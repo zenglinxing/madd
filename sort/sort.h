@@ -11,5 +11,6 @@ This file is part of Math Addition, in ./sort/sort.h
 #include"binary_search.h"
 #include"sort_merge.h"
 #include"sort_counting.h"
+#include"sort_insertion.h"
 
 #endif /* _SORT_H */
