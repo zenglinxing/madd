@@ -1,0 +1,23 @@
+add_executable(test_sort-merge sort/test/sort-merge.c)
+target_include_directories(test_sort-merge PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort-merge PUBLIC madd)
+add_test(NAME Sort-Merge
+         COMMAND test_sort-merge)
+
+add_executable(test_sort-counting sort/test/sort-counting.c)
+target_include_directories(test_sort-counting PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort-counting PUBLIC madd)
+add_test(NAME Sort-Counting
+         COMMAND test_sort-counting)
+
+add_executable(test_sort_binary-search sort/test/binary-search.c)
+target_include_directories(test_sort_binary-search PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort_binary-search PUBLIC madd)
+add_test(NAME Sort-BinarySearchFunc
+         COMMAND test_sort_binary-search)
+
+add_executable(test_sort_binary-search-insert sort/test/binary-search-insert.c)
+target_include_directories(test_sort_binary-search-insert PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort_binary-search-insert PUBLIC madd)
+add_test(NAME Sort-BinarySearchInsertFunc
+         COMMAND test_sort_binary-search-insert)

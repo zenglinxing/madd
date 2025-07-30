@@ -1,0 +1,76 @@
+\chapter{basic}
+
+\section{error information}
+
+Madd supports error information logging. In details, the functions with names starting with {\it Madd\_Error} process the error/warning informations.
+
+\begin{lstlisting}[language=C, title={Functions of error information.},]
+bool Madd_Error_Enable_Logfile(const char *log_file_name);
+void Madd_Error_Set_Logfile(FILE *fp);
+void Madd_Error_Close_Logfile(void);
+void Madd_Error_Add(char sign, const wchar_t *info);
+void Madd_Error_Print_Last(void);
+void Madd_Error_Save_Last(FILE *fp);
+void Madd_Error_Print_All(void);
+void Madd_Error_Save_All(FILE *fp);
+char Madd_Error_Get_Last(Madd_Error_Item *mei); 
+\end{lstlisting} 
+
+Madd\_Error\_Add provides new information. {\it sign} only accepts MADD\_ERROR and MADD\_WARNING. {\it *info} is a wide character string, but the length is limited to MADD\_ERROR\_INFO\_LEN.
+
+If you want to print the error/warning instantly, you can call Madd\_Error\_Print\_Last or Madd\_Error\_Print\_All to get the latest errors/warnings. But do remember Madd only remembers MADD\_ERROR\_MAX items, hence it may not print all the previous errors/warnings. 
+
+To record more error/warning informations, you can also enable log file. Madd\_Error\_Enable\_Logfile accepts the log file name, and returns the boolean to inform whether the file is created under expectation. You can also call Madd\_Error\_Set\_Logfile to redirect the info writing to the opened file. You may not need to call Madd\_Error\_Close\_Logfile to close the log file, since Madd has already call fflush after writing the log file. However, Madd\_Error\_Close\_Logfile will at least safely save the file. 
+
+\section{constant}
+
+Madd includes some natural constants: Pi $\rightarrow \pi$, E\_Nat $\rightarrow e$.
+
+There are some binary integer numbers are useful for masking, as shown in Table~\ref{table:binary mask int}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Binary mask integer.}\label{table:binary mask int}
+  \begin{tabular}{cc}
+    \hline\hline
+    type & variable \\
+    \hline
+    \multirow{5}*{uint8\_t} & Bin4 \\
+    {} & Bin5 \\
+    {} & Bin6 \\
+    {} & Bin7 \\
+    {} & Bin8 \\
+    \hline
+    \multirow{2}*{uint16\_t} & Bin15 \\
+    {} & Bin16 \\
+    \hline
+    \multirow{2}*{uint32\_t} & Bin31 \\
+    {} & Bin32 \\
+    \hline
+    \multirow{2}*{uint64\_t} & Bin63 \\
+    {} & Bin64 \\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
+\section{log2 integer functions}
+
+\begin{lstlisting}[language=C, title={Functions of integer log2 functions.},]
+uint64_t Log2_Floor(uint64_t x);
+uint64_t Log2_Ceil(uint64_t x);
+void Log2_Full(uint64_t x, uint64_t *lower, uint64_t *upper);
+\end{lstlisting}
+
+Log2\_Floor and Log2\_Ceil are similar, accepting uint64\_t and return uint64\_t. The results are just like floor(log2(a)) and ceil(log2(a)).
+
+\section{binary union}
+
+Madd is targeted on binary 64-bit platform. Madd defines 4 unions for different length of data types.
+\begin{lstlisting}[language=C, title={Unions of data types.},]
+union _union8; // 8-bit
+union _union16; // 16-bit
+union _union32; // 32-bit
+union _union64; // 64-bit
+\end{lstlisting}
+
+union \_union8 has .u and .i in type uint8\_t int8\_t. union \_union64 has .f .u and .i in type double, uint64\_t and int64\_t. Whereas, union \_union64 also has array members: .f32[2] (float), .u8[8] (uint8\_t), .i8[8], .u16[4], .i16[4], .u32[2], .i32[2]. Things are similar in union \_union16 and union \_union32.
