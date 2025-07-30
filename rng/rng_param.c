@@ -39,7 +39,7 @@ RNG_Param RNG_Init(uint64_t seed, uint32_t rng_type)
             break;
         case RNG_CLIB:
             RNG_Clib_Init(seed);
-            rng.rand_max = BIN64;
+            rng.rand_max = RAND_MAX;
             rng.ru32 = NULL;
             rng.ru64 = (RNG_U64_t)RNG_Clib_U64;
             rng.rand = (Rand_t)Rand_Clib;
