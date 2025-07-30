@@ -60,6 +60,7 @@ typedef struct{
     RNG_Union rng;
 } RNG_Param;
 
+void RNG_Init_Pointer(uint32_t rng_type, RNG_Param *rng);
 RNG_Param RNG_Init(uint64_t seed, uint32_t rng_type);
 uint64_t Rand_Uint(RNG_Param *rng);
 double Rand(RNG_Param *rng);
@@ -68,5 +69,10 @@ long double Rand_fl(RNG_Param *rng);
 #ifdef ENABLE_QUADPRECISION
 float Rand_f128(RNG_Param *rng);
 #endif /* ENABLE_QUADPRECISION */
+
+RNG_Param RNG_Read_BE(FILE *fp);
+RNG_Param RNG_Read_LE(FILE *fp);
+void RNG_Write_BE(RNG_Param rng, FILE *fp);
+void RNG_Write_LE(RNG_Param rng, FILE *fp);
 
 #endif /* _RNG_H */
