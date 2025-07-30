@@ -23,7 +23,7 @@ union _union16 Byte_Reverse_16(union _union16 u)
 
 union _union32 Byte_Reverse_32(union _union32 u)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__) && !defined(__APPLE__)
     uint32_t y = _bswap(u.u);
 #else
     uint32_t y = u.u;
@@ -36,7 +36,7 @@ union _union32 Byte_Reverse_32(union _union32 u)
 
 union _union64 Byte_Reverse_64(union _union64 u)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__) && !defined(__APPLE__)
     uint64_t y = _bswap64(u.u);
 #else
     uint64_t y = u.u;

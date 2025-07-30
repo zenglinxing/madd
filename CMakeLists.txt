@@ -21,6 +21,8 @@ project(madd
         DESCRIPTION "Math Addition: A mathematics extension for C programming."
         )
 
+#message(STATUS "C compiler ID: ${CMAKE_C_COMPILER_ID}")
+
 # CUDA
 option(ENABLE_CUDA "Enable support for CUDA. NVIDIA compiler is required" OFF)
 if (ENABLE_CUDA)
@@ -69,7 +71,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_SORT} # sort/
 )
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang")
     target_compile_options(madd PUBLIC "-march=native")
     target_link_libraries(madd PUBLIC m)
 endif()
