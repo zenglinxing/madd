@@ -25,6 +25,7 @@ typedef struct{
 extern uint32_t RNG_Xorwow_default_state[5];
 
 RNG_Xorwow_Param RNG_Xorwow_Init(uint32_t seed);
+uint32_t RNG_Xorwow_U32(RNG_Xorwow_Param *rxp);
 
 double Rand_Xorwow(RNG_Xorwow_Param *rxp);
 float Rand_Xorwow_f32(RNG_Xorwow_Param *rxp);

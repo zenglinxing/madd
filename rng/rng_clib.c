@@ -20,6 +20,11 @@ void RNG_Clib_Init(uint64_t seed)
     srand(seed);
 }
 
+uint64_t RNG_Clib_U64(void)
+{
+    return rand();
+}
+
 #define RAND_CLIB__ALGORITHM(float_type) \
 { \
     Madd_RNG_Clib_n_gen ++; \

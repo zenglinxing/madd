@@ -89,11 +89,11 @@ RAND_MT__ALGORITHM(double)
 float Rand_MT_f32(RNG_MT_Param *mt)
 RAND_MT__ALGORITHM(float)
 
-long double Rand_MT_LD(RNG_MT_Param *mt)
+long double Rand_MT_fl(RNG_MT_Param *mt)
 RAND_MT__ALGORITHM(long double)
 
 #ifdef ENABLE_QUADPRECISION
-__float128 Rand_MT_QD(RNG_MT_Param *mt)
+__float128 Rand_MT_f128(RNG_MT_Param *mt)
 RAND_MT__ALGORITHM(__float128)
 #endif /* ENABLE_QUADPRECISION */
 

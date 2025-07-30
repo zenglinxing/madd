@@ -13,6 +13,7 @@ This file is part of Math Addition, in ./rng/rng_clib.h
 extern uint64_t Madd_RNG_Clib_seed, Madd_RNG_Clib_n_gen;
 
 void RNG_Clib_Init(uint64_t seed);
+uint64_t RNG_Clib_U64(void);
 double Rand_Clib(void);
 float Rand_Clib_f32(void);
 long double Rand_Clib_fl(void);

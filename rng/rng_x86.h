@@ -14,6 +14,9 @@ This file is part of Math Addition, in ./rng/rng_x86.h
 
 extern uint64_t Madd_RNG_x86_n_gen;
 
+uint64_t RNG_x86_U64(void);
+uint32_t RNG_x86_U32(void);
+
 double Rand_x86(void);
 float Rand_x86_f32(void);
 long double Rand_x86_fl(void);

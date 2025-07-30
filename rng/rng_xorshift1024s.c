@@ -26,14 +26,10 @@ RNG_Xorshift1024_Param RNG_Xorshift1024s_Init(uint64_t seed_)
 {
     RNG_Xorshift1024_Param rxp;
     uint64_t seed = (seed_) ? seed_ : 1, s;
-    rxp.seed = seed;
+    rxp.seed = rxp.state[0] = seed;
     int i;
-    for (i=1; i<16; i++){
-        s = rxp.state[i-1];
-        s ^= s >> 12;
-        s ^= s << 25;
-        s ^= s >> 27;
-        rxp.state[i] = s * 0x2545F4914F6CDD1DULL;
+    for (int i = 1; i < 16; i++) {
+        rxp.state[i] = 6364136223846793005ULL * (rxp.state[i-1] ^ (rxp.state[i-1] >> 62)) + i;
     }
     rxp.s1 = 31;
     rxp.s2 = 11;

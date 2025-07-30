@@ -20,7 +20,7 @@ This file is part of Math Addition, in ./rng/rng_x86.c
 
 uint64_t Madd_RNG_x86_n_gen=0;
 
-uint64_t Rand_x86_U64(void)
+uint64_t RNG_x86_U64(void)
 {
     Madd_RNG_x86_n_gen ++;
     unsigned long long val;
@@ -33,7 +33,7 @@ uint64_t Rand_x86_U64(void)
     }
 }
 
-uint32_t Rand_x86_U32(void)
+uint32_t RNG_x86_U32(void)
 {
     Madd_RNG_x86_n_gen ++;
     uint32_t val;
@@ -48,26 +48,26 @@ uint32_t Rand_x86_U32(void)
 
 double Rand_x86(void)
 {
-    uint64_t val = Rand_x86_U64();
+    uint64_t val = RNG_x86_U64();
     return val / (double)BIN64;
 }
 
 float Rand_x86_f32(void)
 {
-    uint32_t val = Rand_x86_U32();
+    uint32_t val = RNG_x86_U32();
     return val / (float)BIN32;
 }
 
 long double Rand_x86_fl(void)
 {
-    uint64_t val = Rand_x86_U64();
+    uint64_t val = RNG_x86_U64();
     return val / (long double)BIN64;
 }
 
 #ifdef ENABLE_QUADPRECISION
 __float128 Rand_x86_f128(void)
 {
-    uint64_t val = Rand_x86_U64();
+    uint64_t val = RNG_x86_U64();
     return val / (__float128)BIN64;
 }
 #endif

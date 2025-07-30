@@ -63,3 +63,10 @@ if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "AMD64")
     add_test(NAME RNG-x86
             COMMAND test_RNG-x86)
 endif ()
+
+# RNG Param
+add_executable(test_RNG-Param rng/test/RNG-Param.c)
+target_include_directories(test_RNG-Param PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_RNG-Param PUBLIC madd)
+add_test(NAME RNG-Param
+         COMMAND test_RNG-Param)
