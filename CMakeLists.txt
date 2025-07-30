@@ -129,6 +129,10 @@ install(
 file(GLOB_RECURSE HEADER_FILES 
      RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
      "*.h" "*.cuh")
+file(GLOB_RECURSE HEADER_REMOVE_FILES
+     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+     "build/*" "build*/*")
+list(REMOVE_ITEM HEADER_FILES ${HEADER_REMOVE_FILES})
 # 安装每个头文件并保持相对路径
 foreach(header ${HEADER_FILES})
     get_filename_component(header_dir "${header}" DIRECTORY)
