@@ -12,6 +12,10 @@ This file is part of Math Addition, in ./madd.h
 extern "C" {
 #endif
 
+#ifndef MADD_BUILD_STAGE
+#include"config.h"
+#endif /* MADD_BUILD_STAGE */
+
 #include"basic/basic.h"
 #include"data_struct/data_struct.h"
 #include"large_number/large_uint.h"

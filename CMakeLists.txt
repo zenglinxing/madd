@@ -31,6 +31,7 @@ endif()
 option(ENABLE_QUADPRECISION "Enable quadmath (128-bit float number) in GNU compiler" OFF)
 if (ENABLE_QUADPRECISION)
     add_definitions(-DENABLE_QUADPRECISION)
+    set(MADD_DEF_ENABLE_QUADPRECISION "#define ENABLE_QUADPRECISION")
 endif()
 
 # latex document
@@ -38,6 +39,11 @@ option(LATEX_DOCUMENT "Build LaTeX document guide. Requires LaTeX compiler." ON)
 
 # test
 option(ENABLE_TEST "Enable test to check the functions work well." ON)
+
+# =================================================================================================
+# configure the basic/config.h
+# =================================================================================================
+include(config.cmake)
 
 # =================================================================================================
 # source list
@@ -55,6 +61,7 @@ endif ()
 # =================================================================================================
 # library
 # =================================================================================================
+add_definitions(-DMADD_BUILD_STAGE)
 add_library(madd STATIC
             ${MADD_SRC_LIST_BASIC} # basic/
             ${MADD_SRC_LIST_DATA_STRUCT} # data_struct/
