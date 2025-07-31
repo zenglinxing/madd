@@ -5,7 +5,7 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_x86.c
 */
-#if defined(__x86_64__) || defined(_M_X64)
+#if defined(__x86_64__)
 
 #include<stdint.h>
 #include<immintrin.h>
@@ -69,6 +69,28 @@ __float128 Rand_x86_f128(void)
 {
     uint64_t val = RNG_x86_U64();
     return val / (__float128)BIN64;
+}
+#endif
+
+double Rand_x86_param(void *param)
+{
+    return Rand_x86();
+}
+
+float Rand_x86_param_f32(void *param)
+{
+    return Rand_x86_f32();
+}
+
+long double Rand_x86_param_fl(void *param)
+{
+    return Rand_x86_fl();
+}
+
+#ifdef ENABLE_QUADPRECISION
+__float128 Rand_x86_param_f128(void)
+{
+    return Rand_x86_f128();
 }
 #endif
 

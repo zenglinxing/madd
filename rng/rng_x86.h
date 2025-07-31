@@ -8,7 +8,7 @@ This file is part of Math Addition, in ./rng/rng_x86.h
 #ifndef _RNG_X86_H
 #define _RNG_X86_H
 
-#if defined(__x86_64__) || defined(_M_X64)
+#if defined(__x86_64__)
 
 #include<stdint.h>
 
@@ -24,6 +24,13 @@ long double Rand_x86_fl(void);
 __float128 Rand_x86_f128(void);
 #endif
 
-#endif /* __x86_64__ _M_X64 */
+double Rand_x86_param(void *param);
+float Rand_x86_param_f32(void *param);
+long double Rand_x86_param_fl(void *param);
+#ifdef ENABLE_QUADPRECISION
+__float128 Rand_x86_param_f128(void);
+#endif
+
+#endif /* __x86_64__ */
 
 #endif /* _RNG_X86_H */
