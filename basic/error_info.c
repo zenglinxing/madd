@@ -29,7 +29,7 @@ static void Madd_Error_Print_Wide2Narrow(const wchar_t *wstr)
     size_t len = wcslen(wstr);
     char *str=(char*)malloc(len*sizeof(wchar_t)+1);
     wcstombs(str, wstr, len+1);
-    printf(str);
+    printf("%s", str);
     free(str);
 }
 
@@ -38,8 +38,26 @@ static void Madd_Error_Save_Wide2Narrow(FILE *fp, const wchar_t *wstr)
     size_t len = wcslen(wstr);
     char *str=(char*)malloc(len*sizeof(wchar_t)+1);
     wcstombs(str, wstr, len+1);
-    fprintf(fp, str);
+    fprintf(fp, "%s", str);
     free(str);
+}
+
+static uint64_t Madd_Error_Warning_ID(uint64_t i_item)
+{
+    uint64_t n_warning=0, i;
+    for (i=i_item; i<MADD_ERROR_MAX; i++){
+        if (madd_error.item[i].sign == MADD_WARNING) n_warning ++;
+    }
+    return madd_error.n_warning - n_warning + 1;
+}
+
+static uint64_t Madd_Error_Error_ID(uint64_t i_item)
+{
+    uint64_t n_error=0, i;
+    for (i=i_item; i<MADD_ERROR_MAX; i++){
+        if (madd_error.item[i].sign == MADD_ERROR) n_error ++;
+    }
+    return madd_error.n_error - n_error + 1;
 }
 
 bool Madd_Error_Enable_Logfile(const char *log_file_name)
@@ -70,8 +88,7 @@ void Madd_Error_Close_Logfile(void)
 {
     if (madd_error_fp == NULL){
         Madd_Error_Add(MADD_ERROR, L"Madd_Error_Close_Logfile: cannot close a NULL FILE.");
-    }
-    else{
+    }else{
         fclose(madd_error_fp);
         madd_error_fp = NULL;
     }
@@ -111,7 +128,7 @@ void Madd_Error_Add(char sign, const wchar_t *info)
     wchar_t wtime_stamp[100], *wsign;
     struct tm local_tm;
     Madd_Error_Item mei;
-    uint64_t n_sign;
+    uint64_t id_error;
     if (madd_error_fp!=NULL){
         mei = madd_error.item[madd_error.n-1];
 #ifdef _WIN32
@@ -120,12 +137,16 @@ void Madd_Error_Add(char sign, const wchar_t *info)
         localtime_r(&mei.time_stamp, &local_tm);
 #endif
         wsign = (mei.sign==MADD_ERROR) ? L"Error  " : L"Warning";
-        n_sign = (mei.sign==MADD_ERROR) ? madd_error.n_error : madd_error.n_warning;
+        if (mei.sign == MADD_ERROR) id_error = Madd_Error_Error_ID(madd_error.n-1);
+        else if (mei.sign == MADD_WARNING) id_error = Madd_Error_Warning_ID(madd_error.n-1);
         Time_Stamp_String(mei.time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, n_sign, wtime_stamp, mei.info);
-        if (madd_error_save_wide) fwprintf(madd_error_fp, print_info);
-        else Madd_Error_Print_Wide2Narrow(print_info);
+        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, mei.info);
+        if (madd_error_save_wide){
+            fwprintf(madd_error_fp, print_info);
+        }else{
+            Madd_Error_Save_Wide2Narrow(madd_error_fp, print_info);
+        }
         fflush(madd_error_fp);
     }
 }
@@ -137,7 +158,7 @@ void Madd_Error_Print_Last(void)
         else printf("Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
     }
     wchar_t *wsign, *wtime_stamp;
-    uint64_t n_sign;
+    uint64_t id_error;
     if (madd_error.n == 0){
         if (madd_error_print_wide) wprintf(L"Madd Success.\n");
         else printf("Madd Success.\n");
@@ -145,17 +166,21 @@ void Madd_Error_Print_Last(void)
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         if (madd_error.item[madd_error.n-1].sign == MADD_ERROR){
             wsign = L"Error  ";
+            id_error = Madd_Error_Error_ID(madd_error.n-1);
         }else if (madd_error.item[madd_error.n-1].sign == MADD_WARNING){
             wsign = L"Warning";
+            id_error = Madd_Error_Warning_ID(madd_error.n-1);
         }else{
             wsign = L"Unknown";
         }
-        n_sign = (madd_error.item[madd_error.n-1].sign==MADD_ERROR) ? madd_error.n_error : madd_error.n_warning;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, n_sign, wtime_stamp, madd_error.item[madd_error.n-1].info);
-        if (madd_error_print_wide) wprintf(print_info);
-        else Madd_Error_Print_Wide2Narrow(print_info);
+        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
+        if (madd_error_print_wide){
+            wprintf(print_info);
+        }else{
+            Madd_Error_Print_Wide2Narrow(print_info);
+        }
         free(wtime_stamp);
     }
 }
@@ -167,7 +192,7 @@ void Madd_Error_Save_Last(FILE *fp)
         else fprintf(fp, "Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
     }
     wchar_t *wsign, *wtime_stamp;
-    uint64_t n_sign;
+    uint64_t id_error;
     if (madd_error.n == 0){
         if (madd_error_save_wide) fwprintf(fp, L"Madd Success.\n");
         else fprintf(fp, "Madd Success.\n");
@@ -175,17 +200,21 @@ void Madd_Error_Save_Last(FILE *fp)
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         if (madd_error.item[madd_error.n-1].sign == MADD_ERROR){
             wsign = L"Error  ";
+            id_error = Madd_Error_Error_ID(madd_error.n-1);
         }else if (madd_error.item[madd_error.n-1].sign == MADD_WARNING){
             wsign = L"Warning";
+            id_error = Madd_Error_Warning_ID(madd_error.n-1);
         }else{
             wsign = L"Unknown";
         }
-        n_sign = (madd_error.item[madd_error.n-1].sign==MADD_ERROR) ? madd_error.n_error : madd_error.n_warning;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, n_sign, wtime_stamp, madd_error.item[madd_error.n-1].info);
-        if (madd_error_save_wide) fwprintf(fp, print_info);
-        else Madd_Error_Save_Wide2Narrow(fp, print_info);
+        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
+        if (madd_error_save_wide){
+            fwprintf(fp, print_info);
+        }else{
+            Madd_Error_Save_Wide2Narrow(fp, print_info);
+        }
         free(wtime_stamp);
     }
 }
@@ -197,7 +226,7 @@ void Madd_Error_Print_All(void)
         else printf("Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
     }
     wchar_t *wsign, *wtime_stamp;
-    uint64_t i_item, n_sign;
+    uint64_t i_item, id_error;
     if (madd_error.n==0){
         wprintf(L"Madd Success.\n");
     }else{
@@ -205,17 +234,21 @@ void Madd_Error_Print_All(void)
         for (i_item=0; i_item<madd_error.n; i_item++){
             if (madd_error.item[i_item].sign == MADD_ERROR){
                 wsign = L"Error  ";
+                id_error = Madd_Error_Error_ID(i_item);
             }else if (madd_error.item[i_item].sign == MADD_WARNING){
                 wsign = L"Warning";
+                id_error = Madd_Error_Warning_ID(i_item);
             }else{
                 wsign = L"Unknown";
             }
-            n_sign = (madd_error.item[i_item].sign==MADD_ERROR) ? madd_error.n_error : madd_error.n_warning;
             Time_Stamp_String(madd_error.item[i_item].time_stamp, wtime_stamp);
             wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-            swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-MADD_ERROR_MAX+i_item+1, wsign, n_sign, wtime_stamp, madd_error.item[i_item].info);
-            if (madd_error_print_wide) wprintf(print_info);
-            else Madd_Error_Print_Wide2Narrow(print_info);
+            swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-madd_error.n+i_item+1, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
+            if (madd_error_print_wide){
+                wprintf(print_info);
+            }else{
+                Madd_Error_Print_Wide2Narrow(print_info);
+            }
         }
         free(wtime_stamp);
     }
@@ -228,7 +261,7 @@ void Madd_Error_Save_All(FILE *fp)
         else fprintf(fp, "Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
     }
     wchar_t *wsign, *wtime_stamp;
-    uint64_t i_item, n_sign;
+    uint64_t i_item, id_error;
     if (madd_error.n==0){
         if (madd_error_save_wide) fwprintf(fp, L"Madd Success.\n");
         else fprintf(fp, "Madd Success.\n");
@@ -237,17 +270,21 @@ void Madd_Error_Save_All(FILE *fp)
         for (i_item=0; i_item<madd_error.n; i_item++){
             if (madd_error.item[i_item].sign == MADD_ERROR){
                 wsign = L"Error  ";
+                id_error = Madd_Error_Error_ID(i_item);
             }else if (madd_error.item[i_item].sign == MADD_WARNING){
                 wsign = L"Warning";
+                id_error = Madd_Error_Warning_ID(i_item);
             }else{
                 wsign = L"Unknown";
             }
-            n_sign = (madd_error.item[i_item].sign==MADD_ERROR) ? madd_error.n_error : madd_error.n_warning;
             Time_Stamp_String(madd_error.item[i_item].time_stamp, wtime_stamp);
             wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-            swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-MADD_ERROR_MAX+i_item+1, wsign, n_sign, wtime_stamp, madd_error.item[i_item].info);
-            if (madd_error_save_wide) fwprintf(fp, print_info);
-            else Madd_Error_Save_Wide2Narrow(fp, print_info);
+            swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-madd_error.n+i_item+1, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
+            if (madd_error_save_wide){
+                fwprintf(fp, print_info);
+            }else{
+                Madd_Error_Save_Wide2Narrow(fp, print_info);
+            }
         }
         free(wtime_stamp);
     }
