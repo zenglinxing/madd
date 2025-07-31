@@ -25,6 +25,7 @@ project(madd
 
 # CUDA
 option(ENABLE_CUDA "Enable support for CUDA. NVIDIA compiler is required" OFF)
+set(CMAKE_CUDA_ARCHITECTURES 86 CACHE STRING "CUDA architecture. You should check it on https://developer.nvidia.com/cuda-gpus")
 if (ENABLE_CUDA)
     enable_language(CUDA)
 endif()
@@ -43,7 +44,7 @@ option(LATEX_DOCUMENT "Build LaTeX document guide. Requires LaTeX compiler." ON)
 option(ENABLE_TEST "Enable test to check the functions work well." ON)
 
 # =================================================================================================
-# configure the basic/config.h
+# configure the config.h
 # =================================================================================================
 include(config.cmake)
 
@@ -81,9 +82,14 @@ else()
     target_compile_options(madd PUBLIC "-O3")
 endif()
 if (ENABLE_CUDA)
+    target_link_libraries(madd PRIVATE cudart_static cublas)
+    target_compile_definitions(madd PRIVATE ENABLE_CUDA)
     set_target_properties(madd
                           PROPERTIES
                           CUDA_SEPARABLE_COMPILATION ON)
+    set_target_properties(madd
+                          PROPERTIES
+                          CUDA_RESOLVE_DEVICE_SYMBOLS ON)
 endif()
 if (ENABLE_QUADPRECISION)
     target_link_libraries(madd PRIVATE quadmath)

@@ -17,6 +17,7 @@ This file is aimed to collect majority of prevalent constants used in math and p
 #include<time.h>
 #include"cnum.h"
 #include"constant.h"
+#include"cuda_base.cuh"
 
 #ifdef ENABLE_QUADPRECISION
 #include<quadmath.h>
@@ -158,7 +159,8 @@ inline union _union64 Bit_Reverse_64(union _union64 x)
 /* endian type */
 inline bool Endian_Type(void)
 {
-    union _union32 u32={.u=0x00010000};
+    union _union32 u32;
+    u32.u=0x00010000;
     return u32.u16[1] == 0;
 }
 

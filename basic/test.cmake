@@ -57,3 +57,11 @@ target_include_directories(test_basic-error-info PUBLIC ${CMAKE_CURRENT_SOURCE_D
 target_link_libraries(test_basic-error-info PUBLIC madd)
 add_test(NAME Basic-MaddErrorInfo
          COMMAND test_basic-error-info)
+
+if (ENABLE_CUDA)
+    add_executable(test_basic-cuda-base basic/test/cuda-base.c)
+    target_include_directories(test_basic-cuda-base PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    target_link_libraries(test_basic-cuda-base PUBLIC madd cudart_static)
+    add_test(NAME Basic-Madd-cudaBase
+            COMMAND test_basic-cuda-base)
+endif()
