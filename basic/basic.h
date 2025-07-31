@@ -211,7 +211,7 @@ typedef struct{
     Madd_Error_Item item[MADD_ERROR_MAX];
 } Madd_Error;
 
-extern bool madd_error_keep_print;
+extern bool madd_error_keep_print, madd_error_print_wide, madd_error_save_wide;
 extern Madd_Error madd_error;
 extern uint64_t madd_error_n;
 

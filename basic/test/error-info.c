@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-    Madd_Error_Enable_Logfile("test_error-info.log");
+    Madd_Error_Enable_Logfile("test_baisc-error-info.log");
     madd_error_keep_print = true;
 
     Madd_Error_Add(MADD_ERROR, L"func 1: error info");
