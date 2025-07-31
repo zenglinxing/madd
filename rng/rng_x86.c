@@ -5,7 +5,7 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_x86.c
 */
-#if defined(__x86_64__)
+#if defined(__x86_64__) || defined(_M_X64)
 
 #include<stdint.h>
 #include<immintrin.h>

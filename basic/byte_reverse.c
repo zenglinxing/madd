@@ -9,7 +9,7 @@ This file is part of Math Addition, in ./basic/byte_reverse.h
 #include<stdlib.h>
 #include"basic.h"
 
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #include<immintrin.h>
 #endif
 

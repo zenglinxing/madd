@@ -102,7 +102,7 @@ void RNG_Init_Pointer(uint32_t rng_type, RNG_Param *rng)
 #endif /* ENABLE_QUADPRECISION */
             break;
         case RNG_X86:
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
             rng->rand_max = BIN64;
             rng->ru32 = NULL;
             rng->ru64 = (RNG_U64_t)RNG_x86_U64;
@@ -149,7 +149,7 @@ RNG_Param RNG_Init(uint64_t seed, uint32_t rng_type)
         case RNG_XORWOW:
             rng.rng.rxw = RNG_Xorwow_Init(seed);
             break;
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
         case RNG_X86:
             break;
 #endif
@@ -222,7 +222,7 @@ RNG_Param RNG_Read_BE(FILE *fp)
             rng.rng.rxw = RNG_Xorwow_Read_BE(fp);
             break;
         case RNG_X86:
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
             Madd_Error_Add(MADD_WARNING, L"RNG_Read_BE: the RNG type read from file is x86 CPU, unable to reproduce.");
 #else
             Madd_Error_Add(MADD_ERROR, L"RNG_Read_BE: the RNG type read from file is x86 CPU, but this is not a x86 platform.");
@@ -266,7 +266,7 @@ RNG_Param RNG_Read_LE(FILE *fp)
             rng.rng.rxw = RNG_Xorwow_Read_LE(fp);
             break;
         case RNG_X86:
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
             Madd_Error_Add(MADD_WARNING, L"RNG_Read_LE: the RNG type read from file is x86 CPU, unable to reproduce.");
 #else
             Madd_Error_Add(MADD_ERROR, L"RNG_Read_LE: the RNG type read from file is x86 CPU, but this is not a x86 platform.");
@@ -309,7 +309,7 @@ void RNG_Write_BE(RNG_Param rng, FILE *fp)
             RNG_Xorwow_Write_BE(rng.rng.rxw, fp);
             break;
         case RNG_X86:
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
             Madd_Error_Add(MADD_WARNING, L"RNG_Write_BE: the RNG type write to file is x86 CPU, unable to record.");
 #else
             Madd_Error_Add(MADD_ERROR, L"RNG_Write_BE: the RNG type write to file is x86 CPU, but this is not a x86 platform.");
@@ -350,7 +350,7 @@ void RNG_Write_LE(RNG_Param rng, FILE *fp)
             RNG_Xorwow_Write_LE(rng.rng.rxw, fp);
             break;
         case RNG_X86:
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(_M_X64)
             Madd_Error_Add(MADD_WARNING, L"RNG_Write_LE: the RNG type write to file is x86 CPU, unable to record.");
 #else
             Madd_Error_Add(MADD_ERROR, L"RNG_Write_LE: the RNG type write to file is x86 CPU, but this is not a x86 platform.");

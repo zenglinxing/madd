@@ -8,7 +8,7 @@ This file is part of Math Addition, in ./rng/rng_x86.h
 #ifndef _RNG_X86_H
 #define _RNG_X86_H
 
-#if defined(__x86_64__)
+#if defined(__x86_64__) || defined(_M_X64)
 
 #include<stdint.h>
 

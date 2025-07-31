@@ -10,13 +10,13 @@ This file is aimed to collect majority of prevalent constants used in math and p
 #include"constant.h"
 #include"basic.h"
 
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #include<immintrin.h>
 #endif
 
 uint8_t Binary_Number_of_1_8bit(union _union8 u8)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #ifdef __APPLE__
     return _mm_popcnt_u32(u8.u);
 #else
@@ -29,7 +29,7 @@ uint8_t Binary_Number_of_1_8bit(union _union8 u8)
 
 uint8_t Binary_Number_of_1_16bit(union _union16 u16)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #ifdef __APPLE__
     return _mm_popcnt_u32(u16.u);
 #else
@@ -45,7 +45,7 @@ uint8_t Binary_Number_of_1_16bit(union _union16 u16)
 
 uint8_t Binary_Number_of_1_32bit(union _union32 u32)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #ifdef __APPLE__
     return _mm_popcnt_u32(u32.u);
 #else
@@ -63,7 +63,7 @@ uint8_t Binary_Number_of_1_32bit(union _union32 u32)
 
 uint8_t Binary_Number_of_1_64bit(union _union64 u64)
 {
-#ifdef __x86_64__
+#if defined(__x86_64__)
 #ifdef __APPLE__
     return _mm_popcnt_u64(u64.u);
 #else
