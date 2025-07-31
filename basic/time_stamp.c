@@ -23,7 +23,7 @@ void Time_Stamp_String(time_t t, wchar_t *str)
     localtime_r(&t, &local_tm);
 #endif
     int ret = swprintf(str, MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t),
-                       L"%d/%02d/%02d %s %02d:%02d:%02d",
+                       L"%d/%02d/%02d %ls %02d:%02d:%02d",
                        local_tm.tm_year + 1900,
                        local_tm.tm_mon,
                        local_tm.tm_hour,

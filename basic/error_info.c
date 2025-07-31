@@ -14,6 +14,7 @@ This file is part of Math Addition, in ./basic/error_info.c
 #include<stdbool.h>
 #include"basic.h"
 
+bool madd_error_keep_print = false;
 Madd_Error madd_error={.n=0, .flag_n_exceed=false, .n_error=0, .n_warning=0};
 static FILE *madd_error_fp = NULL;
 /*
@@ -82,6 +83,12 @@ void Madd_Error_Add(char sign, const wchar_t *info)
     /* copy info */
     size_t n_char = wcslen(info), n_max_copy = (MADD_ERROR_INFO_LEN <= n_char) ? MADD_ERROR_INFO_LEN : n_char+1;
     memcpy(madd_error.item[madd_error.n-1].info, info, (n_max_copy+1)*sizeof(wchar_t));
+
+    /* print error/warning */
+    if (madd_error_keep_print){
+        Madd_Error_Print_Last();
+    }
+
     /* log file */
     wchar_t wtime_stamp[100], *wsign;
     struct tm local_tm;
