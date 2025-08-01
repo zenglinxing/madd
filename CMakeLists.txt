@@ -17,11 +17,18 @@ set(CMAKE_CXX_RESPONSE_FILE_LINK_FLAG "@")
 
 project(madd
         VERSION 0.0.0
-        LANGUAGES C
+        LANGUAGES C CXX
         DESCRIPTION "Math Addition: A mathematics extension for C programming."
         )
 
 #message(STATUS "C compiler ID: ${CMAKE_C_COMPILER_ID}")
+
+# multithread
+option(ENABLE_MULTITHREAD "Enable multithread." ON)
+if (ENABLE_MULTITHREAD)
+    #add_definitions(-DENABLE_MULTITHREAD)
+    set(MADD_DEF_ENABLE_MULTITHREAD "#define MADD_ENABLE_MULTITHREAD")
+endif()
 
 # CUDA
 option(ENABLE_CUDA "Enable support for CUDA. NVIDIA compiler is required" OFF)
@@ -56,6 +63,11 @@ add_subdirectory(data_struct)
 add_subdirectory(rng)
 add_subdirectory(large_number)
 add_subdirectory(sort)
+set(MADD_SRC_LIST_THREAD_BASE)
+if (ENABLE_MULTITHREAD)
+    add_subdirectory(thread_base)
+endif()
+message(STATUS "thread base src: ${MADD_SRC_LIST_THREAD_BASE}")
 
 if (LATEX_DOCUMENT)
     add_subdirectory(doc)
@@ -71,6 +83,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_SORT} # sort/
+            ${MADD_SRC_LIST_THREAD_BASE} # thread_base
 )
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang")
     target_compile_options(madd PUBLIC "-march=native")
@@ -94,6 +107,11 @@ endif()
 if (ENABLE_QUADPRECISION)
     target_link_libraries(madd PRIVATE quadmath)
 endif()
+if (ENABLE_MULTITHREAD)
+    if (${MADD_THREAD_API} STREQUAL "pthread")
+        target_link_libraries(madd PRIVATE pthread)
+    endif()
+endif()
 
 # =================================================================================================
 # test
@@ -105,6 +123,9 @@ if (ENABLE_TEST)
     include(rng/test.cmake)
     include(large_number/test.cmake)
     include(sort/test.cmake)
+    if (ENABLE_MULTITHREAD)
+        include(thread_base/test.cmake)
+    endif ()
 endif()
 
 # =================================================================================================

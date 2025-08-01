@@ -21,6 +21,7 @@ extern "C" {
 #include"large_number/large_uint.h"
 #include"rng/rng.h"
 #include"sort/sort.h"
+#include"thread_base/thread_base.h"
 
 #ifdef __cplusplus
 }
