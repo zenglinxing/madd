@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     int i_dev;
     size_t free_byte, total_byte;
     struct cudaDeviceProp dp;
-    Madd_cuda_Device_Properties mdp = Madd_Get_cuda_Device_Property();
+    Madd_cuda_Device_Properties mdp = Madd_cuda_Get_Device_Property();
     for (i_dev=0; i_dev<mdp.n_device; i_dev++){
         dp = mdp.devices[i_dev];
         printf("\n\n=== Device %d ===\n", i_dev);
@@ -63,8 +63,7 @@ int main(int argc, char *argv[])
             printf("kernels concurrent available:\tFalse\n");
         }
         /* available mem */
-        free_byte = mdp.mem_free[i_dev];
-        total_byte = mdp.mem_total[i_dev];
+        Madd_cuda_Get_Device_Mem(i_dev, &free_byte, &total_byte);
         printf("\nfree mem:\t%zd bytes | %.1f kb | %.1f Mb | %.1f Gb\n", free_byte, free_byte/1024., free_byte/(1024.*1024.), free_byte/(1024.*1024.*1024.));
         printf("total mem:\t%zd bytes | %.1f kb | %.1f Mb | %.1f Gb\n", total_byte, total_byte/1024., total_byte/(1024.*1024.), total_byte/(1024.*1024.*1024.));
     }

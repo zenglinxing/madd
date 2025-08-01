@@ -10,11 +10,11 @@ This file is part of Math Addition, in ./basic/cuda_base.cuh
 
 typedef struct{
     int n_device;
-    size_t *mem_free, *mem_total;
     struct cudaDeviceProp *devices;
 } Madd_cuda_Device_Properties;
 
 int Madd_N_cuda_GPU(void);
-Madd_cuda_Device_Properties Madd_Get_cuda_Device_Property(void);
+Madd_cuda_Device_Properties Madd_cuda_Get_Device_Property(void);
+void Madd_cuda_Get_Device_Mem(int i_dev, size_t *free_mem, size_t *total_mem);
 
 #endif
