@@ -101,7 +101,7 @@ int main() {
     data.not_full = Condition_Variable_Create();
     data.not_empty = Condition_Variable_Create();
     
-    printf("System has %lu CPU cores\n", N_CPU_Core());
+    printf("System has %lu CPU threads\n", N_CPU_Thread());
     printf("Starting %d producers and %d consumers\n", PRODUCERS, CONSUMERS);
     
     // 创建生产者线程
