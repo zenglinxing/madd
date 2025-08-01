@@ -3,9 +3,6 @@
 
 #include<stdint.h>
 #include<stdbool.h>
-#ifdef MADD_ENABLE_MULTITHREAD
-#include<stdatomic.h>
-#endif
 
 typedef void* Thread;
 typedef void* Mutex;
