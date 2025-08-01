@@ -56,7 +56,7 @@ target_link_libraries(test_RNG-Xorwow PUBLIC madd)
 add_test(NAME RNG-Xorwow
          COMMAND test_RNG-Xorwow)
 
-if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64")
     add_executable(test_RNG-x86 rng/test/RNG-x86.c)
     target_include_directories(test_RNG-x86 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
     target_link_libraries(test_RNG-x86 PUBLIC madd)
