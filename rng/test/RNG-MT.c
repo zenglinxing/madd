@@ -34,7 +34,6 @@ int main(int argc,char *argv[])
     printf("i\t%x\t%x\t%x\n", mt1.i, mt2.i, mt3.i);
     printf("n_gen\t%x\t%x\t%x\n", mt1.n_gen, mt2.n_gen, mt3.n_gen);
 
-    RNG_MT_Write_LE(mt1, fp3);
     double num1, num2, num3;
     for (i=0;i<1000;i++){
         num1 = Rand_MT(&mt1);
