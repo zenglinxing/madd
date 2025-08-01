@@ -2,12 +2,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>
+#include<stdbool.h>
 #include"madd.h"
 
 int print_gap = 200;
 
 int main(int argc, char *argv[])
 {
+    madd_error_keep_print = true;
+
     uint32_t rng_type = 0;
     uint64_t seed = 10;
     if (argc > 1){
@@ -16,6 +19,9 @@ int main(int argc, char *argv[])
     printf("rng type:\t%d\n", rng_type);
 
     RNG_Param rng = RNG_Init(seed, rng_type);
+    if (madd_error.n_error){
+        exit(EXIT_FAILURE);
+    }
     double res;
     int i, n=1000;
     for (i=0; i<n; i++){
