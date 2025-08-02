@@ -47,32 +47,32 @@ void Thread_Detach(Thread th_)
 /* mutex */
 void Mutex_Init(Mutex *m)
 {
-    pthread_mutex_t *pmt = (pthread_mutex_t*)m;
+    pthread_mutex_t *pmt = (pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_init(pmt, NULL);
 }
 
 void Mutex_Lock(Mutex *m)
 {
-    pthread_mutex_t *pmt=(pthread_mutex_t*)m;
+    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_lock(pmt);
 }
 
 bool Mutex_Trylock(Mutex *m)
 {
-    pthread_mutex_t *pmt=(pthread_mutex_t*)m;
+    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_trylock(pmt);
     return ret == 0;
 }
 
 void Mutex_Unlock(Mutex *m)
 {
-    pthread_mutex_t *pmt=(pthread_mutex_t*)m;
+    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_unlock(pmt);
 }
 
 void Mutex_Destroy(Mutex *m)
 {
-    pthread_mutex_t *pmt=(pthread_mutex_t*)m;
+    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_destroy(pmt);
     free(pmt);
 }
@@ -80,12 +80,12 @@ void Mutex_Destroy(Mutex *m)
 /* condition variable */
 void Condition_Variable_Init(Condition_Variable *cv)
 {
-    pthread_cond_init((pthread_cond_t*)cv, NULL);
+    pthread_cond_init((pthread_cond_t*)cv->buf, NULL);
 }
 
 void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
 {
-    pthread_cond_wait((pthread_cond_t*)cv, (pthread_mutex_t*)m);
+    pthread_cond_wait((pthread_cond_t*)cv->buf, (pthread_mutex_t*)m->buf);
 }
 
 bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait_sec)
@@ -103,23 +103,23 @@ bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait
     }
     time_out.tv_nsec = until_ns;
     time_out.tv_sec = until_s;
-    int res = pthread_cond_timedwait((pthread_cond_t*)cv, (pthread_mutex_t*)m, &time_out);
+    int res = pthread_cond_timedwait((pthread_cond_t*)cv->buf, (pthread_mutex_t*)m->buf, &time_out);
     return res == 0;
 }
 
 void Condition_Variable_Wake(Condition_Variable *cv)
 {
-    pthread_cond_signal((pthread_cond_t*)cv);
+    pthread_cond_signal((pthread_cond_t*)cv->buf);
 }
 
 void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
-    pthread_cond_broadcast((pthread_cond_t*)cv);
+    pthread_cond_broadcast((pthread_cond_t*)cv->buf);
 }
 
 void Condition_Variable_Destroy(Condition_Variable *cv)
 {
-    pthread_cond_destroy((pthread_cond_t*)cv);
+    pthread_cond_destroy((pthread_cond_t*)cv->buf);
 }
 
 uint64_t N_CPU_Thread(void)

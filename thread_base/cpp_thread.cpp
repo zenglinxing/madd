@@ -38,6 +38,8 @@ class CppThreadBase_SizeCheck{
     }
 };
 
+static CppThreadBase_SizeCheck threadbase_sizecheck;
+
 extern "C"{
 
 Thread Thread_Create(void func(void*), void *param)
