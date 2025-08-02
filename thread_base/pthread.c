@@ -1,4 +1,13 @@
+/* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./thread_base/pthread.c
+*/
 #include<stdlib.h>
+#include<math.h>
+#include<time.h>
 #include<pthread.h>
 #include"thread_base.h"
 
@@ -35,65 +44,82 @@ void Thread_Detach(Thread th_)
     free(th);
 }
 
-Mutex Mutex_Create(void)
+/* mutex */
+void Mutex_Init(Mutex *m)
 {
-    pthread_mutex_t *pmt = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
+    pthread_mutex_t *pmt = (pthread_mutex_t*)m;
     int ret = pthread_mutex_init(pmt, NULL);
-    return pmt;
 }
 
-void Mutex_Lock(Mutex m)
+void Mutex_Lock(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m;
     int ret = pthread_mutex_lock(pmt);
 }
 
-bool Mutex_Trylock(Mutex m)
+bool Mutex_Trylock(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m;
     int ret = pthread_mutex_trylock(pmt);
     return ret == 0;
 }
 
-void Mutex_Unlock(Mutex m)
+void Mutex_Unlock(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m;
     int ret = pthread_mutex_unlock(pmt);
 }
 
-void Mutex_Destroy(Mutex m)
+void Mutex_Destroy(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m;
     int ret = pthread_mutex_destroy(pmt);
     free(pmt);
 }
 
-Condition_Variable Condition_Variable_Create(void)
+/* condition variable */
+void Condition_Variable_Init(Condition_Variable *cv)
 {
-    pthread_cond_t *cv=(pthread_cond_t*)malloc(sizeof(pthread_cond_t));
-    pthread_cond_init(cv, NULL);
-    return cv;
+    pthread_cond_init((pthread_cond_t*)cv, NULL);
 }
 
-void Condition_Variable_Wait(Condition_Variable cv, Mutex m)
+void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
 {
-    pthread_cond_wait(cv, m);
+    pthread_cond_wait((pthread_cond_t*)cv, (pthread_mutex_t*)m);
 }
 
-void Condition_Variable_Wake(Condition_Variable cv)
+bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait_sec)
 {
-    pthread_cond_signal(cv);
+    if (wait_sec <= 0) return false;
+    struct timespec time_now, time_out;
+    timespec_get(&time_now, TIME_UTC);
+
+    const uint64_t ns_count = 1e9; /* nano seconds in a second */
+    int64_t wait_in_sec = floor(wait_sec), wait_nsec = round((wait_sec - wait_in_sec)*ns_count);
+    uint64_t until_ns = wait_nsec + time_now.tv_nsec, until_s = wait_in_sec + time_now.tv_sec;
+    if (until_ns >= ns_count){
+        until_s += until_ns / ns_count;
+        until_ns = until_ns % ns_count;
+    }
+    time_out.tv_nsec = until_ns;
+    time_out.tv_sec = until_s;
+    int res = pthread_cond_timedwait((pthread_cond_t*)cv, (pthread_mutex_t*)m, &time_out);
+    return res == 0;
 }
 
-void Condition_Variable_Wake_All(Condition_Variable cv)
+void Condition_Variable_Wake(Condition_Variable *cv)
 {
-    pthread_cond_broadcast(cv);
+    pthread_cond_signal((pthread_cond_t*)cv);
 }
 
-void Condition_Variable_Destroy(Condition_Variable cv)
+void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
-    pthread_cond_destroy(cv);
-    free(cv);
+    pthread_cond_broadcast((pthread_cond_t*)cv);
+}
+
+void Condition_Variable_Destroy(Condition_Variable *cv)
+{
+    pthread_cond_destroy((pthread_cond_t*)cv);
 }
 
 uint64_t N_CPU_Thread(void)

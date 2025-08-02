@@ -26,7 +26,7 @@ project(madd
 # multithread
 option(ENABLE_MULTITHREAD "Enable multithread." ON)
 if (ENABLE_MULTITHREAD)
-    #add_definitions(-DENABLE_MULTITHREAD)
+    add_definitions(-DMADD_ENABLE_MULTITHREAD)
     set(MADD_DEF_ENABLE_MULTITHREAD "#define MADD_ENABLE_MULTITHREAD")
 endif()
 

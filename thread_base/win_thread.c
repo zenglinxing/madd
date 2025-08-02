@@ -1,3 +1,10 @@
+/* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./thread_base/win_thread.c
+*/
 #include<stdlib.h>
 #include<windows.h>
 #include"thread_base.h"
@@ -27,63 +34,75 @@ void Thread_Detach(Thread th)
     free(handle);
 }
 
-Mutex Mutex_Create(void)
+/* mutex */
+void Mutex_Init(Mutex *m)
 {
-    CRITICAL_SECTION *cs=(CRITICAL_SECTION*)malloc(sizeof(CRITICAL_SECTION));
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
     InitializeCriticalSection(cs);
-    return cs;
 }
 
-void Mutex_Lock(Mutex m)
+void Mutex_Lock(Mutex *m)
 {
-    CRITICAL_SECTION *cs=(CRITICAL_SECTION*)m;
-    EnterCriticalSection(cs);
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
+    EnterCriticalSection((CRITICAL_SECTION*)m);
 }
 
-bool Mutex_Trylock(Mutex m)
+bool Mutex_Trylock(Mutex *m)
 {
-    CRITICAL_SECTION *cs=(CRITICAL_SECTION*)m;
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
     return TryEnterCriticalSection(cs);
 }
 
-void Mutex_Unlock(Mutex m)
+void Mutex_Unlock(Mutex *m)
 {
-    CRITICAL_SECTION *cs=(CRITICAL_SECTION*)m;
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
     LeaveCriticalSection(cs);
 }
 
-void Mutex_Destroy(Mutex m)
+void Mutex_Destroy(Mutex *m)
 {
-    CRITICAL_SECTION *cs=(CRITICAL_SECTION*)m;
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
     DeleteCriticalSection(cs);
-    free(cs);
 }
 
-Condition_Variable Condition_Variable_Create(void)
+/* condition variable */
+void Condition_Variable_Init(Condition_Variable *cv)
 {
-    CONDITION_VARIABLE *cv = (CONDITION_VARIABLE*)malloc(sizeof(CONDITION_VARIABLE));
-    InitializeConditionVariable(cv);
-    return cv;
+    CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
+    InitializeConditionVariable(scv);
 }
 
-void Condition_Variable_Wait(Condition_Variable cv, Mutex m)
+void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
 {
-    SleepConditionVariableCS(cv, m, INFINITE);
+    CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
+    SleepConditionVariableCS(scv, cs, INFINITE);
 }
 
-void Condition_Variable_Wake(Condition_Variable cv)
+bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait_sec)
 {
-    WakeConditionVariable(cv);
+    CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
+    DWORD ms = wait_sec * 1000;
+    BOOL res = SleepConditionVariableCS(scv, cs, ms);
+    return res;
 }
 
-void Condition_Variable_Wake_All(Condition_Variable cv)
+void Condition_Variable_Wake(Condition_Variable *cv)
 {
-    WakeAllConditionVariable(cv);
+    CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
+    WakeConditionVariable(scv);
 }
 
-void Condition_Variable_Destroy(Condition_Variable cv)
+void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
-    free((CONDITION_VARIABLE*)cv);
+    CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
+    WakeAllConditionVariable(scv);
+}
+
+void Condition_Variable_Destroy(Condition_Variable *cv)
+{
+    /*CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;*/
 }
 
 uint64_t N_CPU_Thread(void)

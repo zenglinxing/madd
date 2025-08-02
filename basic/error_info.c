@@ -108,6 +108,10 @@ void Madd_Error_Close_Logfile(void)
 
 void Madd_Error_Add(char sign, const wchar_t *info)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    Mutex_Lock(&madd_error.mutex);
+#endif
+
     if (madd_error.n==0){
         madd_error.n = 1;
     }else if (madd_error.n==MADD_ERROR_MAX){
@@ -173,6 +177,10 @@ void Madd_Error_Add(char sign, const wchar_t *info)
         else printf("Madd Warning triggered, program stopped.\n");
         exit(EXIT_FAILURE);
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    Mutex_Unlock(&madd_error.mutex);
+#endif
 }
 
 void Madd_Error_Print_Last(void)

@@ -16,17 +16,17 @@ void thread_func(void *param_)
     struct Param *param=param_;
     param->a = param->id * 3;
     param->b = param->a + 2;
-    Mutex_Lock(cm);
+    Mutex_Lock(&cm);
     count++;
     arr[ind] = count;
     ind++;
     printf("id = %d\n\ta,b = %d,%d\n\tcount = %d\n", param->id, param->a, param->b, count);
-    Mutex_Unlock(cm);
+    Mutex_Unlock(&cm);
 }
 
 int main(int argc, char *argv[])
 {
-    cm = Mutex_Create();
+    Mutex_Init(&cm);
 
     struct Param param[N];
     Thread ct[N];
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     for (i=0; i<N; i++){
         Thread_Join(ct[i]);
     }
-    Mutex_Destroy(cm);
+    Mutex_Destroy(&cm);
 
     for (i=0; i<N; i++){
         printf("ind:%d\tarr=%d\n", i, arr[i]);

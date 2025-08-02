@@ -26,12 +26,12 @@ void producer(void *arg) {
     int thread_id = (int)(uintptr_t)arg; // 使用参数作为线程ID
     
     for (int i = 0; i < TOTAL_ITEMS/PRODUCERS; i++) {
-        Mutex_Lock(data.mutex);
+        Mutex_Lock(&data.mutex);
         
         // 等待缓冲区有空位
         while (data.count == BUFFER_SIZE) {
             printf("Producer %d: Buffer full, waiting...\n", thread_id);
-            Condition_Variable_Wait(data.not_full, data.mutex);
+            Condition_Variable_Wait(&data.not_full, &data.mutex);
         }
         
         // 生产项目
@@ -44,8 +44,8 @@ void producer(void *arg) {
                thread_id, item, data.count);
         
         // 通知消费者
-        Condition_Variable_Wake(data.not_empty);
-        Mutex_Unlock(data.mutex);
+        Condition_Variable_Wake(&data.not_empty);
+        Mutex_Unlock(&data.mutex);
         
         // 模拟工作时间
         //struct timespec sleep_time = {0, (rand() % 100) * 1000000}; // 毫秒转纳秒
@@ -58,12 +58,12 @@ void consumer(void *arg) {
     int thread_id = (int)(uintptr_t)arg; // 使用参数作为线程ID
     
     for (int i = 0; i < TOTAL_ITEMS/CONSUMERS; i++) {
-        Mutex_Lock(data.mutex);
+        Mutex_Lock(&data.mutex);
         
         // 等待缓冲区有数据
         while (data.count == 0) {
             printf("Consumer %d: Buffer empty, waiting...\n", thread_id);
-            Condition_Variable_Wait(data.not_empty, data.mutex);
+            Condition_Variable_Wait(&data.not_empty, &data.mutex);
         }
         
         // 消费项目
@@ -75,8 +75,8 @@ void consumer(void *arg) {
                thread_id, item, data.count);
         
         // 通知生产者
-        Condition_Variable_Wake(data.not_full);
-        Mutex_Unlock(data.mutex);
+        Condition_Variable_Wake(&data.not_full);
+        Mutex_Unlock(&data.mutex);
         
         // 模拟工作时间
         //struct timespec sleep_time = {0, (rand() % 100) * 1000000}; // 毫秒转纳秒
@@ -97,9 +97,9 @@ int main() {
     data.out = 0;
     
     // 创建同步对象
-    data.mutex = Mutex_Create();
-    data.not_full = Condition_Variable_Create();
-    data.not_empty = Condition_Variable_Create();
+    Mutex_Init(&data.mutex);
+    Condition_Variable_Init(&data.not_full);
+    Condition_Variable_Init(&data.not_empty);
     
     printf("System has %lu CPU threads\n", N_CPU_Thread());
     printf("Starting %d producers and %d consumers\n", PRODUCERS, CONSUMERS);
@@ -127,9 +127,9 @@ int main() {
     }
     
     // 清理资源
-    Mutex_Destroy(data.mutex);
-    Condition_Variable_Destroy(data.not_full);
-    Condition_Variable_Destroy(data.not_empty);
+    Mutex_Destroy(&data.mutex);
+    Condition_Variable_Destroy(&data.not_full);
+    Condition_Variable_Destroy(&data.not_empty);
     
     printf("All threads completed successfully\n");
     return 0;
