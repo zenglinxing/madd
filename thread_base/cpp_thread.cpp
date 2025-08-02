@@ -105,8 +105,7 @@ void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
 
 bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait_sec)
 {
-    int64_t ms_timeout = wait_sec*1000;
-    auto timeout = std::chrono::seconds(ms_timeout);
+    auto timeout = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double>(wait_sec));
     auto& mutex_ref = *reinterpret_cast<std::mutex*>(m->buf);
     std::unique_lock<std::mutex> lock(mutex_ref, std::adopt_lock);
     auto res = reinterpret_cast<std::condition_variable*>(cv->buf)->wait_for(lock, timeout);

@@ -44,7 +44,7 @@ void Mutex_Init(Mutex *m)
 void Mutex_Lock(Mutex *m)
 {
     CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
-    EnterCriticalSection((CRITICAL_SECTION*)m);
+    EnterCriticalSection((CRITICAL_SECTION*)cs);
 }
 
 bool Mutex_Trylock(Mutex *m)

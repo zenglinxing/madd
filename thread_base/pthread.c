@@ -74,7 +74,6 @@ void Mutex_Destroy(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
     int ret = pthread_mutex_destroy(pmt);
-    free(pmt);
 }
 
 /* condition variable */
