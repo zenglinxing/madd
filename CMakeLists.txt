@@ -66,6 +66,8 @@ add_subdirectory(sort)
 set(MADD_SRC_LIST_THREAD_BASE)
 if (ENABLE_MULTITHREAD)
     add_subdirectory(thread_base)
+else()
+    unset(MADD_SRC_LIST_THREAD_BASE CACHE)
 endif()
 message(STATUS "thread base src: ${MADD_SRC_LIST_THREAD_BASE}")
 

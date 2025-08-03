@@ -21,7 +21,7 @@ typedef struct{
     bool auto_shrink;
     void *buf;
     size_t capacity, n_element, unit_capacity, usize;
-    Mutex mutex;
+    RWLock rwlock;
 } Stack;
 
 Stack Stack_Init(size_t unit_capacity, size_t usize /* element size */);

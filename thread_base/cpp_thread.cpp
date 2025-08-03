@@ -22,7 +22,7 @@ extern "C"{
 class CppThreadBase_SizeCheck{
     public:
     CppThreadBase_SizeCheck(){
-        size_t size_mutex = sizeof(std::mutex), size_condition_variable = sizeof(sizeof(std::condition_variable)), size_rwlock=sizeof(std::shared_lock);
+        size_t size_mutex = sizeof(std::mutex), size_condition_variable = sizeof(std::condition_variable), size_rwlock=sizeof(std::shared_mutex);
         bool flag_fail = false;
         if (size_mutex > MADD_THREAD_BASE_MUTEX_LEN){
             printf("Madd Error!\nSize of mutex is %llu, larger than expected %d. Try to re-compile Madd after resetting macro MADD_THREAD_BASE_MUTEX_LEN.\n", size_mutex, MADD_THREAD_BASE_MUTEX_LEN);

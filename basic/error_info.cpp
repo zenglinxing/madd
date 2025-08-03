@@ -4,10 +4,8 @@ Author: Lin-Xing Zeng
 Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./basic/error_info.cpp
-To initialize the mutex in madd_error.
+To initialize madd_error.
 */
-#ifdef MADD_ENABLE_MULTITHREAD
-
 extern "C"{
 #include"basic.h"
 #include"../thread_base/thread_base.h"
@@ -20,10 +18,10 @@ class CppMaddErrorRWLockInit{
     CppMaddErrorRWLockInit(){
         madd_error.flag_n_exceed = false;
         madd_error.n_error = madd_error.n_warning = madd_error.n = 0;
+#ifdef MADD_ENABLE_MULTITHREAD
         RWLock_Init(&madd_error.rwlock);
+#endif
     }
 };
 
 static CppMaddErrorRWLockInit madd_error_rwlock_init;
-
-#endif
