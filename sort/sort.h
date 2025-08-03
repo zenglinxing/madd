@@ -12,5 +12,6 @@ This file is part of Math Addition, in ./sort/sort.h
 #include"sort_merge.h"
 #include"sort_counting.h"
 #include"sort_insertion.h"
+#include"sort_quicksort.h"
 
 #endif /* _SORT_H */

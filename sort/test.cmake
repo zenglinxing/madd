@@ -27,3 +27,9 @@ target_include_directories(test_sort-insertion PUBLIC ${CMAKE_CURRENT_SOURCE_DIR
 target_link_libraries(test_sort-insertion PUBLIC madd)
 add_test(NAME Sort-Insertion
          COMMAND test_sort-insertion)
+
+add_executable(test_sort-quicksort sort/test/sort-quicksort.c)
+target_include_directories(test_sort-quicksort PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort-quicksort PUBLIC madd)
+add_test(NAME Sort-Quicksort
+         COMMAND test_sort-quicksort)
