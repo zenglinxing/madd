@@ -15,13 +15,15 @@ extern "C"{
 
 Madd_Error madd_error;
 
-class CppMaddErrorMutexInit{
+class CppMaddErrorRWLockInit{
     public:
-    CppMaddErrorMutexInit(){
-        Mutex_Init(&madd_error.mutex);
+    CppMaddErrorRWLockInit(){
+        madd_error.flag_n_exceed = false;
+        madd_error.n_error = madd_error.n_warning = madd_error.n = 0;
+        RWLock_Init(&madd_error.rwlock);
     }
 };
 
-static CppMaddErrorMutexInit madd_error_mutex_init;
+static CppMaddErrorRWLockInit madd_error_rwlock_init;
 
 #endif

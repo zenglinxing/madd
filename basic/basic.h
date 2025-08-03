@@ -211,7 +211,7 @@ typedef struct{
 typedef struct{
     bool flag_n_exceed;
     uint64_t n, n_error, n_warning;
-    Mutex mutex;
+    RWLock rwlock;
     Madd_Error_Item item[MADD_ERROR_MAX];
 } Madd_Error;
 

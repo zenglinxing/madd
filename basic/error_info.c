@@ -16,7 +16,6 @@ This file is part of Math Addition, in ./basic/error_info.c
 
 bool madd_error_keep_print = false, madd_error_print_wide = false, madd_error_save_wide = false;
 bool madd_error_stop = false, madd_warning_stop = false;
-Madd_Error madd_error={.n=0, .flag_n_exceed=false, .n_error=0, .n_warning=0};
 static FILE *madd_error_fp = NULL;
 /*
 note: if Madd_Error_Enable_Logfile is used, turn true;
@@ -109,7 +108,7 @@ void Madd_Error_Close_Logfile(void)
 void Madd_Error_Add(char sign, const wchar_t *info)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&madd_error.mutex);
+    RWLock_Write_Lock(&madd_error.rwlock);
 #endif
 
     if (madd_error.n==0){
@@ -134,6 +133,10 @@ void Madd_Error_Add(char sign, const wchar_t *info)
     size_t n_char = wcslen(info), n_max_copy = (MADD_ERROR_INFO_LEN <= n_char) ? MADD_ERROR_INFO_LEN-1 : n_char;
     wcsncpy(madd_error.item[madd_error.n-1].info, info, n_max_copy);
     madd_error.item[madd_error.n-1].info[n_max_copy] = L'\0';
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Write_Unlock(&madd_error.rwlock);
+#endif
 
     /* print error/warning */
     if (madd_error_keep_print){
@@ -177,14 +180,14 @@ void Madd_Error_Add(char sign, const wchar_t *info)
         else printf("Madd Warning triggered, program stopped.\n");
         exit(EXIT_FAILURE);
     }
-
-#ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&madd_error.mutex);
-#endif
 }
 
 void Madd_Error_Print_Last(void)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Lock(&madd_error.rwlock);
+#endif
+
     if (madd_error.flag_n_exceed){
         if (madd_error_print_wide) wprintf(L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
         else printf("Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
@@ -215,10 +218,18 @@ void Madd_Error_Print_Last(void)
         }
         free(wtime_stamp);
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Unlock(&madd_error.rwlock);
+#endif
 }
 
 void Madd_Error_Save_Last(FILE *fp)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Lock(&madd_error.rwlock);
+#endif
+
     if (madd_error.flag_n_exceed){
         if (madd_error_save_wide) fwprintf(fp, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
         else fprintf(fp, "Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
@@ -249,10 +260,18 @@ void Madd_Error_Save_Last(FILE *fp)
         }
         free(wtime_stamp);
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Unlock(&madd_error.rwlock);
+#endif
 }
 
 void Madd_Error_Print_All(void)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Lock(&madd_error.rwlock);
+#endif
+
     if (madd_error.flag_n_exceed){
         if (madd_error_print_wide) wprintf(L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
         else printf("Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
@@ -284,10 +303,18 @@ void Madd_Error_Print_All(void)
         }
         free(wtime_stamp);
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Unlock(&madd_error.rwlock);
+#endif
 }
 
 void Madd_Error_Save_All(FILE *fp)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Lock(&madd_error.rwlock);
+#endif
+
     if (madd_error.flag_n_exceed){
         if (madd_error_save_wide) fwprintf(fp, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
         else fprintf(fp, "Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
@@ -320,10 +347,18 @@ void Madd_Error_Save_All(FILE *fp)
         }
         free(wtime_stamp);
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Unlock(&madd_error.rwlock);
+#endif
 }
 
 char Madd_Error_Get_Last(Madd_Error_Item *mei)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Lock(&madd_error.rwlock);
+#endif
+
     if (madd_error.n){
         if (mei){
             memcpy(mei, &madd_error.item[0], sizeof(Madd_Error_Item));
@@ -332,4 +367,8 @@ char Madd_Error_Get_Last(Madd_Error_Item *mei)
     }else{
         return MADD_SUCCESS;
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Read_Unlock(&madd_error.rwlock);
+#endif
 }
