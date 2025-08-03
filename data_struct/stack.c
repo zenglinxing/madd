@@ -29,20 +29,20 @@ Stack Stack_Init(size_t unit_capacity, size_t usize_ /* element size */)
 void Stack_Destroy(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     free(stack->buf);
     stack->buf = NULL;
     stack->capacity = stack->n_element = 0;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
 void Stack_Shrink(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     size_t n_unit = stack->capacity/stack->unit_capacity, n_rest = stack->capacity%stack->unit_capacity, new_capacity;
     if (n_rest){
@@ -60,14 +60,14 @@ void Stack_Shrink(Stack *stack)
     }
     stack->buf = new_buf;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
 void Stack_Expand(Stack *stack, size_t new_capacity)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     if (new_capacity <= stack->capacity){
         /* new capacity less than current capacity */
@@ -80,14 +80,14 @@ void Stack_Expand(Stack *stack, size_t new_capacity)
     }
     stack->buf = new_buf;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
 void Stack_Resize(Stack *stack, size_t new_capacity)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     if (new_capacity < stack->n_element){
         /* new capacity not enough */
@@ -108,14 +108,14 @@ void Stack_Resize(Stack *stack, size_t new_capacity)
     }
     stack->buf = new_buf;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
 bool Stack_Push(Stack *stack, void *element)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     if (stack->capacity == stack->n_element){
         Stack_Expand(stack, stack->capacity + stack->unit_capacity);
@@ -129,14 +129,14 @@ bool Stack_Push(Stack *stack, void *element)
     stack->n_element ++;
     return true;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
 bool Stack_Pop(Stack *stack, void *element)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Lock(&stack.mutex);
+    Mutex_Lock(&stack->mutex);
 #endif
     if (stack->n_element == 0){
         /* no element */
@@ -152,7 +152,7 @@ bool Stack_Pop(Stack *stack, void *element)
     }
     return true;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Mutex_Unlock(&stack.mutex);
+    Mutex_Unlock(&stack->mutex);
 #endif
 }
 
