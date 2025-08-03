@@ -121,6 +121,48 @@ void Condition_Variable_Destroy(Condition_Variable *cv)
     pthread_cond_destroy((pthread_cond_t*)cv->buf);
 }
 
+/* read-write lock */
+void RWLock_Init(RWLock *rw)
+{
+    pthread_rwlock_init((pthread_rwlock_t*)rw->buf, NULL);
+}
+
+void RWLock_Destroy(RWLock *rw)
+{
+    pthread_rwlock_destroy((pthread_rwlock_t*)rw->buf);
+}
+
+void RWLock_Read_Lock(RWLock *rw){
+    pthread_rwlock_rdlock((pthread_rwlock_t*)rw->buf);
+}
+
+bool RWLock_Try_Read_Lock(RWLock *rw)
+{
+    int res = pthread_rwlock_tryrdlock((pthread_rwlock_t*)rw->buf);
+    return res == 0;
+}
+
+void RWLock_Write_Lock(RWLock *rw)
+{
+    pthread_rwlock_wrlock((pthread_rwlock_t*)rw->buf);
+}
+
+bool RWLock_Try_Write_Lock(RWLock *rw)
+{
+    int res = pthread_rwlock_trywrlock((pthread_rwlock_t*)rw->buf);
+    return res == 0;
+}
+
+void RWLock_Read_Unlock(RWLock *rw)
+{
+    int res = pthread_rwlock_unlock((pthread_rwlock_t*)rw->buf);
+}
+
+void RWLock_Write_Unlock(RWLock *rw)
+{
+    int res = pthread_rwlock_unlock((pthread_rwlock_t*)rw->buf);
+}
+
 uint64_t N_CPU_Thread(void)
 {
 #ifdef _WIN32

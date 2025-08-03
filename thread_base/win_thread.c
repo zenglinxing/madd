@@ -105,6 +105,49 @@ void Condition_Variable_Destroy(Condition_Variable *cv)
     /*CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;*/
 }
 
+/* read-write lock */
+void RWLock_Init(RWLock *rw)
+{
+    InitializeSRWLock((SRWLOCK*)rw->buf);
+}
+
+void RWLock_Destroy(RWLock *rw)
+{
+    /*SRWLOCK *sl = (SRWLOCK*)rw->buf;*/
+}
+
+void RWLock_Read_Lock(RWLock *rw)
+{
+    AcquireSRWLockShared((SRWLOCK*)rw->buf);
+}
+
+bool RWLock_Try_Read_Lock(RWLock *rw)
+{
+    BOOLEAN ret = TryAcquireSRWLockShared((SRWLOCK*)rw->buf);
+    return ret != 0;
+}
+
+void RWLock_Write_Lock(RWLock *rw)
+{
+    AcquireSRWLockExclusive((SRWLOCK*)rw->buf);
+}
+
+bool RWLock_Try_Write_Lock(RWLock *rw)
+{
+    BOOLEAN ret = TryAcquireSRWLockExclusive((SRWLOCK*)rw->buf);
+    return ret != 0;
+}
+
+void RWLock_Read_Unlock(RWLock *rw)
+{
+    ReleaseSRWLockShared((SRWLOCK*)rw->buf);
+}
+
+void RWLock_Write_Unlock(RWLock *rw)
+{
+    ReleaseSRWLockExclusive((SRWLOCK*)rw->buf);
+}
+
 uint64_t N_CPU_Thread(void)
 {
     SYSTEM_INFO si;

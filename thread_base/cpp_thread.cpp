@@ -22,7 +22,7 @@ extern "C"{
 class CppThreadBase_SizeCheck{
     public:
     CppThreadBase_SizeCheck(){
-        size_t size_mutex = sizeof(std::mutex), size_condition_variable = sizeof(sizeof(std::condition_variable));
+        size_t size_mutex = sizeof(std::mutex), size_condition_variable = sizeof(sizeof(std::condition_variable)), size_rwlock=sizeof(std::shared_lock);
         bool flag_fail = false;
         if (size_mutex > MADD_THREAD_BASE_MUTEX_LEN){
             printf("Madd Error!\nSize of mutex is %llu, larger than expected %d. Try to re-compile Madd after resetting macro MADD_THREAD_BASE_MUTEX_LEN.\n", size_mutex, MADD_THREAD_BASE_MUTEX_LEN);
@@ -30,6 +30,10 @@ class CppThreadBase_SizeCheck{
         }
         if (size_condition_variable > MADD_THREAD_BASE_CONDITION_VARIABLE_LEN){
             printf("Madd Error!\nSize of condition variable is %llu, larger than expected %d. Try to re-compile Madd after resetting macro MADD_THREAD_BASE_MUTEX_LEN.\n", size_condition_variable, MADD_THREAD_BASE_CONDITION_VARIABLE_LEN);
+            flag_fail = true;
+        }
+        if (size_rwlock > MADD_THREAD_BASE_RWLOCK_LEN){
+            printf("Madd Error!\nSize of read-write lock is %llu, larger than expected %d. Try to re-compile Madd after resetting macro MADD_THREAD_BASE_RWLOCK_LEN.\n", size_rwlock, MADD_THREAD_BASE_RWLOCK_LEN);
             flag_fail = true;
         }
         if (flag_fail){
@@ -126,6 +130,47 @@ void Condition_Variable_Wake_All(Condition_Variable *cv)
 void Condition_Variable_Destroy(Condition_Variable *cv)
 {
     reinterpret_cast<std::condition_variable*>(cv->buf)->~condition_variable();
+}
+
+/* read-write lock */
+void RWLock_Init(RWLock *rw)
+{
+    new (rw->buf) std::shared_mutex();
+}
+
+void RWLock_Destroy(RWLock *rw)
+{
+    reinterpret_cast<std::shared_mutex*>(rw->buf)->~shared_mutex();
+}
+
+void RWLock_Read_Lock(RWLock *rw)
+{
+    reinterpret_cast<std::shared_mutex*>(rw->buf)->lock_shared();
+}
+
+bool RWLock_Try_Read_Lock(RWLock *rw)
+{
+    return reinterpret_cast<std::shared_mutex*>(rw->buf)->try_lock_shared();
+}
+
+void RWLock_Write_Lock(RWLock *rw)
+{
+    reinterpret_cast<std::shared_mutex*>(rw->buf)->lock();
+}
+
+bool RWLock_Try_Write_Lock(RWLock *rw)
+{
+    return reinterpret_cast<std::shared_mutex*>(rw->buf)->try_lock();
+}
+
+void RWLock_Read_Unlock(RWLock *rw)
+{
+    reinterpret_cast<std::shared_mutex*>(rw->buf)->unlock_shared();
+}
+
+void RWLock_Write_Unlock(RWLock *rw)
+{
+    reinterpret_cast<std::shared_mutex*>(rw->buf)->unlock();
 }
 
 uint64_t N_CPU_Thread(void)
