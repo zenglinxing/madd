@@ -34,17 +34,17 @@ void Thread_Join(Thread th);
 void Thread_Detach(Thread th);
 
 void Mutex_Init(Mutex *m);
+void Mutex_Destroy(Mutex *m);
 void Mutex_Lock(Mutex *m);
 bool Mutex_Trylock(Mutex *m);
 void Mutex_Unlock(Mutex *m);
-void Mutex_Destroy(Mutex *m);
 
 void Condition_Variable_Init(Condition_Variable *cv);
+void Condition_Variable_Destroy(Condition_Variable *cv);
 void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m);
 bool Condition_Variable_Timed_Wait(Condition_Variable *cv, Mutex *m, double wait_sec);
 void Condition_Variable_Wake(Condition_Variable *cv);
 void Condition_Variable_Wake_All(Condition_Variable *cv);
-void Condition_Variable_Destroy(Condition_Variable *cv);
 
 void RWLock_Init(RWLock *rw);
 void RWLock_Destroy(RWLock *rw);

@@ -41,6 +41,12 @@ void Mutex_Init(Mutex *m)
     InitializeCriticalSection(cs);
 }
 
+void Mutex_Destroy(Mutex *m)
+{
+    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
+    DeleteCriticalSection(cs);
+}
+
 void Mutex_Lock(Mutex *m)
 {
     CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
@@ -59,17 +65,16 @@ void Mutex_Unlock(Mutex *m)
     LeaveCriticalSection(cs);
 }
 
-void Mutex_Destroy(Mutex *m)
-{
-    CRITICAL_SECTION *cs = (CRITICAL_SECTION*)m->buf;
-    DeleteCriticalSection(cs);
-}
-
 /* condition variable */
 void Condition_Variable_Init(Condition_Variable *cv)
 {
     CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
     InitializeConditionVariable(scv);
+}
+
+void Condition_Variable_Destroy(Condition_Variable *cv)
+{
+    /*CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;*/
 }
 
 void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
@@ -98,11 +103,6 @@ void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
     CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;
     WakeAllConditionVariable(scv);
-}
-
-void Condition_Variable_Destroy(Condition_Variable *cv)
-{
-    /*CONDITION_VARIABLE *scv = (CONDITION_VARIABLE*)cv->buf;*/
 }
 
 /* read-write lock */

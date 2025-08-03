@@ -73,6 +73,11 @@ void Mutex_Init(Mutex *m)
     new (m->buf) std::mutex();
 }
 
+void Mutex_Destroy(Mutex *m)
+{
+    reinterpret_cast<std::mutex*>(m->buf)->~mutex();
+}
+
 void Mutex_Lock(Mutex *m)
 {
     reinterpret_cast<std::mutex*>(m->buf)->lock();
@@ -88,15 +93,15 @@ void Mutex_Unlock(Mutex *m)
     reinterpret_cast<std::mutex*>(m->buf)->unlock();
 }
 
-void Mutex_Destroy(Mutex *m)
-{
-    reinterpret_cast<std::mutex*>(m->buf)->~mutex();
-}
-
 /* condition variable */
 void Condition_Variable_Init(Condition_Variable *cv)
 {
     new (cv->buf) std::condition_variable();
+}
+
+void Condition_Variable_Destroy(Condition_Variable *cv)
+{
+    reinterpret_cast<std::condition_variable*>(cv->buf)->~condition_variable();
 }
 
 void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
@@ -125,11 +130,6 @@ void Condition_Variable_Wake(Condition_Variable *cv)
 void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
     reinterpret_cast<std::condition_variable*>(cv->buf)->notify_all();
-}
-
-void Condition_Variable_Destroy(Condition_Variable *cv)
-{
-    reinterpret_cast<std::condition_variable*>(cv->buf)->~condition_variable();
 }
 
 /* read-write lock */

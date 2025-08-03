@@ -51,6 +51,12 @@ void Mutex_Init(Mutex *m)
     int ret = pthread_mutex_init(pmt, NULL);
 }
 
+void Mutex_Destroy(Mutex *m)
+{
+    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
+    int ret = pthread_mutex_destroy(pmt);
+}
+
 void Mutex_Lock(Mutex *m)
 {
     pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
@@ -70,16 +76,15 @@ void Mutex_Unlock(Mutex *m)
     int ret = pthread_mutex_unlock(pmt);
 }
 
-void Mutex_Destroy(Mutex *m)
-{
-    pthread_mutex_t *pmt=(pthread_mutex_t*)m->buf;
-    int ret = pthread_mutex_destroy(pmt);
-}
-
 /* condition variable */
 void Condition_Variable_Init(Condition_Variable *cv)
 {
     pthread_cond_init((pthread_cond_t*)cv->buf, NULL);
+}
+
+void Condition_Variable_Destroy(Condition_Variable *cv)
+{
+    pthread_cond_destroy((pthread_cond_t*)cv->buf);
 }
 
 void Condition_Variable_Wait(Condition_Variable *cv, Mutex *m)
@@ -114,11 +119,6 @@ void Condition_Variable_Wake(Condition_Variable *cv)
 void Condition_Variable_Wake_All(Condition_Variable *cv)
 {
     pthread_cond_broadcast((pthread_cond_t*)cv->buf);
-}
-
-void Condition_Variable_Destroy(Condition_Variable *cv)
-{
-    pthread_cond_destroy((pthread_cond_t*)cv->buf);
 }
 
 /* read-write lock */
