@@ -31,8 +31,8 @@ void Stack_Expand(Stack *stack, size_t new_capacity);
 void Stack_Resize(Stack *stack, size_t new_capacity);
 bool Stack_Push(Stack *stack, void *element);
 bool Stack_Pop(Stack *stack, void *element);
-bool Stack_Top(Stack *stack, void *element);
+bool Stack_Top(Stack stack, void *element);
 bool Stack_Empty(Stack stack);
-size_t Stack_Size(Stack *stack);
+size_t Stack_Size(Stack stack);
 
 #endif /* _DATA_STRUCT_H */

@@ -1,0 +1,189 @@
+﻿/* coding: utf-8 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include "madd.h"
+
+#define TEST_ASSERT(cond, msg) \
+    do { \
+        if (!(cond)) { \
+            fprintf(stderr, "TEST FAILED: %s (at %s:%d)\n", msg, __FILE__, __LINE__); \
+            exit(EXIT_FAILURE); \
+        } else { \
+            printf("TEST PASSED: %s\n", msg); \
+        } \
+    } while (0)
+
+// 测试基础功能
+void test_basic_operations() {
+    printf("\n=== Testing Basic Stack Operations ===\n");
+    
+    // 初始化栈，元素大小为sizeof(int)
+    Stack stack = Stack_Init(4, sizeof(int));
+    TEST_ASSERT(stack.capacity == 4, "Initial capacity should be 4");
+    TEST_ASSERT(Stack_Empty(stack), "New stack should be empty");
+    
+    // 测试Push和Top
+    int values[] = {10, 20, 30, 40, 50};
+    for (int i = 0; i < 5; i++) {
+        bool res = Stack_Push(&stack, &values[i]);
+        TEST_ASSERT(res, "Push should succeed");
+        
+        int top_val;
+        bool top_res = Stack_Top(stack, &top_val);
+        TEST_ASSERT(top_res && top_val == values[i], "Top should return last pushed value");
+    }
+    
+    TEST_ASSERT(Stack_Size(stack) == 5, "Stack size should be 5 after 5 pushes");
+    TEST_ASSERT(stack.capacity == 8, "Stack should have expanded to 8 capacity");
+    
+    // 测试Pop
+    for (int i = 4; i >= 0; i--) {
+        int popped;
+        bool pop_res = Stack_Pop(&stack, &popped);
+        TEST_ASSERT(pop_res && popped == values[i], "Pop should return values in LIFO order");
+    }
+    
+    TEST_ASSERT(Stack_Empty(stack), "Stack should be empty after all pops");
+    
+    // 测试空栈Pop
+    int dummy;
+    bool pop_res = Stack_Pop(&stack, &dummy);
+    TEST_ASSERT(!pop_res, "Pop from empty stack should fail");
+    
+    Stack_Destroy(&stack);
+}
+
+// 测试自动收缩功能
+void test_auto_shrink() {
+    printf("\n=== Testing Auto Shrink ===\n");
+    
+    Stack stack = Stack_Init(4, sizeof(int));
+    stack.auto_shrink = true;
+    
+    // 填充栈
+    for (int i = 0; i < 8; i++) {
+        Stack_Push(&stack, &i);
+    }
+    TEST_ASSERT(stack.capacity == 8, "Stack should expand to 8");
+    
+    // 弹出元素触发收缩
+    for (int i = 7; i >= 4; i--) {
+        int val;
+        Stack_Pop(&stack, &val);
+    }
+    TEST_ASSERT(stack.capacity == 4, "Stack should shrink back to 4");
+    
+    Stack_Destroy(&stack);
+}
+
+// 测试字符串存储
+void test_string_storage() {
+    printf("\n=== Testing String Storage ===\n");
+    
+    Stack stack = Stack_Init(2, 32); // 存储最大31字符的字符串
+    
+    const char* strs[] = {"Hello", "World", "Stack", "Test"};
+    for (int i = 0; i < 4; i++) {
+        Stack_Push(&stack, strs[i]);
+    }
+    
+    char buf[32];
+    for (int i = 3; i >= 0; i--) {
+        Stack_Pop(&stack, buf);
+        TEST_ASSERT(strcmp(buf, strs[i]) == 0, "Strings should pop in reverse order");
+    }
+    
+    Stack_Destroy(&stack);
+}
+
+// 测试多线程安全
+#ifdef MADD_ENABLE_MULTITHREAD
+void producer(void* arg) {
+    Stack* stack = (Stack*)arg;
+    for (int i = 0; i < 1000; i++) {
+        Stack_Push(stack, &i);
+    }
+}
+
+void consumer(void* arg) {
+    Stack* stack = (Stack*)arg;
+    for (int i = 0; i < 1000; ) {
+        int val;
+        if (Stack_Pop(stack, &val)) {
+            i++;
+        }
+    }
+}
+
+void test_thread_safety() {
+    printf("\n=== Testing Thread Safety ===\n");
+    
+    Stack stack = Stack_Init(100, sizeof(int));
+    
+    Thread producers[5];
+    Thread consumers[5];
+    
+    // 创建生产者线程
+    for (int i = 0; i < 5; i++) {
+        producers[i] = Thread_Create(producer, &stack);
+    }
+    
+    // 创建消费者线程
+    for (int i = 0; i < 5; i++) {
+        consumers[i] = Thread_Create(consumer, &stack);
+    }
+    
+    // 等待所有线程完成
+    for (int i = 0; i < 5; i++) {
+        Thread_Join(producers[i]);
+        Thread_Join(consumers[i]);
+    }
+    
+    TEST_ASSERT(Stack_Empty(stack), "Stack should be empty after producer-consumer");
+    
+    Stack_Destroy(&stack);
+}
+#endif
+
+// 测试错误处理
+void test_error_handling() {
+    printf("\n=== Testing Error Handling ===\n");
+    
+    // 测试初始化失败
+    Stack stack = Stack_Init(SIZE_MAX, sizeof(int));
+    TEST_ASSERT(stack.buf == NULL, "Should fail to allocate huge stack");
+    
+    // 测试正常使用
+    stack = Stack_Init(2, sizeof(int));
+    int values[] = {1, 2, 3};
+    for (int i = 0; i < 2; i++) {
+        Stack_Push(&stack, &values[i]);
+    }
+    
+    // 测试扩容失败
+    // 注意: 这个测试可能不稳定，取决于系统内存状态
+    bool res = Stack_Push(&stack, &values[2]);
+    if (!res) {
+        printf("NOTE: Stack expansion failed (expected in low memory conditions)\n");
+    }
+    
+    Stack_Destroy(&stack);
+}
+
+int main() {
+    test_basic_operations();
+    test_auto_shrink();
+    test_string_storage();
+    test_error_handling();
+    
+#ifdef MADD_ENABLE_MULTITHREAD
+    test_thread_safety();
+#else
+    printf("\n=== Multithread tests skipped (MADD_ENABLE_MULTITHREAD not defined) ===\n");
+#endif
+    
+    printf("\nAll tests completed!\n");
+    return 0;
+}
