@@ -211,16 +211,16 @@ bool Stack_Top(Stack *stack, void *element)
 bool Stack_Empty(Stack stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Lock(&stack->rwlock);
+    RWLock_Read_Lock(&stack.rwlock);
 #endif
     bool res = stack.n_element==0;
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Unlock(&stack->rwlock);
+    RWLock_Read_Unlock(&stack.rwlock);
 #endif
     return res;
 }
 
-size_t Stack_Size(const Stack *stack)
+size_t Stack_Size(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
     RWLock_Read_Lock(&stack->rwlock);

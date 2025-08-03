@@ -33,6 +33,6 @@ bool Stack_Push(Stack *stack, void *element);
 bool Stack_Pop(Stack *stack, void *element);
 bool Stack_Top(Stack *stack, void *element);
 bool Stack_Empty(Stack stack);
-size_t Stack_Size(const Stack *stack);
+size_t Stack_Size(Stack *stack);
 
 #endif /* _DATA_STRUCT_H */
