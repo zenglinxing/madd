@@ -11,8 +11,8 @@ This file is part of Math Addition, in ./thread_base/thread_base.h
 #include<stdint.h>
 #include<stdbool.h>
 
-#define MADD_THREAD_BASE_MUTEX_LEN 40
-#define MADD_THREAD_BASE_CONDITION_VARIABLE_LEN 48
+#define MADD_THREAD_BASE_MUTEX_LEN 80
+#define MADD_THREAD_BASE_CONDITION_VARIABLE_LEN 72
 #define MADD_THREAD_BASE_RWLOCK_LEN 40
 
 typedef void* Thread;
