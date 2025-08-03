@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
 {
     Madd_Error_Enable_Logfile("test_basic-error-info.log");
     madd_error_keep_print = true;
-    madd_error_save_wide  = true;
-    madd_error_print_wide = true;
+    madd_save_wide  = true;
+    madd_print_wide = true;
     if (argc > 1) madd_error_keep_print = atoi(argv[1]) != 0;
-    if (argc > 2) madd_error_save_wide  = atoi(argv[2]) != 0;
-    if (argc > 3) madd_error_print_wide = atoi(argv[3]) != 0;
+    if (argc > 2) madd_save_wide  = atoi(argv[2]) != 0;
+    if (argc > 3) madd_print_wide = atoi(argv[3]) != 0;
 
     int i;
     for (i=0; i<8; i++){

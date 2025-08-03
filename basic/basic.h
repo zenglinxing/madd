@@ -215,7 +215,7 @@ typedef struct{
     Madd_Error_Item item[MADD_ERROR_MAX];
 } Madd_Error;
 
-extern bool madd_error_keep_print, madd_error_print_wide, madd_error_save_wide;
+extern bool madd_error_keep_print;
 extern bool madd_error_stop, madd_warning_stop;
 extern Madd_Error madd_error;
 extern uint64_t madd_error_n;
@@ -234,5 +234,11 @@ char Madd_Error_Get_Last(Madd_Error_Item *mei);
 #define MADD_TIME_STAMP_STRING_LEN 100
 
 void Time_Stamp_String(time_t t, wchar_t *str);
+
+/* madd_print.c */
+extern bool madd_print_wide, madd_save_wide;
+
+void Madd_Print(wchar_t *wstr);
+void Madd_Save(FILE *fp, wchar_t *wstr);
 
 #endif /* _BASIC_H */
