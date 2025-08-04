@@ -9,9 +9,24 @@ This file is part of Math Addition, in ./sort/sort.h
 #define _SORT_H
 
 #include"binary_search.h"
-#include"sort_merge.h"
-#include"sort_counting.h"
-#include"sort_insertion.h"
-#include"sort_quicksort.h"
+
+void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,
+                   uint64_t get_key(void *element, void *other_param), void *other_param);
+void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
+                    bool func_compare(void *a1, void *a2, void *other_param), void *other_param);
+void Sort_Merge_merge_array(uint64_t n1, void *arr1_,
+                            uint64_t n2, void *arr2_,
+                            size_t usize, bool func_compare(void *a1, void *a2, void *other_param), void *other_param,
+                            unsigned char *res);
+void Sort_Merge(uint64_t n_element, size_t usize, void *arr_,
+                bool func_compare(void *a1, void *a2, void *other_param), void *other_param);
+void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_,
+                    bool func_compare(void *a, void *b, void *other_param), void *other_param);
+void Sort__Merge_Left(uint64_t n_left, uint64_t n_right, size_t usize,
+                      void *arr_, void *temp_,
+                      bool func_compare(void *a, void *b, void *other_param), void *other_param);
+void Sort__Merge_Right(uint64_t n_left, uint64_t n_right, size_t usize,
+                       void *arr_, void *temp_,
+                       bool func_compare(void *a, void *b, void *other_param), void *other_param);
 
 #endif /* _SORT_H */

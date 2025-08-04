@@ -9,8 +9,7 @@ This file is part of Math Addition, in ./sort/sort_quicksort.c
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
-#include"sort_quicksort.h"
-#include"sort_insertion.h"
+#include"sort.h"
 #include"../data_struct/data_struct.h"
 #include"../basic/basic.h"
 
