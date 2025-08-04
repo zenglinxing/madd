@@ -26,6 +26,7 @@ void test_basic_operations() {
     Stack stack = Stack_Init(4, sizeof(int));
     TEST_ASSERT(stack.capacity == 4, "Initial capacity should be 4");
     bool res_empty = Stack_Empty(stack);
+    printf("empty ?: %d\n", res_empty);
     TEST_ASSERT(res_empty, "New stack should be empty");
     
     // 测试Push和Top
@@ -177,7 +178,7 @@ void test_error_handling() {
 }
 
 int main() {
-    madd_error_exit = true;
+    //madd_error_exit = true;
     test_basic_operations();
     test_auto_shrink();
     test_string_storage();
