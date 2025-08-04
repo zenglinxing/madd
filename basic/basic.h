@@ -205,7 +205,7 @@ void Write_Array_BE(FILE *fp, void *buf_, size_t n_element, size_t element_size)
 typedef struct{
     char sign;
     time_t time_stamp;
-    uint64_t i_sign;
+    uint64_t i_all, i_sign;
     wchar_t info[MADD_ERROR_INFO_LEN];
 } Madd_Error_Item;
 

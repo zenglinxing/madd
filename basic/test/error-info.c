@@ -31,18 +31,21 @@ int main(int argc, char *argv[])
 
     FILE *fp=fopen("test_basic-error-info.txt", "wb");
 
-    printf("\n\nprint last:\n");
+    Madd_Print(L"\n\nprint last:\n");
     Madd_Error_Print_Last();
     Madd_Error_Save_Last(fp);
 
-    printf("\n\nprint all:\n");
+    Madd_Print(L"\n\nprint all:\n");
     Madd_Error_Print_All();
     Madd_Error_Save_All(fp);
 
     Madd_Error_Item mei;
     int madd_error_ret = Madd_Error_Get_Last(&mei);
-    printf("\n\nlast sign:\t%d\n", mei.sign);
-    wprintf(L"%ls\n", mei.info);
+    wchar_t print_info[80];
+    swprintf(print_info, 80, L"\n\nlast sign:\t%d\n", mei.sign);
+    Madd_Print(print_info);
+    swprintf(print_info, 80, L"%ls\n", mei.info);
+    Madd_Print(print_info);
 
     fclose(fp);
     return 0;
