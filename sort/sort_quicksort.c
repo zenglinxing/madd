@@ -112,6 +112,7 @@ inline void Sort_Quicksort_Clean(size_t usize, void *pivot, Stack *stack)
 void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, bool func_compare(void *a, void *b, void *other_param), void *other_param)
 {
     if (n_element < 2){
+        Madd_Error_Add(MADD_WARNING, L"Sort_Quicksort: array length is less than 2, unnecessary to sort.");
         return;
     }
     unsigned char *arr = arr_;

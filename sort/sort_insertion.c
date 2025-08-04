@@ -15,7 +15,10 @@ This file is part of Math Addition, in ./sort/sort_insertion.c
 void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
                     bool func_compare(void *a1, void *a2, void *other_param), void *other_param)
 {
-    if (n_element < 2) return;
+    if (n_element < 2){
+        Madd_Error_Add(MADD_WARNING, L"Sort_Insertion: array length is less than 2, unnecessary to sort.");
+        return;
+    }
     unsigned char stack_temp[1024];
     unsigned char *ptemp = (usize <= sizeof(stack_temp)) ? stack_temp : malloc(usize);
     unsigned char *arr=arr_, *parr;
