@@ -31,7 +31,7 @@ void test_basic_operations() {
     swprintf(print_info, 1000, L"stack capacity: %llu\n", stack.capacity);
     Madd_Print(print_info);
     TEST_ASSERT(stack.capacity == 4, "Initial capacity should be 4");
-    bool res_empty = Stack_Empty(stack);
+    bool res_empty = Stack_Empty(&stack);
     printf("empty ?: %d\n", res_empty);
     TEST_ASSERT(res_empty, "New stack should be empty");
     
@@ -42,11 +42,11 @@ void test_basic_operations() {
         TEST_ASSERT(res, "Push should succeed");
         
         int top_val;
-        bool top_res = Stack_Top(stack, &top_val);
+        bool top_res = Stack_Top(&stack, &top_val);
         TEST_ASSERT(top_res && top_val == values[i], "Top should return last pushed value");
     }
     
-    TEST_ASSERT(Stack_Size(stack) == 5, "Stack size should be 5 after 5 pushes");
+    TEST_ASSERT(Stack_Size(&stack) == 5, "Stack size should be 5 after 5 pushes");
     TEST_ASSERT(stack.capacity == 8, "Stack should have expanded to 8 capacity");
     
     // 测试Pop
@@ -56,7 +56,7 @@ void test_basic_operations() {
         TEST_ASSERT(pop_res && popped == values[i], "Pop should return values in LIFO order");
     }
     
-    TEST_ASSERT(Stack_Empty(stack), "Stack should be empty after all pops");
+    TEST_ASSERT(Stack_Empty(&stack), "Stack should be empty after all pops");
     
     // 测试空栈Pop
     int dummy;
@@ -71,7 +71,11 @@ void test_auto_shrink() {
     printf("\n=== Testing Auto Shrink ===\n");
     
     Stack stack;
-    Stack_Init(&stack, 4, sizeof(int));
+    bool inti_success = Stack_Init(&stack, 4, sizeof(int));
+    if (!inti_success){
+        printf("stack not init!\n");
+        exit(EXIT_FAILURE);
+    }
     stack.auto_shrink = true;
     
     // 填充栈
@@ -83,11 +87,14 @@ void test_auto_shrink() {
     // 弹出元素触发收缩
     for (int i = 7; i >= 4; i--) {
         int val;
-        Stack_Pop(&stack, &val);
+        bool success = Stack_Pop(&stack, &val);
+        printf("Pop %d: %s | n_element=%zu, capacity=%zu\n", 
+               i, success ? "OK" : "FAIL", stack.n_element, stack.capacity);
     }
     TEST_ASSERT(stack.capacity == 4, "Stack should shrink back to 4");
     
     Stack_Destroy(&stack);
+    Madd_Print(L"after destroy\n");
 }
 
 // 测试字符串存储
@@ -155,7 +162,7 @@ void test_thread_safety() {
         Thread_Join(consumers[i]);
     }
     
-    TEST_ASSERT(Stack_Empty(stack), "Stack should be empty after producer-consumer");
+    TEST_ASSERT(Stack_Empty(&stack), "Stack should be empty after producer-consumer");
     
     Stack_Destroy(&stack);
 }
@@ -189,11 +196,7 @@ void test_error_handling() {
 }
 
 int main() {
-    Stack temp;
-    Stack_Init(&temp, 5, sizeof(double));
-    Madd_Print(L"init\n");
-    Stack_Destroy(&temp);
-    Madd_Print(L"stack destroyed\n");
+    //madd_error_keep_print = true;
     //madd_error_exit = true;
     test_basic_operations();
     test_auto_shrink();

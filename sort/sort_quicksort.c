@@ -127,7 +127,8 @@ void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, bool func_comp
     }else{
         pivot = arr_pivot;
     }
-    Stack stack = Stack_Init(0, sizeof(Quicksort_Param));
+    Stack stack;
+    Stack_Init(&stack, 0, sizeof(Quicksort_Param));
     if (stack.capacity == 0){
         Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort: unable to create a stack.");
         if (usize > 1024){
@@ -143,7 +144,7 @@ void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, bool func_comp
         return;
     }
 
-    while (!Stack_Empty(stack)){
+    while (!Stack_Empty(&stack)){
         bool res_internal = Sort_Quicksort_Internal(&stack, pivot);
         if (!res_internal){
             Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort: See info from Sort_Quicksort_Internal.");

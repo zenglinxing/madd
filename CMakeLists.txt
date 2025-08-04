@@ -79,6 +79,7 @@ endif ()
 # library
 # =================================================================================================
 add_definitions(-DMADD_BUILD_STAGE)
+#add_compile_options(-fsanitize=address)
 add_library(madd STATIC
             ${MADD_SRC_LIST_BASIC} # basic/
             ${MADD_SRC_LIST_DATA_STRUCT} # data_struct/

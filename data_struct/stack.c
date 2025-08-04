@@ -8,7 +8,7 @@
 
 static size_t Stack_Default_Unit_Capacity = 1<<10;
 
-void Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize_ /* element size */)
+bool Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize_ /* element size */)
 {
     size_t usize = (usize_) ? usize_ : sizeof(void*);
     if (unit_capacity == 0){
@@ -27,7 +27,9 @@ void Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize_ /* element s
         stack->capacity = stack->unit_capacity = 0;
         /* unable to allocate mem for Stack */
         Madd_Error_Add(MADD_ERROR, L"Stack_Init: unable to allocate mem for Stack");
+        return false;
     }
+    return true;
 }
 
 void Stack_Destroy(Stack *stack)
@@ -37,7 +39,7 @@ void Stack_Destroy(Stack *stack)
 #endif
     free(stack->buf);
     stack->buf = NULL;
-    stack->capacity = stack->n_element = 0;
+    stack->capacity = stack->n_element = stack->unit_capacity = 0;
 #ifdef MADD_ENABLE_MULTITHREAD
     RWLock_Write_Unlock(&stack->rwlock);
     RWLock_Destroy(&stack->rwlock);
@@ -221,14 +223,10 @@ bool Stack_Pop(Stack *stack, void *element)
             wchar_t error_info[MADD_ERROR_INFO_LEN];
             swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"Stack_Pop: unable to shrink because of cannot re-allocate new mem %llu", new_capacity);
             Madd_Error_Add(MADD_WARNING, error_info);
-#ifdef MADD_ENABLE_MULTITHREAD
-            RWLock_Write_Unlock(&stack->rwlock);
-#endif
-            return true;
+        }else{
+            stack->buf = new_buf;
+            stack->capacity = new_capacity;
         }
-        stack->buf = new_buf;
-        stack->capacity = new_capacity;
-
     }
 #ifdef MADD_ENABLE_MULTITHREAD
     RWLock_Write_Unlock(&stack->rwlock);
@@ -236,50 +234,50 @@ bool Stack_Pop(Stack *stack, void *element)
     return true;
 }
 
-bool Stack_Top(Stack stack, void *element)
+bool Stack_Top(Stack *stack, void *element)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Lock(&stack.rwlock);
+    RWLock_Read_Lock(&stack->rwlock);
 #endif
-    if (stack.n_element == 0){
+    if (stack->n_element == 0){
         /* no element */
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"Stack_Top: no element in stack now");
         Madd_Error_Add(MADD_WARNING, error_info);
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Unlock(&stack.rwlock);
+    RWLock_Read_Unlock(&stack->rwlock);
 #endif
         return false;
     }
-    unsigned char *buf = stack.buf;
-    buf += (stack.n_element-1) * stack.usize;
-    memcpy(element, buf, stack.usize);
+    unsigned char *buf = stack->buf;
+    buf += (stack->n_element-1) * stack->usize;
+    memcpy(element, buf, stack->usize);
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Unlock(&stack.rwlock);
+    RWLock_Read_Unlock(&stack->rwlock);
 #endif
     return true;
 }
 
-bool Stack_Empty(Stack stack)
+bool Stack_Empty(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Lock(&stack.rwlock);
+    RWLock_Read_Lock(&stack->rwlock);
 #endif
-    bool res = (stack.n_element==0);
+    bool res = (stack->n_element==0);
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Unlock(&stack.rwlock);
+    RWLock_Read_Unlock(&stack->rwlock);
 #endif
     return res;
 }
 
-size_t Stack_Size(Stack stack)
+size_t Stack_Size(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Lock(&stack.rwlock);
+    RWLock_Read_Lock(&stack->rwlock);
 #endif
-    size_t n = stack.n_element;
+    size_t n = stack->n_element;
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Read_Unlock(&stack.rwlock);
+    RWLock_Read_Unlock(&stack->rwlock);
 #endif
     return n;
 }
