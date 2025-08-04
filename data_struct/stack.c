@@ -8,7 +8,7 @@
 
 static size_t Stack_Default_Unit_Capacity = 1<<10;
 
-Stack Stack_Init(size_t unit_capacity, size_t usize_ /* element size */)
+Stack Stack_Init(uint64_t unit_capacity, size_t usize_ /* element size */)
 {
     size_t usize = (usize_) ? usize_ : sizeof(void*);
     if (unit_capacity == 0){

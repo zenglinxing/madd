@@ -24,7 +24,7 @@ typedef struct{
     RWLock rwlock;
 } Stack;
 
-Stack Stack_Init(size_t unit_capacity, size_t usize /* element size */);
+Stack Stack_Init(uint64_t unit_capacity, size_t usize /* element size */);
 void Stack_Destroy(Stack *stack);
 void Stack_Shrink(Stack *stack);
 void Stack_Expand(Stack *stack, size_t new_capacity);
