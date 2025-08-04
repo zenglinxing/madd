@@ -24,7 +24,8 @@ void test_basic_operations() {
     printf("\n=== Testing Basic Stack Operations ===\n");
     
     // 初始化栈，元素大小为sizeof(int)
-    Stack stack = Stack_Init(4, sizeof(int));
+    Stack stack;
+    Stack_Init(&stack, 4, sizeof(int));
     Madd_Print(L"after init\n");
     wchar_t print_info[1000];
     swprintf(print_info, 1000, L"stack capacity: %llu\n", stack.capacity);
@@ -69,7 +70,8 @@ void test_basic_operations() {
 void test_auto_shrink() {
     printf("\n=== Testing Auto Shrink ===\n");
     
-    Stack stack = Stack_Init(4, sizeof(int));
+    Stack stack;
+    Stack_Init(&stack, 4, sizeof(int));
     stack.auto_shrink = true;
     
     // 填充栈
@@ -92,7 +94,8 @@ void test_auto_shrink() {
 void test_string_storage() {
     printf("\n=== Testing String Storage ===\n");
     
-    Stack stack = Stack_Init(2, 32); // 存储最大31字符的字符串
+    Stack stack;
+    Stack_Init(&stack, 2, 32); // 存储最大31字符的字符串
     
     char* strs[] = {"Hello", "World", "Stack", "Test"};
     for (int i = 0; i < 4; i++) {
@@ -130,7 +133,8 @@ void consumer(void* arg) {
 void test_thread_safety() {
     printf("\n=== Testing Thread Safety ===\n");
     
-    Stack stack = Stack_Init(100, sizeof(int));
+    Stack stack;
+    Stack_Init(&stack, 100, sizeof(int));
     
     Thread producers[5];
     Thread consumers[5];
@@ -162,11 +166,13 @@ void test_error_handling() {
     printf("\n=== Testing Error Handling ===\n");
     
     // 测试初始化失败
-    Stack stack = Stack_Init(SIZE_MAX, sizeof(int));
+    Stack stack;
+    Stack_Init(&stack, SIZE_MAX, sizeof(int));
     TEST_ASSERT(stack.buf == NULL, "Should fail to allocate huge stack");
+    Stack_Destroy(&stack);
     
     // 测试正常使用
-    stack = Stack_Init(2, sizeof(int));
+    Stack_Init(&stack, 2, sizeof(int));
     int values[] = {1, 2, 3};
     for (int i = 0; i < 2; i++) {
         Stack_Push(&stack, &values[i]);
@@ -183,7 +189,8 @@ void test_error_handling() {
 }
 
 int main() {
-    Stack temp = Stack_Init(5, sizeof(double));
+    Stack temp;
+    Stack_Init(&temp, 5, sizeof(double));
     Madd_Print(L"init\n");
     Stack_Destroy(&temp);
     Madd_Print(L"stack destroyed\n");

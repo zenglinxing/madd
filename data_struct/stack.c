@@ -8,24 +8,26 @@
 
 static size_t Stack_Default_Unit_Capacity = 1<<10;
 
-Stack Stack_Init(uint64_t unit_capacity, size_t usize_ /* element size */)
+void Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize_ /* element size */)
 {
     size_t usize = (usize_) ? usize_ : sizeof(void*);
     if (unit_capacity == 0){
         unit_capacity = Stack_Default_Unit_Capacity;
     }
-    Stack stack={.capacity=unit_capacity, .n_element=0, .unit_capacity=unit_capacity, .usize=usize, .auto_shrink=true};
+    stack->capacity = unit_capacity;
+    stack->n_element = 0;
+    stack->unit_capacity = unit_capacity;
+    stack->usize = usize;
+    stack->auto_shrink = true;
 #ifdef MADD_ENABLE_MULTITHREAD
-    RWLock_Init(&stack.rwlock);
+    RWLock_Init(&stack->rwlock);
 #endif
-    stack.buf = (void*)malloc(unit_capacity*usize);
-    if (stack.buf == NULL){
-        stack.capacity = stack.unit_capacity = 0;
+    stack->buf = (void*)malloc(unit_capacity*usize);
+    if (stack->buf == NULL){
+        stack->capacity = stack->unit_capacity = 0;
         /* unable to allocate mem for Stack */
         Madd_Error_Add(MADD_ERROR, L"Stack_Init: unable to allocate mem for Stack");
-        return stack;
     }
-    return stack;
 }
 
 void Stack_Destroy(Stack *stack)
