@@ -90,6 +90,7 @@ static void Madd_Error_Print_Last_Internal(void)
 
 void Madd_Error_Add(char sign, const wchar_t *info)
 {
+    time_t time_stamp = time(NULL);
 #ifdef MADD_ENABLE_MULTITHREAD
     RWLock_Write_Lock(&madd_error.rwlock);
 #endif
@@ -113,7 +114,7 @@ void Madd_Error_Add(char sign, const wchar_t *info)
         madd_error.n_warning ++;
         madd_error.item[madd_error.n-1].i_sign = madd_error.n_warning;
     }
-    madd_error.item[madd_error.n-1].time_stamp = time(NULL);
+    madd_error.item[madd_error.n-1].time_stamp = time_stamp;
     /* copy info */
     size_t n_char = wcslen(info), n_max_copy = (MADD_ERROR_INFO_LEN <= n_char) ? MADD_ERROR_INFO_LEN-1 : n_char;
     wcsncpy(madd_error.item[madd_error.n-1].info, info, n_max_copy);
