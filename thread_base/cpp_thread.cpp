@@ -24,6 +24,9 @@ class CppThreadBase_SizeCheck{
     CppThreadBase_SizeCheck(){
         size_t size_mutex = sizeof(std::mutex), size_condition_variable = sizeof(std::condition_variable), size_rwlock=sizeof(std::shared_mutex);
         bool flag_fail = false;
+        //printf("mutex size:\t%llu\n", size_mutex);
+        //printf("cond size:\t%llu\n", size_condition_variable);
+        //printf("rwlock size:\t%llu\n", size_rwlock);
         if (size_mutex > MADD_THREAD_BASE_MUTEX_LEN){
             printf("Madd Error!\nSize of mutex is %llu, larger than expected %d. Try to re-compile Madd after resetting macro MADD_THREAD_BASE_MUTEX_LEN.\n", size_mutex, MADD_THREAD_BASE_MUTEX_LEN);
             flag_fail = true;
