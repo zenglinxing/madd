@@ -127,26 +127,26 @@ RNG_Xorwow_Param RNG_Xorwow_Read_LE(FILE *fp)
     return rxp;
 }
 
-void RNG_Xorwow_Write_BE(RNG_Xorwow_Param rxp, FILE *fp)
+void RNG_Xorwow_Write_BE(RNG_Xorwow_Param *rxp, FILE *fp)
 {
-    Write_4byte_BE(fp, &rxp.seed);
-    Write_8byte_BE(fp, &rxp.n_gen);
-    Write_Array_BE(fp, rxp.state, 5, sizeof(uint32_t));
-    Write_4byte_BE(fp, &rxp.counter);
-    Write_4byte_BE(fp, &rxp.s1);
-    Write_4byte_BE(fp, &rxp.s2);
-    Write_4byte_BE(fp, &rxp.s3);
-    Write_4byte_BE(fp, &rxp.add);
+    Write_4byte_BE(fp, &rxp->seed);
+    Write_8byte_BE(fp, &rxp->n_gen);
+    Write_Array_BE(fp, rxp->state, 5, sizeof(uint32_t));
+    Write_4byte_BE(fp, &rxp->counter);
+    Write_4byte_BE(fp, &rxp->s1);
+    Write_4byte_BE(fp, &rxp->s2);
+    Write_4byte_BE(fp, &rxp->s3);
+    Write_4byte_BE(fp, &rxp->add);
 }
 
-void RNG_Xorwow_Write_LE(RNG_Xorwow_Param rxp, FILE *fp)
+void RNG_Xorwow_Write_LE(RNG_Xorwow_Param *rxp, FILE *fp)
 {
-    Write_4byte_LE(fp, &rxp.seed);
-    Write_8byte_LE(fp, &rxp.n_gen);
-    Write_Array_LE(fp, rxp.state, 5, sizeof(uint32_t));
-    Write_4byte_LE(fp, &rxp.counter);
-    Write_4byte_LE(fp, &rxp.s1);
-    Write_4byte_LE(fp, &rxp.s2);
-    Write_4byte_LE(fp, &rxp.s3);
-    Write_4byte_LE(fp, &rxp.add);
+    Write_4byte_LE(fp, &rxp->seed);
+    Write_8byte_LE(fp, &rxp->n_gen);
+    Write_Array_LE(fp, rxp->state, 5, sizeof(uint32_t));
+    Write_4byte_LE(fp, &rxp->counter);
+    Write_4byte_LE(fp, &rxp->s1);
+    Write_4byte_LE(fp, &rxp->s2);
+    Write_4byte_LE(fp, &rxp->s3);
+    Write_4byte_LE(fp, &rxp->add);
 }

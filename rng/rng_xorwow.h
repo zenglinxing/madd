@@ -36,7 +36,7 @@ __float128 Rand_Xorwow_f128(RNG_Xorwow_Param *rxp);
 
 RNG_Xorwow_Param RNG_Xorwow_Read_BE(FILE *fp);
 RNG_Xorwow_Param RNG_Xorwow_Read_LE(FILE *fp);
-void RNG_Xorwow_Write_BE(RNG_Xorwow_Param rxp, FILE *fp);
-void RNG_Xorwow_Write_LE(RNG_Xorwow_Param rxp, FILE *fp);
+void RNG_Xorwow_Write_BE(RNG_Xorwow_Param *rxp, FILE *fp);
+void RNG_Xorwow_Write_LE(RNG_Xorwow_Param *rxp, FILE *fp);
 
 #endif /* _RNG_XORWOW_H */

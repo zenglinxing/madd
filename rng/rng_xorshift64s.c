@@ -83,24 +83,24 @@ RNG_Xorshift64_Param RNG_Xorshift64s_Read_LE(FILE *fp)
     return rxp;
 }
 
-void RNG_Xorshift64s_Write_BE(RNG_Xorshift64_Param rxp, FILE *fp)
+void RNG_Xorshift64s_Write_BE(RNG_Xorshift64_Param *rxp, FILE *fp)
 {
-    Write_8byte_BE(fp, &rxp.seed);
-    Write_8byte_BE(fp, &rxp.n_gen);
-    Write_8byte_BE(fp, &rxp.state);
-    Write_8byte_BE(fp, &rxp.s1);
-    Write_8byte_BE(fp, &rxp.s2);
-    Write_8byte_BE(fp, &rxp.s3);
-    Write_8byte_BE(fp, &rxp.mul);
+    Write_8byte_BE(fp, &rxp->seed);
+    Write_8byte_BE(fp, &rxp->n_gen);
+    Write_8byte_BE(fp, &rxp->state);
+    Write_8byte_BE(fp, &rxp->s1);
+    Write_8byte_BE(fp, &rxp->s2);
+    Write_8byte_BE(fp, &rxp->s3);
+    Write_8byte_BE(fp, &rxp->mul);
 }
 
-void RNG_Xorshift64s_Write_LE(RNG_Xorshift64_Param rxp, FILE *fp)
+void RNG_Xorshift64s_Write_LE(RNG_Xorshift64_Param *rxp, FILE *fp)
 {
-    Write_8byte_LE(fp, &rxp.seed);
-    Write_8byte_LE(fp, &rxp.n_gen);
-    Write_8byte_LE(fp, &rxp.state);
-    Write_8byte_LE(fp, &rxp.s1);
-    Write_8byte_LE(fp, &rxp.s2);
-    Write_8byte_LE(fp, &rxp.s3);
-    Write_8byte_LE(fp, &rxp.mul);
+    Write_8byte_LE(fp, &rxp->seed);
+    Write_8byte_LE(fp, &rxp->n_gen);
+    Write_8byte_LE(fp, &rxp->state);
+    Write_8byte_LE(fp, &rxp->s1);
+    Write_8byte_LE(fp, &rxp->s2);
+    Write_8byte_LE(fp, &rxp->s3);
+    Write_8byte_LE(fp, &rxp->mul);
 }

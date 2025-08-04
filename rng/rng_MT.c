@@ -118,18 +118,18 @@ RNG_MT_Param RNG_MT_Read_LE(FILE *fp)
     return mt;
 }
 
-void RNG_MT_Write_BE(RNG_MT_Param mt, FILE *fp)
+void RNG_MT_Write_BE(RNG_MT_Param *mt, FILE *fp)
 {
-    Write_2byte_BE(fp, &mt.i);
-    Write_8byte_BE(fp, &mt.n_gen);
-    Write_8byte_BE(fp, &mt.seed);
-    Write_Array_BE(fp, mt.seeds, 312, sizeof(uint64_t));
+    Write_2byte_BE(fp, &mt->i);
+    Write_8byte_BE(fp, &mt->n_gen);
+    Write_8byte_BE(fp, &mt->seed);
+    Write_Array_BE(fp, mt->seeds, 312, sizeof(uint64_t));
 }
 
-void RNG_MT_Write_LE(RNG_MT_Param mt, FILE *fp)
+void RNG_MT_Write_LE(RNG_MT_Param *mt, FILE *fp)
 {
-    Write_2byte_LE(fp, &mt.i);
-    Write_8byte_LE(fp, &mt.n_gen);
-    Write_8byte_LE(fp, &mt.seed);
-    Write_Array_LE(fp, mt.seeds, 312, sizeof(uint64_t));
+    Write_2byte_LE(fp, &mt->i);
+    Write_8byte_LE(fp, &mt->n_gen);
+    Write_8byte_LE(fp, &mt->seed);
+    Write_Array_LE(fp, mt->seeds, 312, sizeof(uint64_t));
 }

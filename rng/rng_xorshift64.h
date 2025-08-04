@@ -29,8 +29,8 @@ __float128 Rand_Xorshift64_f128(RNG_Xorshift64_Param *rxp);
 
 RNG_Xorshift64_Param RNG_Xorshift64_Read_BE(FILE *fp);
 RNG_Xorshift64_Param RNG_Xorshift64_Read_LE(FILE *fp);
-void RNG_Xorshift64_Write_BE(RNG_Xorshift64_Param rxp, FILE *fp);
-void RNG_Xorshift64_Write_LE(RNG_Xorshift64_Param rxp, FILE *fp);
+void RNG_Xorshift64_Write_BE(RNG_Xorshift64_Param *rxp, FILE *fp);
+void RNG_Xorshift64_Write_LE(RNG_Xorshift64_Param *rxp, FILE *fp);
 
 /* Xorshift64* */
 RNG_Xorshift64_Param RNG_Xorshift64s_Init(uint64_t seed);
@@ -45,7 +45,7 @@ __float128 Rand_Xorshift64s_f128(RNG_Xorshift64_Param *rxp);
 
 RNG_Xorshift64_Param RNG_Xorshift64s_Read_BE(FILE *fp);
 RNG_Xorshift64_Param RNG_Xorshift64s_Read_LE(FILE *fp);
-void RNG_Xorshift64s_Write_BE(RNG_Xorshift64_Param rxp, FILE *fp);
-void RNG_Xorshift64s_Write_LE(RNG_Xorshift64_Param rxp, FILE *fp);
+void RNG_Xorshift64s_Write_BE(RNG_Xorshift64_Param *rxp, FILE *fp);
+void RNG_Xorshift64s_Write_LE(RNG_Xorshift64_Param *rxp, FILE *fp);
 
 #endif /* _RNG_XORSHIFT64_H */

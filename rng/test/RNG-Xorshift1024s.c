@@ -11,15 +11,18 @@ int main(int argc,char *argv[])
     rxp1 = RNG_Xorshift1024s_Init(10);
 
     FILE *fp2, *fp3;
+    printf("opening BE\n");
     fp2 = fopen(file_BE, "wb");
-    RNG_Xorshift1024s_Write_BE(rxp1, fp2);
+    printf("writing\n");
+    RNG_Xorshift1024s_Write_BE(&rxp1, fp2);
+    printf("written\n");
     fclose(fp2);
     fp2 = fopen(file_BE, "rb");
     rxp2 = RNG_Xorshift1024s_Read_BE(fp2);
     fclose(fp2);
 
     fp3 = fopen(file_LE, "wb");
-    RNG_Xorshift1024s_Write_LE(rxp1, fp3);
+    RNG_Xorshift1024s_Write_LE(&rxp1, fp3);
     fclose(fp3);
     fp3 = fopen(file_LE, "rb");
     rxp3 = RNG_Xorshift1024s_Read_LE(fp3);

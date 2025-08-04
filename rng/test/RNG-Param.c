@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     rng_old = rng;
     //printf("try to open BE file\n");
     fp = fopen("test_RNG-Param_BE", "wb");
-    RNG_Write_BE(rng_old, fp);
+    RNG_Write_BE(&rng_old, fp);
     //printf("BE file write\n");
     fclose(fp);
     fp = fopen("test_RNG-Param_BE", "rb");
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     flag_LE_same = true;
     rng_old = rng;
     fp = fopen("test_RNG-Param_LE", "wb");
-    RNG_Write_LE(rng_old, fp);
+    RNG_Write_LE(&rng_old, fp);
     fclose(fp);
     fp = fopen("test_RNG-Param_LE", "rb");
     rng_new = RNG_Read_LE(fp);

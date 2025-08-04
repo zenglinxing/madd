@@ -39,7 +39,7 @@ void RNG_Xorshift1024s_Jump(RNG_Xorshift1024_Param *rxp);
 
 RNG_Xorshift1024_Param RNG_Xorshift1024s_Read_BE(FILE *fp);
 RNG_Xorshift1024_Param RNG_Xorshift1024s_Read_LE(FILE *fp);
-void RNG_Xorshift1024s_Write_BE(RNG_Xorshift1024_Param rxp, FILE *fp);
-void RNG_Xorshift1024s_Write_LE(RNG_Xorshift1024_Param rxp, FILE *fp);
+void RNG_Xorshift1024s_Write_BE(RNG_Xorshift1024_Param *rxp, FILE *fp);
+void RNG_Xorshift1024s_Write_LE(RNG_Xorshift1024_Param *rxp, FILE *fp);
 
 #endif /* _RNG_XORSHIFT1024_H */

@@ -53,7 +53,7 @@ __float128 Rand_MT_f128(RNG_MT_Param *mt);
 /* Write & Read RNG_MT_Param */
 RNG_MT_Param RNG_MT_Read_BE(FILE *fp);
 RNG_MT_Param RNG_MT_Read_LE(FILE *fp);
-void RNG_MT_Write_BE(RNG_MT_Param mt, FILE *fp);
-void RNG_MT_Write_LE(RNG_MT_Param mt, FILE *fp);
+void RNG_MT_Write_BE(RNG_MT_Param *mt, FILE *fp);
+void RNG_MT_Write_LE(RNG_MT_Param *mt, FILE *fp);
 
 #endif /* _RNG_MT_H */

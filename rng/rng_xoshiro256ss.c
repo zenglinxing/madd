@@ -120,26 +120,26 @@ RNG_Xoshiro256_Param RNG_Xoshiro256ss_Read_LE(FILE *fp)
     return rxp;
 }
 
-void RNG_Xoshiro256ss_Write_BE(RNG_Xoshiro256_Param rxp, FILE *fp)
+void RNG_Xoshiro256ss_Write_BE(RNG_Xoshiro256_Param *rxp, FILE *fp)
 {
-    Write_8byte_BE(fp, &rxp.seed);
-    Write_8byte_BE(fp, &rxp.n_gen);
-    Write_Array_BE(fp, rxp.state, 4, sizeof(uint64_t));
-    Write_8byte_BE(fp, &rxp.mul1);
-    Write_8byte_BE(fp, &rxp.mul2);
-    Write_8byte_BE(fp, &rxp.s1);
-    Write_1byte(fp, &rxp.k1);
-    Write_1byte(fp, &rxp.k2);
+    Write_8byte_BE(fp, &rxp->seed);
+    Write_8byte_BE(fp, &rxp->n_gen);
+    Write_Array_BE(fp, rxp->state, 4, sizeof(uint64_t));
+    Write_8byte_BE(fp, &rxp->mul1);
+    Write_8byte_BE(fp, &rxp->mul2);
+    Write_8byte_BE(fp, &rxp->s1);
+    Write_1byte(fp, &rxp->k1);
+    Write_1byte(fp, &rxp->k2);
 }
 
-void RNG_Xoshiro256ss_Write_LE(RNG_Xoshiro256_Param rxp, FILE *fp)
+void RNG_Xoshiro256ss_Write_LE(RNG_Xoshiro256_Param *rxp, FILE *fp)
 {
-    Write_8byte_LE(fp, &rxp.seed);
-    Write_8byte_LE(fp, &rxp.n_gen);
-    Write_Array_LE(fp, rxp.state, 4, sizeof(uint64_t));
-    Write_8byte_LE(fp, &rxp.mul1);
-    Write_8byte_LE(fp, &rxp.mul2);
-    Write_8byte_LE(fp, &rxp.s1);
-    Write_1byte(fp, &rxp.k1);
-    Write_1byte(fp, &rxp.k2);
+    Write_8byte_LE(fp, &rxp->seed);
+    Write_8byte_LE(fp, &rxp->n_gen);
+    Write_Array_LE(fp, rxp->state, 4, sizeof(uint64_t));
+    Write_8byte_LE(fp, &rxp->mul1);
+    Write_8byte_LE(fp, &rxp->mul2);
+    Write_8byte_LE(fp, &rxp->s1);
+    Write_1byte(fp, &rxp->k1);
+    Write_1byte(fp, &rxp->k2);
 }

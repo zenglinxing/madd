@@ -34,8 +34,8 @@ __float128 Rand_Xoshiro256ss_f128(RNG_Xoshiro256_Param *rxp);
 
 RNG_Xoshiro256_Param RNG_Xoshiro256ss_Read_BE(FILE *fp);
 RNG_Xoshiro256_Param RNG_Xoshiro256ss_Read_LE(FILE *fp);
-void RNG_Xoshiro256ss_Write_BE(RNG_Xoshiro256_Param rxp, FILE *fp);
-void RNG_Xoshiro256ss_Write_LE(RNG_Xoshiro256_Param rxp, FILE *fp);
+void RNG_Xoshiro256ss_Write_BE(RNG_Xoshiro256_Param *rxp, FILE *fp);
+void RNG_Xoshiro256ss_Write_LE(RNG_Xoshiro256_Param *rxp, FILE *fp);
 
 /* Xoshiro256+ */
 RNG_Xoshiro256_Param RNG_Xoshiro256p_Init(uint64_t seed_);
@@ -50,7 +50,7 @@ __float128 Rand_Xoshiro256p_f128(RNG_Xoshiro256_Param *rxp);
 
 RNG_Xoshiro256_Param RNG_Xoshiro256p_Read_BE(FILE *fp);
 RNG_Xoshiro256_Param RNG_Xoshiro256p_Read_LE(FILE *fp);
-void RNG_Xoshiro256p_Write_BE(RNG_Xoshiro256_Param rxp, FILE *fp);
-void RNG_Xoshiro256p_Write_LE(RNG_Xoshiro256_Param rxp, FILE *fp);
+void RNG_Xoshiro256p_Write_BE(RNG_Xoshiro256_Param *rxp, FILE *fp);
+void RNG_Xoshiro256p_Write_LE(RNG_Xoshiro256_Param *rxp, FILE *fp);
 
 #endif /* _RNG_XOSHIRO256_H */

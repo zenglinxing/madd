@@ -13,14 +13,14 @@ int main(int argc,char *argv[])
 
     FILE *fp2, *fp3;
     fp2 = fopen(file_BE, "wb");
-    RNG_Xoshiro256p_Write_BE(rxp1, fp2);
+    RNG_Xoshiro256p_Write_BE(&rxp1, fp2);
     fclose(fp2);
     fp2 = fopen(file_BE, "rb");
     rxp2 = RNG_Xoshiro256p_Read_BE(fp2);
     fclose(fp2);
 
     fp3 = fopen(file_LE, "wb");
-    RNG_Xoshiro256p_Write_LE(rxp1, fp3);
+    RNG_Xoshiro256p_Write_LE(&rxp1, fp3);
     fclose(fp3);
     fp3 = fopen(file_LE, "rb");
     rxp3 = RNG_Xoshiro256p_Read_LE(fp3);

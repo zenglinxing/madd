@@ -13,14 +13,14 @@ int main(int argc,char *argv[])
 
     FILE *fp2, *fp3;
     fp2 = fopen(file_BE, "wb");
-    RNG_MT_Write_BE(mt1, fp2);
+    RNG_MT_Write_BE(&mt1, fp2);
     fclose(fp2);
     fp2 = fopen(file_BE, "rb");
     mt2 = RNG_MT_Read_BE(fp2);
     fclose(fp2);
 
     fp3 = fopen(file_LE, "wb");
-    RNG_MT_Write_LE(mt1, fp3);
+    RNG_MT_Write_LE(&mt1, fp3);
     fclose(fp3);
     fp3 = fopen(file_LE, "rb");
     mt3 = RNG_MT_Read_LE(fp3);
