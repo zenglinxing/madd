@@ -261,11 +261,15 @@ bool Stack_Top(Stack stack, void *element)
 bool Stack_Empty(Stack stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
+    Madd_Print(L"before rwlock\n");
     RWLock_Read_Lock(&stack.rwlock);
+    Madd_Print(L"after rwlock\n");
 #endif
-    bool res = stack.n_element==0;
+    bool res = (stack.n_element==0);
 #ifdef MADD_ENABLE_MULTITHREAD
+    Madd_Print(L"before unlock\n");
     RWLock_Read_Unlock(&stack.rwlock);
+    Madd_Print(L"after unlock\n");
 #endif
     return res;
 }

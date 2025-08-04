@@ -15,7 +15,7 @@ This file is part of Math Addition, in ./basic/error_info.c
 #include"basic.h"
 
 bool madd_error_keep_print = false;
-bool madd_error_stop = false, madd_warning_stop = false;
+bool madd_error_exit = false, madd_warning_exit = false;
 static FILE *madd_error_fp = NULL;
 /*
 note: if Madd_Error_Enable_Logfile is used, turn true;
@@ -164,11 +164,11 @@ void Madd_Error_Add(char sign, const wchar_t *info)
     }
 
     /* check if the program should be stopped */
-    if (sign == MADD_ERROR && madd_error_stop){
+    if (sign == MADD_ERROR && madd_error_exit){
         Madd_Print(L"Madd Error triggered, program stopped.\n");
         exit(EXIT_FAILURE);
     }
-    if (sign == MADD_WARNING && madd_warning_stop){
+    if (sign == MADD_WARNING && madd_warning_exit){
         Madd_Print(L"Madd Warning triggered, program stopped.\n");
         exit(EXIT_FAILURE);
     }

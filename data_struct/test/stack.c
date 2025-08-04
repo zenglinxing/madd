@@ -25,7 +25,8 @@ void test_basic_operations() {
     // 初始化栈，元素大小为sizeof(int)
     Stack stack = Stack_Init(4, sizeof(int));
     TEST_ASSERT(stack.capacity == 4, "Initial capacity should be 4");
-    TEST_ASSERT(Stack_Empty(stack), "New stack should be empty");
+    bool res_empty = Stack_Empty(stack);
+    TEST_ASSERT(res_empty, "New stack should be empty");
     
     // 测试Push和Top
     int values[] = {10, 20, 30, 40, 50};
@@ -87,7 +88,7 @@ void test_string_storage() {
     
     Stack stack = Stack_Init(2, 32); // 存储最大31字符的字符串
     
-    const char* strs[] = {"Hello", "World", "Stack", "Test"};
+    char* strs[] = {"Hello", "World", "Stack", "Test"};
     for (int i = 0; i < 4; i++) {
         Stack_Push(&stack, strs[i]);
     }
@@ -176,6 +177,7 @@ void test_error_handling() {
 }
 
 int main() {
+    madd_error_exit = true;
     test_basic_operations();
     test_auto_shrink();
     test_string_storage();
