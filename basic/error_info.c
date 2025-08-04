@@ -24,24 +24,6 @@ if Madd_Error_Set_Logfile, turn false;
 static bool madd_error_file_enable = false;
 uint64_t madd_error_n = 0;
 
-static uint64_t Madd_Error_Warning_ID(uint64_t i_item)
-{
-    uint64_t n_warning=0, i;
-    for (i=i_item; i<MADD_ERROR_MAX; i++){
-        if (madd_error.item[i].sign == MADD_WARNING) n_warning ++;
-    }
-    return madd_error.n_warning - n_warning + 1;
-}
-
-static uint64_t Madd_Error_Error_ID(uint64_t i_item)
-{
-    uint64_t n_error=0, i;
-    for (i=i_item; i<MADD_ERROR_MAX; i++){
-        if (madd_error.item[i].sign == MADD_ERROR) n_error ++;
-    }
-    return madd_error.n_error - n_error + 1;
-}
-
 bool Madd_Error_Enable_Logfile(const char *log_file_name)
 {
     if (madd_error_file_enable){
@@ -92,13 +74,12 @@ static void Madd_Error_Print_Last_Internal(void)
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         if (madd_error.item[madd_error.n-1].sign == MADD_ERROR){
             wsign = L"Error  ";
-            id_error = Madd_Error_Error_ID(madd_error.n-1);
         }else if (madd_error.item[madd_error.n-1].sign == MADD_WARNING){
             wsign = L"Warning";
-            id_error = Madd_Error_Warning_ID(madd_error.n-1);
         }else{
             wsign = L"Unknown";
         }
+        id_error = madd_error.item[madd_error.n-1].i_sign;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
         swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
@@ -126,9 +107,11 @@ void Madd_Error_Add(char sign, const wchar_t *info)
     madd_error.item[madd_error.n-1].sign = sign;
     if (sign == MADD_ERROR){
         madd_error.n_error ++;
+        madd_error.item[madd_error.n-1].i_sign = madd_error.n_error;
     }
     else if (sign == MADD_WARNING){
         madd_error.n_warning ++;
+        madd_error.item[madd_error.n-1].i_sign = madd_error.n_warning;
     }
     madd_error.item[madd_error.n-1].time_stamp = time(NULL);
     /* copy info */
@@ -154,8 +137,7 @@ void Madd_Error_Add(char sign, const wchar_t *info)
         localtime_r(&mei.time_stamp, &local_tm);
 #endif
         wsign = (mei.sign==MADD_ERROR) ? L"Error  " : L"Warning";
-        if (mei.sign == MADD_ERROR) id_error = Madd_Error_Error_ID(madd_error.n-1);
-        else if (mei.sign == MADD_WARNING) id_error = Madd_Error_Warning_ID(madd_error.n-1);
+        id_error = mei.i_sign;
         Time_Stamp_String(mei.time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
         swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, mei.info);
@@ -210,13 +192,12 @@ void Madd_Error_Save_Last(FILE *fp)
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         if (madd_error.item[madd_error.n-1].sign == MADD_ERROR){
             wsign = L"Error  ";
-            id_error = Madd_Error_Error_ID(madd_error.n-1);
         }else if (madd_error.item[madd_error.n-1].sign == MADD_WARNING){
             wsign = L"Warning";
-            id_error = Madd_Error_Warning_ID(madd_error.n-1);
         }else{
             wsign = L"Unknown";
         }
+        id_error = madd_error.item[madd_error.n-1].i_sign;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
         swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
@@ -249,13 +230,12 @@ void Madd_Error_Print_All(void)
         for (i_item=0; i_item<madd_error.n; i_item++){
             if (madd_error.item[i_item].sign == MADD_ERROR){
                 wsign = L"Error  ";
-                id_error = Madd_Error_Error_ID(i_item);
             }else if (madd_error.item[i_item].sign == MADD_WARNING){
                 wsign = L"Warning";
-                id_error = Madd_Error_Warning_ID(i_item);
             }else{
                 wsign = L"Unknown";
             }
+            id_error = madd_error.item[i_item].i_sign;
             Time_Stamp_String(madd_error.item[i_item].time_stamp, wtime_stamp);
             wchar_t print_info[MADD_ERROR_INFO_LEN+100];
             swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-madd_error.n+i_item+1, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
@@ -289,13 +269,12 @@ void Madd_Error_Save_All(FILE *fp)
         for (i_item=0; i_item<madd_error.n; i_item++){
             if (madd_error.item[i_item].sign == MADD_ERROR){
                 wsign = L"Error  ";
-                id_error = Madd_Error_Error_ID(i_item);
             }else if (madd_error.item[i_item].sign == MADD_WARNING){
                 wsign = L"Warning";
-                id_error = Madd_Error_Warning_ID(i_item);
             }else{
                 wsign = L"Unknown";
             }
+            id_error = madd_error.item[i_item].i_sign;
             Time_Stamp_String(madd_error.item[i_item].time_stamp, wtime_stamp);
             wchar_t print_info[MADD_ERROR_INFO_LEN+100];
             swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n-madd_error.n+i_item+1, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
