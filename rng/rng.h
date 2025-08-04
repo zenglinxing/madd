@@ -72,7 +72,7 @@ float Rand_f128(RNG_Param *rng);
 
 RNG_Param RNG_Read_BE(FILE *fp);
 RNG_Param RNG_Read_LE(FILE *fp);
-void RNG_Write_BE(RNG_Param rng, FILE *fp);
-void RNG_Write_LE(RNG_Param rng, FILE *fp);
+void RNG_Write_BE(RNG_Param *rng, FILE *fp);
+void RNG_Write_LE(RNG_Param *rng, FILE *fp);
 
 #endif /* _RNG_H */

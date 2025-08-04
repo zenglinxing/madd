@@ -279,34 +279,34 @@ RNG_Param RNG_Read_LE(FILE *fp)
     return rng;
 }
 
-void RNG_Write_BE(RNG_Param rng, FILE *fp)
+void RNG_Write_BE(RNG_Param *rng, FILE *fp)
 {
-    union _union32 u32={.u=rng.rng_type};
+    union _union32 u32={.u=rng->rng_type};
     Write_4byte_BE(fp, &u32);
-    switch (rng.rng_type){
+    switch (rng->rng_type){
         case RNG_XOSHIRO256SS:
-            RNG_Xoshiro256ss_Write_BE(&rng.rng.rx256, fp);
+            RNG_Xoshiro256ss_Write_BE(&rng->rng.rx256, fp);
             break;
         case RNG_MT:
-            RNG_MT_Write_BE(&rng.rng.mt, fp);
+            RNG_MT_Write_BE(&rng->rng.mt, fp);
             break;
         case RNG_CLIB:
             Madd_Error_Add(MADD_WARNING, L"RNG_Write_BE: the RNG type write to file is standard C library, unable to record.");
             break;
         case RNG_XORSHIFT64:
-            RNG_Xorshift64_Write_BE(&rng.rng.rx64, fp);
+            RNG_Xorshift64_Write_BE(&rng->rng.rx64, fp);
             break;
         case RNG_XORSHIFT64S:
-            RNG_Xorshift64s_Write_BE(&rng.rng.rx64, fp);
+            RNG_Xorshift64s_Write_BE(&rng->rng.rx64, fp);
             break;
         case RNG_XORSHIFT1024S:
-            RNG_Xorshift1024s_Write_BE(&rng.rng.rx1024, fp);
+            RNG_Xorshift1024s_Write_BE(&rng->rng.rx1024, fp);
             break;
         case RNG_XOSHIRO256P:
-            RNG_Xoshiro256p_Write_BE(&rng.rng.rx256, fp);
+            RNG_Xoshiro256p_Write_BE(&rng->rng.rx256, fp);
             break;
         case RNG_XORWOW:
-            RNG_Xorwow_Write_BE(&rng.rng.rxw, fp);
+            RNG_Xorwow_Write_BE(&rng->rng.rxw, fp);
             break;
         case RNG_X86:
 #if defined(__x86_64__) || defined(_M_X64)
@@ -320,34 +320,34 @@ void RNG_Write_BE(RNG_Param rng, FILE *fp)
     }
 }
 
-void RNG_Write_LE(RNG_Param rng, FILE *fp)
+void RNG_Write_LE(RNG_Param *rng, FILE *fp)
 {
-    union _union32 u32={.u=rng.rng_type};
+    union _union32 u32={.u=rng->rng_type};
     Write_4byte_LE(fp, &u32);
-    switch (rng.rng_type){
+    switch (rng->rng_type){
         case RNG_XOSHIRO256SS:
-            RNG_Xoshiro256ss_Write_LE(&rng.rng.rx256, fp);
+            RNG_Xoshiro256ss_Write_LE(&rng->rng.rx256, fp);
             break;
         case RNG_MT:
-            RNG_MT_Write_LE(&rng.rng.mt, fp);
+            RNG_MT_Write_LE(&rng->rng.mt, fp);
             break;
         case RNG_CLIB:
             Madd_Error_Add(MADD_WARNING, L"RNG_Write_LE: the RNG type write to file is standard C library, unable to record.");
             break;
         case RNG_XORSHIFT64:
-            RNG_Xorshift64_Write_LE(&rng.rng.rx64, fp);
+            RNG_Xorshift64_Write_LE(&rng->rng.rx64, fp);
             break;
         case RNG_XORSHIFT64S:
-            RNG_Xorshift64s_Write_LE(&rng.rng.rx64, fp);
+            RNG_Xorshift64s_Write_LE(&rng->rng.rx64, fp);
             break;
         case RNG_XORSHIFT1024S:
-            RNG_Xorshift1024s_Write_LE(&rng.rng.rx1024, fp);
+            RNG_Xorshift1024s_Write_LE(&rng->rng.rx1024, fp);
             break;
         case RNG_XOSHIRO256P:
-            RNG_Xoshiro256p_Write_LE(&rng.rng.rx256, fp);
+            RNG_Xoshiro256p_Write_LE(&rng->rng.rx256, fp);
             break;
         case RNG_XORWOW:
-            RNG_Xorwow_Write_LE(&rng.rng.rxw, fp);
+            RNG_Xorwow_Write_LE(&rng->rng.rxw, fp);
             break;
         case RNG_X86:
 #if defined(__x86_64__) || defined(_M_X64)
