@@ -23,7 +23,7 @@ int main(int argc,char *argv[])
     struct Param value[N];
     RB_Tree_Node rtn[N];
     RB_Tree T;
-    RB_Tree_Create(&T);
+    RB_Tree_Init(&T);
     RNG_MT_Param mt=RNG_MT_Init(10);
     for (i=0; i<N; i++){
         value[i].v = Rand_MT(&mt);

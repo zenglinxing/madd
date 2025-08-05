@@ -65,13 +65,18 @@ static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *n
     }
 }
 
-void RB_Tree_Create(RB_Tree *T)
+bool RB_Tree_Init(RB_Tree *T)
 {
+    if (T == NULL){
+        Madd_Error_Add(MADD_ERROR, L"RB_Tree_Init: RB Tree pointer is NULL.");
+        return false;
+    }
     T->nil.color = 'b';
     T->nil.key = NULL;
     T->nil.left = T->nil.right = T->nil.p = &T->nil;
     T->root = &T->nil;
     T->flag_multithread = false;
+    return true;
 }
 
 bool RB_Tree_Enable_Multithread(RB_Tree *T)

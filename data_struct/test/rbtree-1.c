@@ -24,7 +24,7 @@ int main(int argc,char *argv[])
     struct Param *value=(struct Param*)malloc(N*sizeof(struct Param));
     RB_Tree_Node *rtn=(RB_Tree_Node*)malloc(N*sizeof(RB_Tree_Node));
     RB_Tree T;
-    RB_Tree_Create(&T);
+    RB_Tree_Init(&T);
     RNG_MT_Param mt=RNG_MT_Init(10);
     for (i=0; i<N; i++){
         value[i].v = Rand_MT(&mt);

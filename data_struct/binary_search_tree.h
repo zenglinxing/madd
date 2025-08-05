@@ -26,7 +26,7 @@ typedef struct{
     RWLock rwlock;
 } Binary_Search_Tree;
 
-Binary_Search_Tree Binary_Search_Tree_Make(void);
+bool Binary_Search_Tree_Init(Binary_Search_Tree *T);
 bool Binary_Search_Tree_Enable_Multithread(Binary_Search_Tree *T);
 Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree *T, Binary_Search_Tree_Node *x, void *k,
                                                    char func(void *key1,void *key2,void *other_param), void *other_param);

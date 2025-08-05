@@ -26,7 +26,8 @@ int main(int argc,char *argv[])
     RNG_MT_Param mt=RNG_MT_Init(30);
     struct Param value[N];
     Binary_Search_Tree_Node node[N];
-    Binary_Search_Tree T=Binary_Search_Tree_Make();
+    Binary_Search_Tree T;
+    Binary_Search_Tree_Init(&T);
     for (i=0; i<N; i++){
         /*printf("i=%d\n",i);*/
         value[i].id = i;

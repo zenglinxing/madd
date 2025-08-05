@@ -35,7 +35,7 @@ typedef struct{
     RWLock rwlock;
 } RB_Tree;
 
-void RB_Tree_Create(RB_Tree *T);
+bool RB_Tree_Init(RB_Tree *T);
 bool RB_Tree_Enable_Multithread(RB_Tree *T);
 RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
                              char func(void *key1,void *key2,void *other_param), void *other_param,

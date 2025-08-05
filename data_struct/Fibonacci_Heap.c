@@ -33,10 +33,16 @@ The Fibonacci_Heap_Delete is mainly contributed by Deepseek
         RWLock_Write_Unlock(&(H)->rwlock); \
     } \
 
-Fibonacci_Heap Fibonacci_Heap_Make(void)
+bool Fibonacci_Heap_Init(Fibonacci_Heap *H)
 {
-    Fibonacci_Heap H = {.n=0, .min=NULL, .flag_multithread=false};
-    return H;
+    if (H == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Fibonacci_Heap_Init: Fibonacci heap pointer is NULL.");
+        return false;
+    }
+    H->n = 0;
+    H->min = NULL;
+    H->flag_multithread = false;
+    return true;
 }
 
 bool Fibonacci_Heap_Enable_Multithread(Fibonacci_Heap *H)

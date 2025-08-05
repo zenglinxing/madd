@@ -32,10 +32,15 @@ This file is part of Math Addition, in ./data_struct/binary_search_tree.c
         RWLock_Write_Unlock(&T->rwlock); \
     } \
 
-Binary_Search_Tree Binary_Search_Tree_Make(void)
+bool Binary_Search_Tree_Init(Binary_Search_Tree *T)
 {
-    Binary_Search_Tree T={.root=NULL, .flag_multithread=false};
-    return T;
+    if (T == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Binary_Search_Tree_Init: BST pointer is NULL.");
+        return false;
+    }
+    T->root = NULL;
+    T->flag_multithread = false;
+    return true;
 }
 
 bool Binary_Search_Tree_Enable_Multithread(Binary_Search_Tree *T)

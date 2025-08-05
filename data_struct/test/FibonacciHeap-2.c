@@ -16,7 +16,9 @@ int main(int argc,char *argv[])
     int i;
     double key[N1+N2]={1, 3, 2, 4, 5, 7};
     Fibonacci_Heap_Node *fhe=(Fibonacci_Heap_Node*)malloc((N1+N2)*sizeof(Fibonacci_Heap_Node));
-    Fibonacci_Heap H1=Fibonacci_Heap_Make(), H2=Fibonacci_Heap_Make(), H;
+    Fibonacci_Heap H1, H2, H;
+    Fibonacci_Heap_Init(&H1);
+    Fibonacci_Heap_Init(&H2);
     for (i=0; i<N1+N2; i++){
         fhe[i].key = &key[i];
         if (i<N1){

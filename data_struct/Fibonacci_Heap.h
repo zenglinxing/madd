@@ -32,7 +32,7 @@ typedef struct{
     RWLock rwlock;
 } Fibonacci_Heap;
 
-Fibonacci_Heap Fibonacci_Heap_Make(void);
+bool Fibonacci_Heap_Init(Fibonacci_Heap *H);
 bool Fibonacci_Heap_Enable_Multithread(Fibonacci_Heap *H);
 void Fibonacci_Heap_Insert(Fibonacci_Heap *H, Fibonacci_Heap_Node *x,
                            char func(void *key1,void *key2,void *other_param), void *other_param);

@@ -31,7 +31,8 @@ int main(int argc,char *argv[])
     int i;
     RNG_MT_Param mt=RNG_MT_Init(40);
     Fibonacci_Heap_Node fhe[N];
-    Fibonacci_Heap H=Fibonacci_Heap_Make();
+    Fibonacci_Heap H;
+    Fibonacci_Heap_Init(&H);
     struct Param value[N];
     for (i=0; i<N; i++){
         value[i].id = i;

@@ -18,7 +18,8 @@ int main(int argc,char *argv[])
     RNG_MT_Param mt=RNG_MT_Init(10);
     double value[N];
     Binary_Search_Tree_Node node[N];
-    Binary_Search_Tree T=Binary_Search_Tree_Make();
+    Binary_Search_Tree T;
+    Binary_Search_Tree_Init(&T);
     for (i=0; i<N; i++){
         printf("i=%d\n",i);
         value[i] = Rand_MT(&mt);
