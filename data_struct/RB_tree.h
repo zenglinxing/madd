@@ -16,10 +16,6 @@ Red-Black Tree
 #define RB_TREE_SUCCESS 0
 #define RB_TREE_NULL 1
 
-#define RB_TREE_SAME 0
-#define RB_TREE_LESS 1
-#define RB_TREE_GREATER 2
-
 #define RB_TREE_DISABLE_SAME_KEY 0
 #define RB_TREE_ENABLE_SAME_KEY 1
 

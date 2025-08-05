@@ -16,13 +16,13 @@ char func_compare(void *key1_, void *key2_, void *other_param)
 {
     struct Param *key1=key1_, *key2=key2_;
     if (key1->v < key2->v){
-        return FIBONACCI_HEAP_LESS;
+        return MADD_LESS;
     }
     else if (key1->v > key2->v){
-        return FIBONACCI_HEAP_GREATER;
+        return MADD_GREATER;
     }
     else{
-        return FIBONACCI_HEAP_SAME;
+        return MADD_SAME;
     }
 }
 

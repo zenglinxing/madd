@@ -9,6 +9,7 @@ This file is part of Math Addition, in ./data_struct/binary_search_tree.c
 #include<stdint.h>
 #include<stdlib.h>
 #include"binary_search_tree.h"
+#include"../basic/basic.h"
 
 Binary_Search_Tree Binary_Search_Tree_Make(void)
 {
@@ -24,8 +25,8 @@ func return:
 */
 Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree_Node *x, void *k, char func(void *key1,void *key2,void *other_param), void *other_param)
 {
-    while (x != NULL && func(k, x->key, other_param)!=BINARY_SEARCH_TREE_SAME){
-        if (func(k, x->key, other_param)==BINARY_SEARCH_TREE_LESS){
+    while (x != NULL && func(k, x->key, other_param)!=MADD_SAME){
+        if (func(k, x->key, other_param)==MADD_LESS){
             x = x->left;
         }
         else{
@@ -82,7 +83,7 @@ void Binary_Search_Tree_Insert(Binary_Search_Tree *T, Binary_Search_Tree_Node *z
     Binary_Search_Tree_Node *y=NULL, *x=T->root;
     while (x!=NULL){
         y = x;
-        if (func(z->key, x->key, other_param)==BINARY_SEARCH_TREE_LESS){
+        if (func(z->key, x->key, other_param)==MADD_LESS){
             x = x->left;
         }
         else{
@@ -93,7 +94,7 @@ void Binary_Search_Tree_Insert(Binary_Search_Tree *T, Binary_Search_Tree_Node *z
     if (y == NULL){
         T->root = z; /* tree T was empty */
     }
-    else if (func(z->key, y->key, other_param)==BINARY_SEARCH_TREE_LESS){
+    else if (func(z->key, y->key, other_param)==MADD_LESS){
         y->left = z;
     }
     else{

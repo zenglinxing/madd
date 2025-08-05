@@ -13,9 +13,9 @@ struct Param{
 char func(void *key1_, void *key2_, void *other_param)
 {
     struct Param *key1=key1_, *key2=key2_;
-    if (key1->v < key2->v) return RB_TREE_LESS;
-    else if (key1->v == key2->v) return RB_TREE_SAME;
-    else return RB_TREE_GREATER;
+    if (key1->v < key2->v) return MADD_LESS;
+    else if (key1->v == key2->v) return MADD_SAME;
+    else return MADD_GREATER;
 }
 
 int main(int argc,char *argv[])

@@ -12,16 +12,17 @@ I did this via refering to the book Introduction to Algorithm by Thomas H. Corme
 #include<stdlib.h>
 
 #include"RB_tree.h"
+#include"../basic/basic.h"
 
 inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
                                      char func(void *key1, void *key2, void *other_param), void *other_param,
                                      int flag_allow_same_key)
 {
     char res = func(node1->key, node2->key, other_param);
-    if (res != RB_TREE_SAME) return res;
+    if (res != MADD_SAME) return res;
     if (flag_allow_same_key == RB_TREE_ENABLE_SAME_KEY){
-        if (node1 < node2) return RB_TREE_LESS;
-        else if (node1 > node2) return RB_TREE_GREATER;
+        if (node1 < node2) return MADD_LESS;
+        else if (node1 > node2) return MADD_GREATER;
     }
     /* if RB_TREE_DISABLE_SAME_KEY or pointers node1==node2 */
     /*
@@ -45,8 +46,8 @@ RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
     char cmp;
     while (x != &T->nil){
         cmp = func(k, x->key, other_param);
-        if (cmp == RB_TREE_SAME) return x;
-        x = (cmp == RB_TREE_LESS) ? x->left : x->right;
+        if (cmp == MADD_SAME) return x;
+        x = (cmp == MADD_LESS) ? x->left : x->right;
     }
     return NULL;
 }
@@ -190,7 +191,7 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     x = T->root;
     while (x != &T->nil){
         y = x;
-        if (RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key) == RB_TREE_LESS){
+        if (RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key) == MADD_LESS){
             x = x->left;
         }
         else{
@@ -201,7 +202,7 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     if (y == &T->nil){
         T->root = z;
     }
-    else if (RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key) == RB_TREE_LESS){
+    else if (RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key) == MADD_LESS){
         y->left = z;
     }
     else{

@@ -7,9 +7,9 @@
 char func_compare(void *key1_, void *key2_, void *other_param)
 {
     double *key1=key1_, *key2=key2_;
-    if (*key1 < *key2) return BINARY_SEARCH_TREE_LESS;
-    else if (*key1 == *key2) return BINARY_SEARCH_TREE_SAME;
-    else return BINARY_SEARCH_TREE_GREATER;
+    if (*key1 < *key2) return MADD_LESS;
+    else if (*key1 == *key2) return MADD_SAME;
+    else return MADD_GREATER;
 }
 
 int main(int argc,char *argv[])

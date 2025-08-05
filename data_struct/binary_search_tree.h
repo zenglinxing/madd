@@ -11,10 +11,6 @@ This file is part of Math Addition, in ./data_struct/binary_search_tree.h
 #include<stdint.h>
 #include<stdlib.h>
 
-#define BINARY_SEARCH_TREE_SAME 0
-#define BINARY_SEARCH_TREE_LESS 1
-#define BINARY_SEARCH_TREE_GREATER 2
-
 struct _Binary_Search_Tree_Node{
     void *key;
     struct _Binary_Search_Tree_Node *left,*right,*p;

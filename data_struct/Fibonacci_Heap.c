@@ -8,6 +8,7 @@ This file is part of Math Addition, in ./data_struct/Fibonacci_Heap.c
 #include<stdint.h>
 #include<stdlib.h>
 #include"Fibonacci_Heap.h"
+#include"../basic/basic.h"
 
 Fibonacci_Heap Fibonacci_Heap_Make(void)
 {
@@ -40,7 +41,7 @@ void Fibonacci_Heap_Insert(Fibonacci_Heap *H, Fibonacci_Heap_Node *x, char func(
         x->right = H->min;
         H->min->left->right = x;
         H->min->left = x;
-        if (func(x->key, H->min->key, other_param)==FIBONACCI_HEAP_LESS){ /* x->key < H->min->key */
+        if (func(x->key, H->min->key, other_param)==MADD_LESS){ /* x->key < H->min->key */
             H->min = x;
         }
     }
@@ -60,7 +61,7 @@ Fibonacci_Heap Fibonacci_Heap_Union(Fibonacci_Heap H1, Fibonacci_Heap H2, char f
     }
     /*else if (H1.min != NULL);*/ /* nothing to do */
     /*else if (H2.min != NULL);*/ /* nothing to do */
-    if (H1.min == NULL || ( H2.min != NULL && func(H2.min->key, H1.min->key, other_param)==FIBONACCI_HEAP_LESS )){
+    if (H1.min == NULL || ( H2.min != NULL && func(H2.min->key, H1.min->key, other_param)==MADD_LESS )){
         H.min = H2.min;
     }
     H.n = H1.n + H2.n;
@@ -79,7 +80,7 @@ void Fibonacci_Heap_Link(/*Fibonacci_Heap H, */Fibonacci_Heap_Node *y, Fibonacci
         y->right=x->child->right;
         x->child->right->left=y;
         x->child->right=y;
-        if (func(y->key, x->child->key, other_param)==FIBONACCI_HEAP_LESS){
+        if (func(y->key, x->child->key, other_param)==MADD_LESS){
             x->child=y;
         }
     }else{ /* y is the only child of x */
@@ -110,7 +111,7 @@ void Fibonacci_Heap_Consolidate(Fibonacci_Heap *H, char func(void *key1,void *ke
         while (A[d]!=NULL){
             /*printf("consolidate\td=%llu\n",d);*/
             y=A[d]; /* another node with the same degree as x */
-            if (func(y->key, x->key, other_param)==FIBONACCI_HEAP_LESS){
+            if (func(y->key, x->key, other_param)==MADD_LESS){
             /*if (x->unit.weight>y->unit.weight){*/ /* swap x y */
                 temp=x;
                 x=y;
@@ -138,7 +139,7 @@ void Fibonacci_Heap_Consolidate(Fibonacci_Heap *H, char func(void *key1,void *ke
             w->right=H->min->right;
             H->min->right->left=w;
             H->min->right=w;
-            if (func(w->key, H->min->key, other_param)==FIBONACCI_HEAP_LESS){
+            if (func(w->key, H->min->key, other_param)==MADD_LESS){
             /*if (w->unit.weight<H->min->unit.weight){*/
                 H->min=w;
             }
@@ -206,7 +207,7 @@ void Fibonacci_Heap_Cut(Fibonacci_Heap *H, Fibonacci_Heap_Node *x, Fibonacci_Hea
             last=y->child->left;
             i=0;
             while (p!=last){
-                if (func(p->key, min, other_param)==FIBONACCI_HEAP_LESS){
+                if (func(p->key, min, other_param)==MADD_LESS){
                 /*if (min > p->unit.weight){*/
                     pmin=p;
                     min=p->key;
@@ -214,7 +215,7 @@ void Fibonacci_Heap_Cut(Fibonacci_Heap *H, Fibonacci_Heap_Node *x, Fibonacci_Hea
                 p=p->right;
                 i++;
             }
-            if (func(p->key, min, other_param)==FIBONACCI_HEAP_LESS){
+            if (func(p->key, min, other_param)==MADD_LESS){
             /*if (min > p->unit.weight){*/ /* check the last one */
                 pmin=p;
                 min=p->key;
@@ -253,13 +254,13 @@ void Fibonacci_Heap_Decrease_Key_Internal(Fibonacci_Heap *H, Fibonacci_Heap_Node
     x->key=k;
     Fibonacci_Heap_Node *y=x->p;
     if (y!=NULL){
-        if (func(x->key, y->key, other_param)==FIBONACCI_HEAP_LESS){
+        if (func(x->key, y->key, other_param)==MADD_LESS){
         /*if (x->key < y->key){*/
             Fibonacci_Heap_Cut(H,x,y,func,other_param);
             Fibonacci_Heap_Cascading_Cut(H,y,func,other_param);
         }
     }
-    if (func(x->key, H->min->key, other_param)==FIBONACCI_HEAP_LESS){
+    if (func(x->key, H->min->key, other_param)==MADD_LESS){
     /*if (x->key < H->min->key){*/
         H->min=x;
     }
@@ -267,7 +268,7 @@ void Fibonacci_Heap_Decrease_Key_Internal(Fibonacci_Heap *H, Fibonacci_Heap_Node
 
 char Fibonacci_Heap_Decrease_Key(Fibonacci_Heap *H, Fibonacci_Heap_Node *x, void *k, char func(void *key1,void *key2,void *other_param), void *other_param/*, char purpose*/)
 {
-    if (func(x->key, k, other_param)==FIBONACCI_HEAP_LESS/* && purpose == FIBONACCI_HEAP_NORMAL*/){
+    if (func(x->key, k, other_param)==MADD_LESS/* && purpose == FIBONACCI_HEAP_NORMAL*/){
     /*if (k > x->key){*/
         /*printf("new key is greater than current key");*/
         return FIBONACCI_HEAP_DECREASE_KEY_FAIL;
@@ -280,10 +281,10 @@ char Fibonacci_Heap_Delete__Func(void *key1,void *key2,void *other_delete_param_
 {
     Fibonacci_Heap_Delete_Param *other_delete_param=(Fibonacci_Heap_Delete_Param*)other_delete_param_;
     if (key1 == other_delete_param->useless_var){
-        return FIBONACCI_HEAP_LESS;
+        return MADD_LESS;
     }
     else if (key2 == other_delete_param->useless_var){
-        return FIBONACCI_HEAP_GREATER;
+        return MADD_GREATER;
     }
     else{
         return other_delete_param->func(key1,key2,other_delete_param->other_param);
