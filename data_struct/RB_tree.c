@@ -10,24 +10,38 @@ I did this via refering to the book Introduction to Algorithm by Thomas H. Corme
 */
 #include<stdint.h>
 #include<stdlib.h>
+#include<wchar.h>
 
 #include"RB_tree.h"
 #include"../basic/basic.h"
 
-inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
+static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
                                      char func(void *key1, void *key2, void *other_param), void *other_param,
-                                     int flag_allow_same_key)
+                                     int flag_allow_same_key,
+                                     char *func_name)
 {
     char res = func(node1->key, node2->key, other_param);
-    if (res != MADD_SAME) return res;
-    if (flag_allow_same_key == RB_TREE_ENABLE_SAME_KEY){
+    if (res == MADD_LESS || res == MADD_GREATER) return res;
+    else if (res == MADD_SAME && flag_allow_same_key == RB_TREE_ENABLE_SAME_KEY){
         if (node1 < node2) return MADD_LESS;
         else if (node1 > node2) return MADD_GREATER;
+        else{
+            wchar_t error_info[MADD_ERROR_INFO_LEN];
+            swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: red-black tree doesn't allow same key! Although you had set RB_TREE_ENABLE_SAME_KEY, but even the RB_Tree_Node(s) have same pointer.", func_name);
+            Madd_Error_Add(MADD_ERROR, error_info);
+            return MADD_SAME;
+        }
+    }else if (res == MADD_SAME /*&& flag_allow_same_key != RB_TREE_ENABLE_SAME_KEY*/){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: red-black tree doesn't allow same key! You may try to set RB_TREE_ENABLE_SAME_KEY for %s(... int flag_allow_same_key, ...).", func_name);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        return MADD_SAME;
+    }else{
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: unknown return value: %d. func_compare should only return MADD_LESS/MADD_SAME/MADD_GREATER.", func_name, res);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        return res;
     }
-    /* if RB_TREE_DISABLE_SAME_KEY or pointers node1==node2 */
-    /*
-    code blocks for error info
-    */
 }
 
 void RB_Tree_Create(RB_Tree *T)
@@ -191,7 +205,7 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     x = T->root;
     while (x != &T->nil){
         y = x;
-        if (RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key) == MADD_LESS){
+        if (RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key, "RB_Tree_Insert") == MADD_LESS){
             x = x->left;
         }
         else{
@@ -202,7 +216,7 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     if (y == &T->nil){
         T->root = z;
     }
-    else if (RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key) == MADD_LESS){
+    else if (RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key, "RB_Tree_Insert") == MADD_LESS){
         y->left = z;
     }
     else{
