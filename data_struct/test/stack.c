@@ -150,9 +150,7 @@ void test_thread_safety() {
     
     Stack stack;
     Stack_Init(&stack, 100, sizeof(int));
-    if (flag_enable_multithread){
-        Stack_Enable_Multithread(&stack);
-    }
+    Stack_Enable_Multithread(&stack);
     
     Thread producers[5];
     Thread consumers[5];
@@ -173,6 +171,9 @@ void test_thread_safety() {
         Thread_Join(consumers[i]);
     }
     
+    bool is_empty = Stack_Empty(&stack);
+    printf("is empty ?\t%d\n", is_empty);
+    printf("elements:\t%llu\n", stack.n_element);
     TEST_ASSERT(Stack_Empty(&stack), "Stack should be empty after producer-consumer");
     
     Stack_Destroy(&stack);
