@@ -42,7 +42,7 @@ int main(int argc,char *argv[])
     printf("deleted\n");
     /* search */
     uint64_t id_search = 90;
-    Binary_Search_Tree_Node *node_search=Binary_Search_Tree_Search(T.root, &value[id_search], func_compare, NULL);
+    Binary_Search_Tree_Node *node_search=Binary_Search_Tree_Search(&T, T.root, &value[id_search], func_compare, NULL);
     printf("searched, searched id=%llu, found id=%llu\n",id_search,((struct Param*)(node_search->key))->id);
     return 0;
 }

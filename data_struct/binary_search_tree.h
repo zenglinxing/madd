@@ -10,6 +10,8 @@ This file is part of Math Addition, in ./data_struct/binary_search_tree.h
 
 #include<stdint.h>
 #include<stdlib.h>
+#include<stdbool.h>
+#include"../thread_base/thread_base.h"
 
 struct _Binary_Search_Tree_Node{
     void *key;
@@ -19,17 +21,19 @@ struct _Binary_Search_Tree_Node{
 typedef struct _Binary_Search_Tree_Node Binary_Search_Tree_Node;
 
 typedef struct{
+    bool flag_multithread;
     Binary_Search_Tree_Node *root;
+    RWLock rwlock;
 } Binary_Search_Tree;
 
 Binary_Search_Tree Binary_Search_Tree_Make(void);
-
-Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree_Node *x, void *k,
+bool Binary_Search_Tree_Enable_Multithread(Binary_Search_Tree *T);
+Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree *T, Binary_Search_Tree_Node *x, void *k,
                                                    char func(void *key1,void *key2,void *other_param), void *other_param);
-Binary_Search_Tree_Node *Binary_Search_Tree_Minimum(Binary_Search_Tree_Node *x);
-Binary_Search_Tree_Node *Binary_Search_Tree_Maximum(Binary_Search_Tree_Node *x);
-Binary_Search_Tree_Node *Binary_Search_Tree_Successor(Binary_Search_Tree_Node *x);
-Binary_Search_Tree_Node *Binary_Search_Tree_Predecessor(Binary_Search_Tree_Node *x);
+Binary_Search_Tree_Node *Binary_Search_Tree_Minimum(Binary_Search_Tree *T, Binary_Search_Tree_Node *x);
+Binary_Search_Tree_Node *Binary_Search_Tree_Maximum(Binary_Search_Tree *T, Binary_Search_Tree_Node *x);
+Binary_Search_Tree_Node *Binary_Search_Tree_Successor(Binary_Search_Tree *T, Binary_Search_Tree_Node *x);
+Binary_Search_Tree_Node *Binary_Search_Tree_Predecessor(Binary_Search_Tree *T, Binary_Search_Tree_Node *x);
 void Binary_Search_Tree_Insert(Binary_Search_Tree *T, Binary_Search_Tree_Node *z,
                                char func(void *key1,void *key2,void *other_param), void *other_param);
 void Binary_Search_Tree_Transplant(Binary_Search_Tree *T,

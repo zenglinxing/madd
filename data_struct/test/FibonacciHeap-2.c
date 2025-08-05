@@ -26,7 +26,7 @@ int main(int argc,char *argv[])
             Fibonacci_Heap_Insert(&H2, fhe+i, func, NULL);
         }
     }
-    H = Fibonacci_Heap_Union(H1,H2,func,NULL);
+    H = Fibonacci_Heap_Union(&H1, &H2, func, NULL);
     if (H.min == NULL){
         printf("No H.min\n");
     }

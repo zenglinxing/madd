@@ -10,6 +10,8 @@ This file is part of Math Addition, in ./data_struct/Fibonacci_Heap.h
 
 #include<stdint.h>
 #include<stdlib.h>
+#include<stdbool.h>
+#include"../thread_base/thread_base.h"
 
 #define FIBONACCI_HEAP_DECREASE_KEY_SUCCESS 0
 #define FIBONACCI_HEAP_DECREASE_KEY_FAIL 1
@@ -24,14 +26,17 @@ struct _Fibonacci_Heap_Node{
 typedef struct _Fibonacci_Heap_Node Fibonacci_Heap_Node;
 
 typedef struct{
+    bool flag_multithread;
     uint64_t n;
     Fibonacci_Heap_Node *min;
+    RWLock rwlock;
 } Fibonacci_Heap;
 
 Fibonacci_Heap Fibonacci_Heap_Make(void);
+bool Fibonacci_Heap_Enable_Multithread(Fibonacci_Heap *H);
 void Fibonacci_Heap_Insert(Fibonacci_Heap *H, Fibonacci_Heap_Node *x,
                            char func(void *key1,void *key2,void *other_param), void *other_param);
-Fibonacci_Heap Fibonacci_Heap_Union(Fibonacci_Heap H1, Fibonacci_Heap H2,
+Fibonacci_Heap Fibonacci_Heap_Union(Fibonacci_Heap *H1, Fibonacci_Heap *H2,
                                     char func(void *key1,void *key2,void *other_param), void *other_param);
 void Fibonacci_Heap_Link(/*Fibonacci_Heap H, */Fibonacci_Heap_Node *y, Fibonacci_Heap_Node *x,
                          char func(void *key1,void *key2,void *other_param), void *other_param);

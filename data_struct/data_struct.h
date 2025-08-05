@@ -18,13 +18,14 @@ This file is part of Math Addition, in ./basic/data_struct.h
 
 /* stack */
 typedef struct{
-    bool auto_shrink;
+    bool flag_multithread, auto_shrink;
     void *buf;
     size_t capacity, n_element, unit_capacity, usize;
     RWLock rwlock;
 } Stack;
 
 bool Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize /* element size */);
+bool Stack_Enable_Multithread(Stack *stack);
 void Stack_Destroy(Stack *stack);
 void Stack_Shrink(Stack *stack);
 void Stack_Expand(Stack *stack, size_t new_capacity);

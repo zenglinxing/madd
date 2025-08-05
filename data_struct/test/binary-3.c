@@ -39,8 +39,8 @@ int main(int argc,char *argv[])
     /* maximum & minimum node */
     Binary_Search_Tree_Node *node_min, *node_max;
     struct Param *key;
-    node_min = Binary_Search_Tree_Minimum(T.root);
-    node_max = Binary_Search_Tree_Maximum(T.root);
+    node_min = Binary_Search_Tree_Minimum(&T, T.root);
+    node_max = Binary_Search_Tree_Maximum(&T, T.root);
     double v_min, v_max;
     for (i=0; i<N; i++){
         if (i==0){

@@ -14,6 +14,27 @@ I did this via refering to the book Introduction to Algorithm by Thomas H. Corme
 
 #include"RB_tree.h"
 #include"../basic/basic.h"
+/*#include"../thread_base/thread_base.h"*/
+
+#define RB_READ_LOCK(T) \
+    if ((T)->flag_multithread){ \
+        RWLock_Read_Lock(&(T)->rwlock); \
+    } \
+
+#define RB_READ_UNLOCK(T) \
+    if ((T)->flag_multithread){ \
+        RWLock_Read_Unlock(&(T)->rwlock); \
+    } \
+
+#define RB_WRITE_LOCK(T) \
+    if ((T)->flag_multithread){ \
+        RWLock_Write_Lock(&(T)->rwlock); \
+    } \
+
+#define RB_WRITE_UNLOCK(T) \
+    if ((T)->flag_multithread){ \
+        RWLock_Write_Unlock(&(T)->rwlock); \
+    } \
 
 static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
                                      char func(void *key1, void *key2, void *other_param), void *other_param,
@@ -50,68 +71,175 @@ void RB_Tree_Create(RB_Tree *T)
     T->nil.key = NULL;
     T->nil.left = T->nil.right = T->nil.p = &T->nil;
     T->root = &T->nil;
+    T->flag_multithread = false;
+}
+
+bool RB_Tree_Enable_Multithread(RB_Tree *T)
+{
+#ifdef MADD_ENABLE_MULTITHREAD
+    RWLock_Init(&T->rwlock);
+    T->flag_multithread = true;
+    return true;
+#else
+    Madd_Error_Add(MADD_WARNING, L"RB_Tree_Enable_Multithread: Madd lib multithread wasn't enabled during compiling. Tried to enable Madd's multithread and re-compile Madd.");
+    return false;
+#endif
 }
 
 RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
                              char func(void *key1,void *key2,void *other_param), void *other_param,
                              int flag_allow_same_key)
 {
-    if (x == &T->nil) return NULL;
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_LOCK(T)
+#endif
+
+    if (x == &T->nil){
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+        return NULL;
+    }
     char cmp;
     while (x != &T->nil){
         cmp = func(k, x->key, other_param);
-        if (cmp == MADD_SAME) return x;
+        if (cmp == MADD_SAME){
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+            return x;
+        }
         x = (cmp == MADD_LESS) ? x->left : x->right;
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
     return NULL;
 }
 
-RB_Tree_Node *RB_Tree_Minimum(RB_Tree *T,RB_Tree_Node *x)
+static RB_Tree_Node *RB_Tree_Minimum_Internal(RB_Tree *T, RB_Tree_Node *x)
 {
-    if (x == &T->nil) return &T->nil;
+    if (x == &T->nil){
+        return NULL;
+    }
     while (x->left != &T->nil){
         x = x->left;
     }
     return x;
 }
 
-RB_Tree_Node *RB_Tree_Maximum(RB_Tree *T,RB_Tree_Node *x)
+RB_Tree_Node *RB_Tree_Minimum(RB_Tree *T, RB_Tree_Node *x)
 {
-    if (x == &T->nil) return &T->nil;
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_LOCK(T)
+#endif
+
+    RB_Tree_Node *ret = RB_Tree_Minimum_Internal(T, x);
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+    return ret;
+}
+
+static RB_Tree_Node *RB_Tree_Maximum_Internal(RB_Tree *T,RB_Tree_Node *x)
+{
+    if (x == &T->nil){
+        return NULL;
+    }
     while (x->right != &T->nil){
         x = x->right;
     }
     return x;
 }
 
+RB_Tree_Node *RB_Tree_Maximum(RB_Tree *T,RB_Tree_Node *x)
+{
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_LOCK(T)
+#endif
+
+    RB_Tree_Node *ret = RB_Tree_Maximum_Internal(T, x);
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+    return ret;
+}
+
 RB_Tree_Node *RB_Tree_Successor(RB_Tree *T,RB_Tree_Node *x)
 {
-    if (x == &T->nil) return &T->nil;
-    if (x->right != &T->nil) return RB_Tree_Minimum(T, x->right);
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_LOCK(T)
+#endif
+
+    if (x == &T->nil){
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+        return NULL;
+    }
+    if (x->right != &T->nil){
+        RB_Tree_Node *ret = RB_Tree_Minimum_Internal(T, x->right);
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+        return ret;
+    }
     RB_Tree_Node *y = x->p;
     while (y!=&T->nil && x == y->right){
         x = y;
         y = y->p;
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
     return y;
 }
 
 RB_Tree_Node *RB_Tree_Predecessor(RB_Tree *T,RB_Tree_Node *x)
 {
-    if (x == &T->nil) return &T->nil;
-    if (x->left != &T->nil) return RB_Tree_Maximum(T, x->left);
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_LOCK(T)
+#endif
+
+    if (x == &T->nil){
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+        return NULL;
+    }
+    if (x->left != &T->nil){
+        RB_Tree_Node *ret = RB_Tree_Maximum_Internal(T, x->left);
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+        return ret;
+    }
     RB_Tree_Node *y = x->p;
     while (y!=&T->nil && x == y->left){
         x = y;
         y = y->p;
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_READ_UNLOCK(T)
+#endif
+
     return y;
 }
 
 int RB_Tree_Left_Rotate(RB_Tree *T, RB_Tree_Node *x)
 {
     RB_Tree_Node *y = x->right; /* set y */
-    if (y == &T->nil) return RB_TREE_NULL;
+    if (y == &T->nil){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: meets NULL pointer. %s line %d.", __func__, __FILE__, __LINE__);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        return RB_TREE_NULL;
+    }
     x->right = y->left; /* turn y's left subtree into x's right subtree */
     if (y->left != &T->nil){
         y->left->p = x;
@@ -134,7 +262,12 @@ int RB_Tree_Left_Rotate(RB_Tree *T, RB_Tree_Node *x)
 int RB_Tree_Right_Rotate(RB_Tree *T, RB_Tree_Node *x)
 {
     RB_Tree_Node *y = x->left; /* set y */
-    if (y == &T->nil) return RB_TREE_NULL;
+    if (y == &T->nil){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: meets NULL pointer. %s line %d.", __func__, __FILE__, __LINE__);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        return RB_TREE_NULL;
+    }
     x->left = y->right; /* turn y's right subtree into x's left subtree */
     if (y->right != &T->nil){
         y->right->p = x;
@@ -154,8 +287,9 @@ int RB_Tree_Right_Rotate(RB_Tree *T, RB_Tree_Node *x)
     return RB_TREE_SUCCESS;
 }
 
-void RB_Tree_Insert_Fixup(RB_Tree *T, RB_Tree_Node *z)
+int RB_Tree_Insert_Fixup(RB_Tree *T, RB_Tree_Node *z)
 {
+    int res_rotate;
     RB_Tree_Node *y;
     while /*(z->p->color == 'r')*/ ( z->p->color=='r' ){
         if (z->p == z->p->p->left){
@@ -168,11 +302,23 @@ void RB_Tree_Insert_Fixup(RB_Tree *T, RB_Tree_Node *z)
             else{
                 if (z == z->p->right){
                     z = z->p;
-                    RB_Tree_Left_Rotate(T, z);
+                    res_rotate = RB_Tree_Left_Rotate(T, z);
+                    if (res_rotate == RB_TREE_NULL){
+                        wchar_t error_info[MADD_ERROR_INFO_LEN];
+                        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Left_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                        Madd_Error_Add(MADD_ERROR, error_info);
+                        return res_rotate;
+                    }
                 }
                 z->p->color = 'b';
                 z->p->p->color = 'r';
-                RB_Tree_Right_Rotate(T, z->p->p);
+                res_rotate = RB_Tree_Right_Rotate(T, z->p->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Right_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
             }
         }
         else{
@@ -185,46 +331,85 @@ void RB_Tree_Insert_Fixup(RB_Tree *T, RB_Tree_Node *z)
             else{
                 if (z == z->p->left){
                     z = z->p;
-                    RB_Tree_Right_Rotate(T, z);
+                    res_rotate = RB_Tree_Right_Rotate(T, z);
+                    if (res_rotate == RB_TREE_NULL){
+                        wchar_t error_info[MADD_ERROR_INFO_LEN];
+                        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Right_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                        Madd_Error_Add(MADD_ERROR, error_info);
+                        return res_rotate;
+                    }
                 }
                 z->p->color = 'b';
                 z->p->p->color = 'r';
-                RB_Tree_Left_Rotate(T, z->p->p);
+                res_rotate = RB_Tree_Left_Rotate(T, z->p->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Left_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
             }
         }
     }
     T->root->color = 'b';
+    return RB_TREE_SUCCESS;
 }
 
 void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
                     char func(void *key1,void *key2,void *other_param), void *other_param,
                     int flag_allow_same_key)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_WRITE_LOCK(T)
+#endif
+
     RB_Tree_Node *x,*y;
+    int ret_compare;
     y = &T->nil;
     x = T->root;
     while (x != &T->nil){
         y = x;
-        if (RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key, "RB_Tree_Insert") == MADD_LESS){
+        ret_compare = RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key, "RB_Tree_Insert");
+        if (ret_compare == MADD_LESS){
             x = x->left;
-        }
-        else{
+        }else if (ret_compare == MADD_GREATER || ret_compare == MADD_SAME){
             x = x->right;
+        }else{
+            wchar_t error_info[MADD_ERROR_INFO_LEN];
+            swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: got unknown return %d from compare func. The given RB Tree Node pointers are %p and %p. This info is from Madd source %s line %d.", __func__, ret_compare, z, x, __FILE__, __LINE__);
+            Madd_Error_Add(MADD_ERROR, error_info);
+            break;
         }
     }
     z->p = y;
     if (y == &T->nil){
         T->root = z;
     }
-    else if (RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key, "RB_Tree_Insert") == MADD_LESS){
-        y->left = z;
-    }
     else{
-        y->right = z;
+        ret_compare = RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key, "RB_Tree_Insert");
+        if (ret_compare == MADD_LESS){
+            y->left = z;
+        }
+        else if (ret_compare == MADD_GREATER || ret_compare == MADD_SAME){
+            y->right = z;
+        }else{
+            wchar_t error_info[MADD_ERROR_INFO_LEN];
+            swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: got unknown return %d from compare func. The given RB Tree Node pointers are %p and %p. This info is from Madd source %s line %d.", __func__, ret_compare, z, x, __FILE__, __LINE__);
+            Madd_Error_Add(MADD_ERROR, error_info);
+        }
     }
     z->left = z->right = &T->nil;
     z->color = 'r';
-    RB_Tree_Insert_Fixup(T, z);
+    int res_fixup = RB_Tree_Insert_Fixup(T, z);
+    if (res_fixup == RB_TREE_NULL){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Insert_Fixup. This info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+        Madd_Error_Add(MADD_ERROR, error_info);
+    }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_WRITE_UNLOCK(T)
+#endif
 }
 
 void RB_Tree_Transplant(RB_Tree *T, RB_Tree_Node *u, RB_Tree_Node *v)
@@ -243,8 +428,9 @@ void RB_Tree_Transplant(RB_Tree *T, RB_Tree_Node *u, RB_Tree_Node *v)
     }
 }
 
-void RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
+int RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
 {
+    int res_rotate;
     RB_Tree_Node *w;
     while (x != T->root && x->color == 'b'){
         if (x == x->p->left){
@@ -252,7 +438,13 @@ void RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
             if (w->color == 'r'){
                 w->color = 'b';
                 x->p->color = 'r';
-                RB_Tree_Left_Rotate(T, x->p);
+                res_rotate = RB_Tree_Left_Rotate(T, x->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Left_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
                 w = x->p->right;
             }
             if (w->left->color == 'b' && w->right->color == 'b'){
@@ -263,14 +455,26 @@ void RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
                 if (w->right->color == 'b'){
                     w->left->color = 'b';
                     w->color = 'r';
-                    RB_Tree_Right_Rotate(T, w);
+                    res_rotate = RB_Tree_Right_Rotate(T, w);
+                    if (res_rotate == RB_TREE_NULL){
+                        wchar_t error_info[MADD_ERROR_INFO_LEN];
+                        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Right_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                        Madd_Error_Add(MADD_ERROR, error_info);
+                        return res_rotate;
+                    }
                     w = x->p->right;
                 }
                 w->color = x->p->color;
                 x->p->color = w->right->color = 'b';
-                RB_Tree_Left_Rotate(T, x->p);
+                res_rotate = RB_Tree_Left_Rotate(T, x->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Left_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
                 x = T->root;
-                x->p = &T->nil;
+                /*x->p = &T->nil;*/
             }
         }
         else{
@@ -278,7 +482,13 @@ void RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
             if (w->color == 'r'){
                 w->color = 'b';
                 x->p->color = 'r';
-                RB_Tree_Right_Rotate(T, x->p);
+                res_rotate = RB_Tree_Right_Rotate(T, x->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Right_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
                 w = x->p->left;
             }
             if (w->left->color == 'b' && w->right->color == 'b'){
@@ -289,22 +499,39 @@ void RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
                 if (w->left->color == 'b'){
                     w->right->color = 'b';
                     w->color = 'r';
-                    RB_Tree_Left_Rotate(T, w);
+                    res_rotate = RB_Tree_Left_Rotate(T, w);
+                    if (res_rotate == RB_TREE_NULL){
+                        wchar_t error_info[MADD_ERROR_INFO_LEN];
+                        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Left_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                        Madd_Error_Add(MADD_ERROR, error_info);
+                        return res_rotate;
+                    }
                     w = x->p->left;
                 }
                 w->color = x->p->color;
                 x->p->color = w->left->color = 'b';
-                RB_Tree_Right_Rotate(T, x->p);
+                res_rotate = RB_Tree_Right_Rotate(T, x->p);
+                if (res_rotate == RB_TREE_NULL){
+                    wchar_t error_info[MADD_ERROR_INFO_LEN];
+                    swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Right_Rotate. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+                    Madd_Error_Add(MADD_ERROR, error_info);
+                    return res_rotate;
+                }
                 x = T->root;
                 x->p = &T->nil;
             }
         }
     }
     x->color = 'b';
+    return RB_TREE_SUCCESS;
 }
 
 void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
 {
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_WRITE_LOCK(T)
+#endif
+
     RB_Tree_Node *x, *y = z;
     char y_original_color = y->color;
     if (z->left == &T->nil){
@@ -316,11 +543,13 @@ void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
         RB_Tree_Transplant(T, z, z->left);
     }
     else{
-        y = RB_Tree_Minimum(T, z->right);
+        y = RB_Tree_Minimum_Internal(T, z->right);
         y_original_color = y->color;
         x = y->right;
         if (y->p == z){
-            x->p = y;
+            if (x != &T->nil) {
+                x->p = y;
+            }
         }
         else{
             RB_Tree_Transplant(T, y, y->right);
@@ -333,6 +562,15 @@ void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
         y->color = z->color;
     }
     if (y_original_color == 'b'){
-        RB_Tree_Delete_Fixup(T, x);
+        int res_fixup = RB_Tree_Delete_Fixup(T, x);
+        if (res_fixup == RB_TREE_NULL){
+            wchar_t error_info[MADD_ERROR_INFO_LEN];
+            swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%s: see info from RB_Tree_Delete_Fixup. This error info is from Madd Source %s line %d.", __func__, __FILE__, __LINE__);
+            Madd_Error_Add(MADD_ERROR, error_info);
+        }
     }
+
+#ifdef MADD_ENABLE_MULTITHREAD
+    RB_WRITE_UNLOCK(T)
+#endif
 }
