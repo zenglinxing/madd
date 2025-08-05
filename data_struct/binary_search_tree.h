@@ -24,26 +24,16 @@ typedef struct{
 
 Binary_Search_Tree Binary_Search_Tree_Make(void);
 
-/*
-func return:
-    0   key1 < key2
-    1   key1 = key2
-    2   key1 > key2
-*/
-Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree_Node *x, void *k, char func(void *key1,void *key2,void *other_param), void *other_param);
-
+Binary_Search_Tree_Node *Binary_Search_Tree_Search(Binary_Search_Tree_Node *x, void *k,
+                                                   char func(void *key1,void *key2,void *other_param), void *other_param);
 Binary_Search_Tree_Node *Binary_Search_Tree_Minimum(Binary_Search_Tree_Node *x);
-
 Binary_Search_Tree_Node *Binary_Search_Tree_Maximum(Binary_Search_Tree_Node *x);
-
 Binary_Search_Tree_Node *Binary_Search_Tree_Successor(Binary_Search_Tree_Node *x);
-
 Binary_Search_Tree_Node *Binary_Search_Tree_Predecessor(Binary_Search_Tree_Node *x);
-
-void Binary_Search_Tree_Insert(Binary_Search_Tree *T, Binary_Search_Tree_Node *z, char func(void *key1,void *key2,void *other_param), void *other_param);
-
-void Binary_Search_Tree_Transplant(Binary_Search_Tree *T, Binary_Search_Tree_Node *u, Binary_Search_Tree_Node *v);
-
+void Binary_Search_Tree_Insert(Binary_Search_Tree *T, Binary_Search_Tree_Node *z,
+                               char func(void *key1,void *key2,void *other_param), void *other_param);
+void Binary_Search_Tree_Transplant(Binary_Search_Tree *T,
+                                   Binary_Search_Tree_Node *u, Binary_Search_Tree_Node *v);
 void Binary_Search_Tree_Delete(Binary_Search_Tree *T, Binary_Search_Tree_Node *z);
 
 #endif /* _BINARY_SEARCH_TREE_H */
