@@ -5,5 +5,6 @@ int main(int argc, char *argv[])
 {
     uint64_t n_core = N_CPU_Thread();
     printf("n core:\t%llu\n", n_core);
+    //printf("n thread (init):\t%llu\n", madd_n_thread);
     return 0;
 }

@@ -29,6 +29,9 @@ typedef union{
     long long aligner;
 } RWLock;
 
+/* the value is actually of no use, just to ensure the thread_base init could be trigeered at the program start */
+extern bool madd_thread_base_triggered;
+
 Thread Thread_Create(void func(void*), void* param);
 void Thread_Join(Thread th);
 void Thread_Detach(Thread th);
