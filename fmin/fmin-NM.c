@@ -15,7 +15,7 @@ Nelder-Mead Search
 #include<stdio.h>
 #include<wchar.h>
 #include"../basic/basic.h"
-#include"../data_struct/RB_Tree.h"
+#include"../data_struct/RB_tree.h"
 
 #ifdef ENABLE_QUADPRECISION
 #include<quadmath.h>
