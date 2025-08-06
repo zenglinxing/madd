@@ -16,6 +16,7 @@ Nelder-Mead Search
 #include<quadmath.h>
 #endif /* ENABLE_QUADPRECISION */
 
+#define FMIN_NM_FAIL 100
 #define FMIN_NM_COMPARE_FAIL 3
 
 #define FMIN_NM_ELEMENT_AND_PARAM(Fmin_NM_Element, Fmin_NM_Param, num_type) \

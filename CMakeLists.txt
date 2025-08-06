@@ -67,7 +67,7 @@ include(config.cmake)
 # =================================================================================================
 add_subdirectory(basic)
 add_subdirectory(data_struct)
-#add_subdirectory(fmin)
+add_subdirectory(fmin)
 add_subdirectory(rng)
 add_subdirectory(large_number)
 add_subdirectory(sort)
@@ -91,7 +91,7 @@ add_definitions(-DMADD_BUILD_STAGE)
 add_library(madd STATIC
             ${MADD_SRC_LIST_BASIC} # basic/
             ${MADD_SRC_LIST_DATA_STRUCT} # data_struct/
-            #${MADD_SRC_LIST_FMIN} # fmin/
+            ${MADD_SRC_LIST_FMIN} # fmin/
             ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_SORT} # sort/
@@ -132,6 +132,7 @@ if (ENABLE_TEST)
     enable_testing()
     include(basic/test.cmake)
     include(data_struct/test.cmake)
+    include(fmin/test.cmake)
     include(rng/test.cmake)
     include(large_number/test.cmake)
     include(sort/test.cmake)
