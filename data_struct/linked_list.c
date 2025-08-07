@@ -78,7 +78,7 @@ bool Linked_List_Init(Linked_List_Node *node, size_t usize)
         node->buf = malloc(usize);
         if (node->buf == NULL){
             wchar_t error_info[MADD_ERROR_INFO_LEN];
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: cannot allocate mem %llu.", __func__, usize);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cannot allocate mem %llu.", __func__, usize);
             Madd_Error_Add(MADD_ERROR, error_info);
             return false;
         }
@@ -142,6 +142,20 @@ bool Linked_List_Link(Linked_List_Node *prev, Linked_List_Node *next, bool flag_
         return false;
     }
 
+    if (prev == next){
+#ifdef MADD_ENABLE_MULTITHREAD
+        LL_WRITE_LOCK(prev)
+#endif
+        prev->next = next;
+        if (flag_bidirection){
+            next->prev = prev;
+        }
+#ifdef MADD_ENABLE_MULTITHREAD
+        LL_WRITE_UNLOCK(prev)
+#endif
+        return true;
+    }
+
 #ifdef MADD_ENABLE_MULTITHREAD
     LL_WRITE_LOCK_NODES(prev, next)
 #endif
@@ -167,9 +181,11 @@ static void lock_nodes(Linked_List_Node **nodes, int count)
 {
     Sort_Quicksort(count, sizeof(Linked_List_Node*), nodes, Deleta_ptr_compare, NULL);
     for (int i = 0; i < count; i++) {
+        //printf("i=%d|%p", i, nodes[i]);
         if (nodes[i] != NULL) {
             LL_WRITE_LOCK(nodes[i]);
         }
+        //printf("d\t");
     }
 }
 
@@ -205,24 +221,24 @@ bool Linked_List_Delete(Linked_List_Node *node)
     lock_nodes(nodes, n_node);
     if (node->prev != prev || node->next != next) {
         Linked_List_Node *locked_node = (node->prev != prev) ? prev : next;
-        unlock_nodes(nodes, 3);
+        unlock_nodes(nodes, n_node);
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: unable to delete node, ptr %p. The adjacent node is locked, pointer %p.", __func__, node, locked_node);
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to delete node, ptr %p. The adjacent node (pointer %p) is locked by other thread.", __func__, node, locked_node);
         Madd_Error_Add(MADD_ERROR, error_info);
         return false;
     }
 #endif
 
     if (prev != NULL){
-        prev->next = next;
+        prev->next = (next == node) ? NULL : next;
     }
     if (next != NULL){
-        next->prev = prev;
+        next->prev = (prev == node) ? NULL : prev;
     }
     node->next = node->prev = NULL;
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    unlock_nodes(nodes, 3);
+    unlock_nodes(nodes, n_node);
 #endif
     return true;
 }
@@ -237,11 +253,40 @@ bool Linked_List_Insert_After(Linked_List_Node *prev, Linked_List_Node *next, bo
         Madd_Error_Add(MADD_ERROR, L"Linked_List_Link: next node pointer is NULL.");
         return false;
     }
+
+    if (prev == next){
+#ifdef MADD_ENABLE_MULTITHREAD
+            LL_WRITE_LOCK(next)
+#endif
+        Linked_List_Node *old_next = prev->next;
+        prev->next = next;
+        if (flag_bidirection) next->prev = prev;
+#ifdef MADD_ENABLE_MULTITHREAD
+            LL_WRITE_UNLOCK(next)
+#endif
+        return true;
+    }
+
     Linked_List_Node *old_next = prev->next;
+
+    if (old_next == next){
+        Madd_Error_Add(MADD_WARNING, L"Linked_List_Link: the next node had already linked.");
+        if (flag_bidirection){
+#ifdef MADD_ENABLE_MULTITHREAD
+        LL_WRITE_LOCK(next)
+#endif
+            next->prev = prev;
+#ifdef MADD_ENABLE_MULTITHREAD
+        LL_WRITE_UNLOCK(next)
+#endif
+        }
+        return true;
+    }
 
 #ifdef MADD_ENABLE_MULTITHREAD
     Linked_List_Node *nodes[4] = {prev, next, old_next, NULL};
-    int node_count = old_next ? 3 : 2;
+    int node_count = (old_next && old_next != next && prev != old_next) ? 3 : 2;
+    //printf("node_count:%d\t", node_count);
     lock_nodes(nodes, node_count);
     if (prev->next != old_next) {
         unlock_nodes(nodes, node_count);
@@ -261,7 +306,11 @@ bool Linked_List_Insert_After(Linked_List_Node *prev, Linked_List_Node *next, bo
     }
     
 #ifdef MADD_ENABLE_MULTITHREAD
-    LL_WRITE_UNLOCK_NODES(prev, next)
+    if (node_count == 3){
+        unlock_nodes(nodes, node_count);
+    }else{
+        LL_WRITE_UNLOCK_NODES(prev, next)
+    }
 #endif
     return true;
 }

@@ -82,6 +82,7 @@ static void Madd_Error_Print_Last_Internal(bool flag_print_exceed_note)
         id_error = madd_error.item[madd_error.n-1].i_sign;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
         wchar_t print_info[MADD_ERROR_INFO_LEN+100];
+        wprintf(L"%ls\n",madd_error.item[madd_error.n-1].info);
         swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
         Madd_Print(print_info);
         free(wtime_stamp);

@@ -54,7 +54,7 @@ bool Queue_Init(Queue *queue, uint64_t unit_capacity, size_t usize)
     Queue_Node *node = queue->head = (Queue_Node*)malloc(size_required);
     if (node == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: unable to allocate mem %llu bytes.", __func__, size_required);
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to allocate mem %llu bytes.", __func__, size_required);
         Madd_Error_Add(MADD_ERROR, error_info);
         return false;
     }
@@ -122,7 +122,7 @@ static bool Queue_Insert_New_Node(Queue *queue)
     Queue_Node *node = (Queue_Node*)malloc(size_required);
     if (node == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: unable to allocate mem %llu for new node. See Madd source %s line %d.", __func__, size_required, __FILE__, __LINE__);
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to allocate mem %llu for new node. See Madd source %hs line %d.", __func__, size_required, __FILE__, __LINE__);
         Madd_Error_Add(MADD_ERROR, error_info);
         return false;
     }
@@ -192,13 +192,13 @@ static bool Queue_Delete_Head_Node(Queue *queue)
     Queue_Node *head = queue->head, *last = head->prev, *next = head->next;
     if (last == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: corrupted queue, the last node of queue is NULL. See Madd source %s line %d.", __func__, __FILE__, __LINE__);
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: corrupted queue, the last node of queue is NULL. See Madd source %hs line %d.", __func__, __FILE__, __LINE__);
         Madd_Error_Add(MADD_ERROR, error_info);
         return false;
     }
     if (next == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: corrupted queue, the next-to-head node of queue is NULL. See Madd source %s line %d.", __func__, __FILE__, __LINE__);
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: corrupted queue, the next-to-head node of queue is NULL. See Madd source %hs line %d.", __func__, __FILE__, __LINE__);
         Madd_Error_Add(MADD_ERROR, error_info);
         return false;
     }

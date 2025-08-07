@@ -55,7 +55,7 @@ typedef struct{ \
     void *space=(void*)malloc(total_size); \
     if (space == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%s: unable to allocate mem %llu bytes.", __func__, total_size); \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to allocate mem %llu bytes.", __func__, total_size); \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return FMIN_NM_FAIL; \
     } \
@@ -109,7 +109,7 @@ typedef struct{ \
             } \
         } \
         for (i_param=0; i_param<n_param; i_param++){ \
-            x_mean[i_param] = x_sum[i_param] / (double)n_param; \
+            x_mean[i_param] = x_sum[i_param] / (num_type)n_param; \
         } \
         /* x_r = 2*x_mean-xh */ \
         for (i_param=0; i_param<n_param; i_param++){ \

@@ -210,10 +210,15 @@ void thread_work(void* arg) {
     Linked_List_Node** nodes = data->nodes;
     int count = data->node_count;
     
-    srand(time(NULL));
-    //srand(10);
+    //srand(time(NULL));
+    srand(10);
     
     for (int i = 0; i < OPERATIONS_PER_THREAD; i++) {
+        /*if (i==35){
+            bool res = RWLock_Try_Write_Lock(&nodes[14]->rwlock);
+            if (res) RWLock_Write_Unlock(&nodes[14]->rwlock);
+            printf("try lock 14:\t%d\n", res);
+        }*/
         //printf("i=%d\t%d\t", i, OPERATIONS_PER_THREAD);
         int op = rand() % 3;
         int idx1 = rand() % count;
@@ -222,11 +227,13 @@ void thread_work(void* arg) {
         //printf("op=%d\t", op);
         switch (op) {
             case 0: { // 连接
+                //printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
                 bool result = Linked_List_Link(nodes[idx1], nodes[idx2], rand() % 2);
                 //(void)result; // 避免未使用警告
                 break;
             }
             case 1: { // 删除
+                //printf("idx=%02d|%p\t\t", idx1, nodes[idx1]);
                 if (nodes[idx1]->prev || nodes[idx1]->next) {
                     bool result = Linked_List_Delete(nodes[idx1]);
                     //(void)result; // 避免未使用警告
@@ -234,6 +241,7 @@ void thread_work(void* arg) {
                 break;
             }
             case 2: { // 插入
+                //printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
                 bool result = Linked_List_Insert_After(nodes[idx1], nodes[idx2], rand() % 2);
                 //(void)result; // 避免未使用警告
                 break;
@@ -265,18 +273,18 @@ void test_multithread_safety() {
     Thread threads[THREAD_COUNT];
     ThreadData thread_data = {nodes, node_count};
     
-    /*for (int i = 0; i < THREAD_COUNT; i++) {
+    for (int i = 0; i < THREAD_COUNT; i++) {
         threads[i] = Thread_Create(thread_work, &thread_data);
     }
-    Madd_Print(L"threads created\n");*/
+    Madd_Print(L"threads created\n");
     
-    thread_work(&thread_data);
+    //thread_work(&thread_data);
 
     // 等待所有线程完成
-    /*for (int i = 0; i < THREAD_COUNT; i++) {
+    for (int i = 0; i < THREAD_COUNT; i++) {
         Thread_Join(threads[i]);
     }
-    printf("threads joined\n");*/
+    printf("threads joined\n");
     
     // 验证没有死锁或数据损坏
     int active_links = 0;
