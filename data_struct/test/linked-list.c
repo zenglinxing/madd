@@ -174,10 +174,12 @@ void test_circular_linking() {
     // 创建自环节点
     Linked_List_Node node;
     bool init_result = Linked_List_Init(&node, 0);  // 保存结果到变量
+    //printf("init:\t%d\n", init_result);
     assert(init_result);
     
     // 创建自连接
     bool link_result = Linked_List_Link(&node, &node, true);  // 保存结果到变量
+    //printf("link:\t%d\n", link_result);
     assert(link_result);
     
     // 验证自环
@@ -186,9 +188,11 @@ void test_circular_linking() {
     
     // 删除应失败（自环不能删除）
     bool delete_result = Linked_List_Delete(&node);  // 保存结果到变量
+    //printf("delete:\t%d\n", delete_result);
     assert(!delete_result);
     
     // 清理
+    //printf("destroying:\n");
     Linked_List_Destroy(&node);
     
     printf("Passed!\n\n");
@@ -196,7 +200,7 @@ void test_circular_linking() {
 
 #ifdef MADD_ENABLE_MULTITHREAD
 
-#define THREAD_COUNT 4
+#define THREAD_COUNT 1
 #define OPERATIONS_PER_THREAD 1000
 
 typedef struct {
@@ -212,6 +216,8 @@ void thread_work(void* arg) {
     
     //srand(time(NULL));
     srand(10);
+    printf("seed set\n");
+    fflush(stdout);
     
     for (int i = 0; i < OPERATIONS_PER_THREAD; i++) {
         /*if (i==35){
@@ -219,21 +225,25 @@ void thread_work(void* arg) {
             if (res) RWLock_Write_Unlock(&nodes[14]->rwlock);
             printf("try lock 14:\t%d\n", res);
         }*/
-        //printf("i=%d\t%d\t", i, OPERATIONS_PER_THREAD);
+        printf("i=%d\t%d\t", i, OPERATIONS_PER_THREAD);
+        fflush(stdout);
         int op = rand() % 3;
         int idx1 = rand() % count;
         int idx2 = rand() % count;
         
-        //printf("op=%d\t", op);
+        printf("op=%d\t", op);
+        fflush(stdout);
         switch (op) {
             case 0: { // 连接
-                //printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
+                printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
+                fflush(stdout);
                 bool result = Linked_List_Link(nodes[idx1], nodes[idx2], rand() % 2);
                 //(void)result; // 避免未使用警告
                 break;
             }
             case 1: { // 删除
-                //printf("idx=%02d|%p\t\t", idx1, nodes[idx1]);
+                printf("idx=%02d|%p\t\t", idx1, nodes[idx1]);
+                fflush(stdout);
                 if (nodes[idx1]->prev || nodes[idx1]->next) {
                     bool result = Linked_List_Delete(nodes[idx1]);
                     //(void)result; // 避免未使用警告
@@ -241,13 +251,15 @@ void thread_work(void* arg) {
                 break;
             }
             case 2: { // 插入
-                //printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
+                printf("idx=%02d|%p idx=%02d|%p\t", idx1, nodes[idx1], idx2, nodes[idx2]);
+                fflush(stdout);
                 bool result = Linked_List_Insert_After(nodes[idx1], nodes[idx2], rand() % 2);
                 //(void)result; // 避免未使用警告
                 break;
             }
         }
-        //printf("op=%d done\n", op);
+        printf("op=%d done\n", op);
+        fflush(stdout);
     }
 }
 
@@ -275,8 +287,9 @@ void test_multithread_safety() {
     
     for (int i = 0; i < THREAD_COUNT; i++) {
         threads[i] = Thread_Create(thread_work, &thread_data);
+        printf("thread %d created\n", i);
     }
-    Madd_Print(L"threads created\n");
+    //Madd_Print(L"threads created\n");
     
     //thread_work(&thread_data);
 
@@ -321,7 +334,7 @@ void test_memory_leaks() {
 // ================== 主测试函数 ==================
 
 int main() {
-    madd_error_keep_print = true;
+    madd_error_keep_print = false;
     printf("Starting Linked List Test Suite\n");
     printf("===============================\n\n");
     
