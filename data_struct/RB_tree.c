@@ -82,10 +82,15 @@ bool RB_Tree_Init(RB_Tree *T)
 bool RB_Tree_Enable_Multithread(RB_Tree *T)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
+    if (T->flag_multithread){
+        Madd_Error_Add(MADD_WARNING, L"RB_Tree_Enable_Multithread: RB tree already has read-write lock initialized.");
+        return false;
+    }
     RWLock_Init(&T->rwlock);
     T->flag_multithread = true;
     return true;
 #else
+    T->flag_multithread = false;
     Madd_Error_Add(MADD_WARNING, L"RB_Tree_Enable_Multithread: Madd lib multithread wasn't enabled during compiling. Tried to enable Madd's multithread and re-compile Madd.");
     return false;
 #endif

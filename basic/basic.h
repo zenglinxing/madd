@@ -194,7 +194,7 @@ void Read_Array_BE(FILE *fp, void *buf_, size_t n_element, size_t element_size);
 void Write_Array_LE(FILE *fp, void *buf_, size_t n_element, size_t element_size);
 void Write_Array_BE(FILE *fp, void *buf_, size_t n_element, size_t element_size);
 
-/* error_info.c */
+/* error_info.c & error_info.cpp */
 #define MADD_SUCCESS 0
 #define MADD_ERROR 1
 #define MADD_WARNING 2

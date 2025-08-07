@@ -49,13 +49,14 @@ bool Fibonacci_Heap_Enable_Multithread(Fibonacci_Heap *H)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
     if (H->flag_multithread){
-        Madd_Error_Add(MADD_ERROR, L"Fibonacci_Heap_Enable_Multithread: heap already has read-write lock.");
+        Madd_Error_Add(MADD_ERROR, L"Fibonacci_Heap_Enable_Multithread: heap already has read-write lock initialized.");
         return false;
     }
     RWLock_Init(&H->rwlock);
     H->flag_multithread = true;
     return true;
 #else
+    H->flag_multithread = false;
     Madd_Error_Add(MADD_WARNING, L"Fibonacci_Heap_Enable_Multithread: Madd lib multithread wasn't enabled during compiling. Tried to enable Madd's multithread and re-compile Madd.");
     return false;
 #endif

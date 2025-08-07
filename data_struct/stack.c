@@ -33,10 +33,15 @@ bool Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize_ /* element s
 bool Stack_Enable_Multithread(Stack *stack)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
+    if (stack->flag_multithread){
+        Madd_Error_Add(MADD_ERROR, L"Stack_Enable_Multithread: stack already has read-write lock initialized.");
+        return false;
+    }
     RWLock_Init(&stack->rwlock);
     stack->flag_multithread = true;
     return true;
 #else
+    stack->flag_multithread = false;
     Madd_Error_Add(MADD_WARNING, L"Stack_Enable_Multithread: Madd lib multithread wasn't enabled during compiling. Tried to enable Madd's multithread and re-compile Madd.");
     return false;
 #endif

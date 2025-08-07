@@ -47,13 +47,14 @@ bool Binary_Search_Tree_Enable_Multithread(Binary_Search_Tree *T)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
     if (T->flag_multithread){
-        Madd_Error_Add(MADD_ERROR, L"Binary_Search_Tree_Enable_Multithread: BST already has read-write lock.");
+        Madd_Error_Add(MADD_ERROR, L"Binary_Search_Tree_Enable_Multithread: BST already has read-write lock initialized.");
         return false;
     }
     RWLock_Init(&T->rwlock);
     T->flag_multithread = true;
     return true;
 #else
+    T->flag_multithread = false;
     Madd_Error_Add(MADD_WARNING, L"Binary_Search_Tree_Enable_Multithread: Madd lib multithread wasn't enabled during compiling. Tried to enable Madd's multithread and re-compile Madd.");
     return false;
 #endif
