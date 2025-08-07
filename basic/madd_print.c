@@ -18,25 +18,37 @@ bool madd_print_wide = false, madd_save_wide = false;
 
 static char *Wide2Char(wchar_t *wstr)
 {
+    if (wstr == NULL){
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tThe wide character string pointer is NULL.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tThe wide character string pointer is NULL.", __func__, __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
     size_t len_char = wcstombs(NULL, wstr, 0);
     if (len_char == (size_t)-1){
-        if (madd_print_wide) wprintf(L"Madd Exit!\tOccur failure to calculate the wide string.");
-        else printf("Madd Exit!\tOccur failure to calculate the wide string.");
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
     char *str = (char*)malloc(len_char+1);
     if (str == NULL){
-        if (madd_print_wide) wprintf(L"Madd Exit!\tFailed to allocate narrow string mem.");
-        else printf("Madd Exit!\tFailed to allocate narrow string mem.");
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tFailed to allocate narrow string mem.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tFailed to allocate narrow string mem.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
     size_t len_converted = wcstombs(str, wstr, len_char+1);
     if (len_converted == (size_t)-1){
         free(str);
-        if (madd_print_wide) wprintf(L"Madd Exit!\tFailed to convert wide string to narrow string.");
-        else printf("Madd Exit!\tFailed to convert wide string to narrow string.");
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tFailed to convert wide string to narrow string.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tFailed to convert wide string to narrow string.", __func__, __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
+    }
+    if (str[len_char] != '\0'){
+        free(str);
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tThe end of string is not '\\0'.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tMadd Exit!\tThe end of string is not '\\0'.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
@@ -46,8 +58,8 @@ static char *Wide2Char(wchar_t *wstr)
 void Madd_Print(wchar_t *wstr)
 {
     if (wstr == NULL){
-        if (madd_print_wide) wprintf(L"Madd Exit!\tThe given wide string is NULL.");
-        else printf("Madd Exit!\tThe given wide string is NULL.");
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
@@ -63,8 +75,8 @@ void Madd_Print(wchar_t *wstr)
 void Madd_Save(FILE *fp, wchar_t *wstr)
 {
     if (wstr == NULL){
-        if (madd_print_wide) wprintf(L"Madd Exit!\tThe given wide string is NULL.");
-        else printf("Madd Exit!\tThe given wide string is NULL.");
+        if (madd_print_wide) wprintf(L"%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 

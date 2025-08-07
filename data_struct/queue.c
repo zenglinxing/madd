@@ -47,9 +47,9 @@ bool Queue_Init(Queue *queue, uint64_t unit_capacity, size_t usize)
         Madd_Error_Add(MADD_ERROR, L"Queue_Init: queue pointer is NULL.");
         return false;
     }
-    size_t size_required = sizeof(Queue_Node)+queue->unit_capacity*queue->usize;
     queue->unit_capacity = (unit_capacity) ? unit_capacity : madd_queue_default_len;
     queue->usize = (usize) ? usize : sizeof(void*);
+    size_t size_required = sizeof(Queue_Node)+queue->unit_capacity*queue->usize;
     queue->flag_multithread = false;
     Queue_Node *node = queue->head = (Queue_Node*)malloc(size_required);
     if (node == NULL){

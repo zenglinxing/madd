@@ -63,3 +63,9 @@ target_include_directories(test_data-struct-queue PUBLIC ${CMAKE_CURRENT_SOURCE_
 target_link_libraries(test_data-struct-queue PUBLIC madd)
 add_test(NAME DataStruct-Queue
          COMMAND test_data-struct-queue)
+
+add_executable(test_data-struct-queue-minimal data_struct/test/queue-minimal.c)
+target_include_directories(test_data-struct-queue-minimal PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_data-struct-queue-minimal PUBLIC madd)
+add_test(NAME DataStruct-QueueMinimal
+         COMMAND test_data-struct-queue-minimal)

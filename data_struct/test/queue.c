@@ -248,7 +248,7 @@ void Test_Queue_ErrorHandling(void) {
 }
 
 int main(int argc, char *argv[]) {
-    madd_error_keep_print = true;
+    //madd_error_keep_print = true;
     Madd_Print(L"start..\n");
     Test_Queue_Basic();
     Test_Queue_EdgeCases();
@@ -257,9 +257,9 @@ int main(int argc, char *argv[]) {
 #ifdef MADD_ENABLE_MULTITHREAD
     Test_Queue_Multithread();
 #else
-    Madd_Print(L"Skipping multithreaded test (MADD_ENABLE_MULTITHREAD not enabled)");
+    Madd_Print(L"Skipping multithreaded test (MADD_ENABLE_MULTITHREAD not enabled)\n");
 #endif
 
-    Madd_Print(L"===== All Queue Tests Completed Successfully =====");
+    Madd_Print(L"===== All Queue Tests Completed Successfully =====\n");
     return 0;
 }
