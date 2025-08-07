@@ -18,6 +18,7 @@ This file is part of Math Addition, in ./thread_base/pthread.c
 #else
 #include<unistd.h>
 #include<sys/sysinfo.h>
+#include<sys/time.h>
 #endif
 
 typedef void *(*thread_input_func)(void *);

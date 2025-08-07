@@ -5,8 +5,10 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./basic/linked_list.c
 */
+#include<stdio.h>
 #include<stdint.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include"data_struct.h"
 #include"../basic/basic.h"
 #include"../sort/sort.h"
@@ -49,7 +51,7 @@ This file is part of Math Addition, in ./basic/linked_list.c
     } else { \
         LL_WRITE_LOCK(a); \
     } \
-} while(0);
+} while(0); \
 
 #define LL_WRITE_UNLOCK_NODES(a, b) do { \
     if ((uintptr_t)(a) < (uintptr_t)(b)) { \
@@ -61,7 +63,7 @@ This file is part of Math Addition, in ./basic/linked_list.c
     } else { \
         LL_WRITE_UNLOCK(a); \
     } \
-} while(0);
+} while(0); \
 
 bool Linked_List_Init(Linked_List_Node *node, size_t usize)
 {
@@ -145,12 +147,9 @@ bool Linked_List_Link(Linked_List_Node *prev, Linked_List_Node *next, bool flag_
 #endif
 
     prev->next = next;
-    printf("%p\t", prev->next);
     if (flag_bidirection){
         next->prev = prev;
-        printf("%p\t", next->prev);
     }
-    printf("\n");
 
 #ifdef MADD_ENABLE_MULTITHREAD
     LL_WRITE_UNLOCK_NODES(prev, next)
@@ -168,9 +167,7 @@ static void lock_nodes(Linked_List_Node **nodes, int count)
 {
     Sort_Quicksort(count, sizeof(Linked_List_Node*), nodes, Deleta_ptr_compare, NULL);
     for (int i = 0; i < count; i++) {
-        printf("%d\t", i);
         if (nodes[i] != NULL) {
-            Madd_Print(L"locking\t");
             LL_WRITE_LOCK(nodes[i]);
         }
     }
@@ -194,8 +191,18 @@ bool Linked_List_Delete(Linked_List_Node *node)
 
     Linked_List_Node *prev = node->prev, *next = node->next;
 #ifdef MADD_ENABLE_MULTITHREAD
-    Linked_List_Node *nodes[3] = {node, prev, next};
-    lock_nodes(nodes, 3);
+    /* avoid node self ptr */
+    int n_node = 1;
+    Linked_List_Node *nodes[3] = {node};
+    if (prev != node){
+        nodes[n_node] = prev;
+        n_node ++;
+    }
+    if (next != node && next != prev){
+        nodes[n_node] = next;
+        n_node ++;
+    }
+    lock_nodes(nodes, n_node);
     if (node->prev != prev || node->next != next) {
         Linked_List_Node *locked_node = (node->prev != prev) ? prev : next;
         unlock_nodes(nodes, 3);
