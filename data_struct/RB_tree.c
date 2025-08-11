@@ -16,25 +16,33 @@ I did this via refering to the book Introduction to Algorithm by Thomas H. Corme
 #include"../basic/basic.h"
 /*#include"../thread_base/thread_base.h"*/
 
-#define RB_READ_LOCK(T) \
-    if ((T)->flag_multithread){ \
-        RWLock_Read_Lock(&(T)->rwlock); \
-    } \
+static inline void RB_Read_Lock(RB_Tree *T)
+{
+    if (T->flag_multithread){
+        RWLock_Read_Lock(&T->rwlock);
+    }
+}
+    
+static inline void RB_Read_Unlock(RB_Tree *T)
+{
+    if (T->flag_multithread){
+        RWLock_Read_Unlock(&T->rwlock);
+    }
+}
+    
+static inline void RB_Write_Lock(RB_Tree *T)
+{
+    if (T->flag_multithread){
+        RWLock_Write_Lock(&T->rwlock);
+    }
+}
 
-#define RB_READ_UNLOCK(T) \
-    if ((T)->flag_multithread){ \
-        RWLock_Read_Unlock(&(T)->rwlock); \
-    } \
-
-#define RB_WRITE_LOCK(T) \
-    if ((T)->flag_multithread){ \
-        RWLock_Write_Lock(&(T)->rwlock); \
-    } \
-
-#define RB_WRITE_UNLOCK(T) \
-    if ((T)->flag_multithread){ \
-        RWLock_Write_Unlock(&(T)->rwlock); \
-    } \
+static inline void RB_Write_Unlock(RB_Tree *T)
+{
+    if (T->flag_multithread){
+        RWLock_Write_Unlock(&T->rwlock);
+    }
+}
 
 static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
                                      char func(void *key1, void *key2, void *other_param), void *other_param,
@@ -54,9 +62,9 @@ static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *n
         }
     }else if (res == MADD_SAME /*&& flag_allow_same_key != RB_TREE_ENABLE_SAME_KEY*/){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%hs: red-black tree doesn't allow same key! You may try to set RB_TREE_ENABLE_SAME_KEY for %hs(... int flag_allow_same_key, ...).", func_name, func_name);
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%hs: duplicate keys not allowed. You may try to set RB_TREE_ENABLE_SAME_KEY for %hs(... int flag_allow_same_key, ...).", func_name, func_name);
         Madd_Error_Add(MADD_ERROR, error_info);
-        return MADD_SAME;
+        return RB_TREE_SAME_KEY_FAIL;
     }else{
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"%hs: unknown return value: %d. func_compare should only return MADD_LESS/MADD_SAME/MADD_GREATER.", func_name, res);
@@ -101,12 +109,12 @@ RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
                              int flag_allow_same_key)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_LOCK(T)
+    RB_Read_Lock(T);
 #endif
 
     if (x == &T->nil){
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
         return NULL;
     }
@@ -115,7 +123,7 @@ RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
         cmp = func(k, x->key, other_param);
         if (cmp == MADD_SAME){
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
             return x;
         }
@@ -123,7 +131,7 @@ RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
     }
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
     return NULL;
 }
@@ -142,13 +150,13 @@ static RB_Tree_Node *RB_Tree_Minimum_Internal(RB_Tree *T, RB_Tree_Node *x)
 RB_Tree_Node *RB_Tree_Minimum(RB_Tree *T, RB_Tree_Node *x)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_LOCK(T)
+    RB_Read_Lock(T);
 #endif
 
     RB_Tree_Node *ret = RB_Tree_Minimum_Internal(T, x);
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
     return ret;
 }
@@ -167,13 +175,13 @@ static RB_Tree_Node *RB_Tree_Maximum_Internal(RB_Tree *T,RB_Tree_Node *x)
 RB_Tree_Node *RB_Tree_Maximum(RB_Tree *T,RB_Tree_Node *x)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_LOCK(T)
+    RB_Read_Lock(T);
 #endif
 
     RB_Tree_Node *ret = RB_Tree_Maximum_Internal(T, x);
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
     return ret;
 }
@@ -181,19 +189,19 @@ RB_Tree_Node *RB_Tree_Maximum(RB_Tree *T,RB_Tree_Node *x)
 RB_Tree_Node *RB_Tree_Successor(RB_Tree *T,RB_Tree_Node *x)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_LOCK(T)
+    RB_Read_Lock(T);
 #endif
 
     if (x == &T->nil){
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
         return NULL;
     }
     if (x->right != &T->nil){
         RB_Tree_Node *ret = RB_Tree_Minimum_Internal(T, x->right);
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
         return ret;
     }
@@ -204,7 +212,7 @@ RB_Tree_Node *RB_Tree_Successor(RB_Tree *T,RB_Tree_Node *x)
     }
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
     return y;
 }
@@ -212,19 +220,19 @@ RB_Tree_Node *RB_Tree_Successor(RB_Tree *T,RB_Tree_Node *x)
 RB_Tree_Node *RB_Tree_Predecessor(RB_Tree *T,RB_Tree_Node *x)
 {
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_LOCK(T)
+    RB_Read_Lock(T);
 #endif
 
     if (x == &T->nil){
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
         return NULL;
     }
     if (x->left != &T->nil){
         RB_Tree_Node *ret = RB_Tree_Maximum_Internal(T, x->left);
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
         return ret;
     }
@@ -235,7 +243,7 @@ RB_Tree_Node *RB_Tree_Predecessor(RB_Tree *T,RB_Tree_Node *x)
     }
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_READ_UNLOCK(T)
+    RB_Read_Unlock(T);
 #endif
 
     return y;
@@ -369,8 +377,17 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
                     char func(void *key1,void *key2,void *other_param), void *other_param,
                     int flag_allow_same_key)
 {
+    if (T==NULL){
+        Madd_Error_Add(MADD_ERROR, L"RB_Tree_Insert: the input RB_Tree pointer is NULL.");
+        return;
+    }
+    if (z==NULL){
+        Madd_Error_Add(MADD_ERROR, L"RB_Tree_Insert: the input RB_Tree_Node pointer is NULL.");
+        return;
+    }
+
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_WRITE_LOCK(T)
+    RB_Write_Lock(T);
 #endif
 
     RB_Tree_Node *x,*y;
@@ -380,6 +397,12 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     while (x != &T->nil){
         y = x;
         ret_compare = RB_Tree_Internal_Compare(z, x, func, other_param, flag_allow_same_key, "RB_Tree_Insert");
+        if (ret_compare == RB_TREE_SAME_KEY_FAIL){
+            wchar_t error_info[MADD_ERROR_INFO_LEN];
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: see error info from RB_Tree_Internal_Compare. This info is from Madd source %hs line %d.", __func__, __FILE__, __LINE__);
+            Madd_Error_Add(MADD_ERROR, error_info);
+            goto cleanup;
+        }
         if (ret_compare == MADD_LESS){
             x = x->left;
         }else if (ret_compare == MADD_GREATER || ret_compare == MADD_SAME){
@@ -397,6 +420,10 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
     }
     else{
         ret_compare = RB_Tree_Internal_Compare(z, y, func, other_param, flag_allow_same_key, "RB_Tree_Insert");
+        if (ret_compare == RB_TREE_SAME_KEY_FAIL){
+            Madd_Error_Add(MADD_ERROR, L"RB_Tree_Insert: see error info from RB_Tree_Internal_Compare.");
+            goto cleanup;
+        }
         if (ret_compare == MADD_LESS){
             y->left = z;
         }
@@ -417,8 +444,10 @@ void RB_Tree_Insert(RB_Tree *T, RB_Tree_Node *z,
         Madd_Error_Add(MADD_ERROR, error_info);
     }
 
+cleanup:
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_WRITE_UNLOCK(T)
+    RB_Write_Unlock(T);
+    return;
 #endif
 }
 
@@ -433,9 +462,7 @@ void RB_Tree_Transplant(RB_Tree *T, RB_Tree_Node *u, RB_Tree_Node *v)
     else{
         u->p->right = v;
     }
-    if (v != &T->nil) {  /* avoid to change nil */
-        v->p = u->p;
-    }
+    v->p = u->p;
 }
 
 int RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
@@ -528,7 +555,7 @@ int RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
                     return res_rotate;
                 }
                 x = T->root;
-                x->p = &T->nil;
+                /*x->p = &T->nil;*/
             }
         }
     }
@@ -538,11 +565,20 @@ int RB_Tree_Delete_Fixup(RB_Tree *T, RB_Tree_Node *x)
 
 void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
 {
+    if (T==NULL){
+        Madd_Error_Add(MADD_ERROR, L"RB_Tree_Delete: the input RB_Tree pointer is NULL.");
+        return;
+    }
+    if (z==NULL){
+        Madd_Error_Add(MADD_ERROR, L"RB_Tree_Delete: the input RB_Tree_Node pointer is NULL.");
+        return;
+    }
+
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_WRITE_LOCK(T)
+    RB_Write_Lock(T);
 #endif
 
-    RB_Tree_Node *x, *y = z;
+    RB_Tree_Node *x = &T->nil, *y = z;
     char y_original_color = y->color;
     if (z->left == &T->nil){
         x = z->right;
@@ -557,9 +593,7 @@ void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
         y_original_color = y->color;
         x = y->right;
         if (y->p == z){
-            if (x != &T->nil) {
-                x->p = y;
-            }
+            x->p = y;
         }
         else{
             RB_Tree_Transplant(T, y, y->right);
@@ -581,6 +615,6 @@ void RB_Tree_Delete(RB_Tree *T, RB_Tree_Node *z)
     }
 
 #ifdef MADD_ENABLE_MULTITHREAD
-    RB_WRITE_UNLOCK(T)
+    RB_Write_Unlock(T);
 #endif
 }

@@ -46,6 +46,12 @@ target_link_libraries(test_data-struct-RBTree-3 PUBLIC madd)
 add_test(NAME DataStruct-RBTree-3
          COMMAND test_data-struct-RBTree-3)
 
+add_executable(test_data-struct-RBTree-Deepseek data_struct/test/rbtree-deepseek.c)
+target_include_directories(test_data-struct-RBTree-Deepseek PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_data-struct-RBTree-Deepseek PUBLIC madd)
+add_test(NAME DataStruct-RBTreeDeepseek
+         COMMAND test_data-struct-RBTree-Deepseek)
+
 add_executable(test_data-struct-stack data_struct/test/stack.c)
 target_include_directories(test_data-struct-stack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_data-struct-stack PUBLIC madd)
