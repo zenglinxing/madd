@@ -36,24 +36,6 @@ bool Stack_Top(Stack *stack, void *element);
 bool Stack_Empty(Stack *stack);
 size_t Stack_Size(Stack *stack);
 
-/* linked list */
-struct _Linked_List_Node{
-    bool flag_multithread;
-    void *buf;
-    size_t usize;
-    uint64_t max_trylock; /* if 0, then infinite try -- high risk! */
-    struct _Linked_List_Node *prev, *next;
-    RWLock rwlock;
-};
-typedef struct _Linked_List_Node Linked_List_Node;
-
-bool Linked_List_Init(Linked_List_Node *node, size_t usize);
-bool Linked_List_Enable_Multithread(Linked_List_Node *node);
-bool Linked_List_Destroy(Linked_List_Node *node);
-bool Linked_List_Link(Linked_List_Node *prev, Linked_List_Node *next, bool flag_bidirection);
-bool Linked_List_Delete(Linked_List_Node *node);
-bool Linked_List_Insert_After(Linked_List_Node *prev, Linked_List_Node *next, bool flag_bidirection);
-
 /* queue */
 struct _Queue_Node{
     uint64_t start, end, n_element; /* convention: start + n_element = end */

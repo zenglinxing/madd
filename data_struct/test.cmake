@@ -58,12 +58,6 @@ target_link_libraries(test_data-struct-stack PUBLIC madd)
 add_test(NAME DataStruct-Stack
          COMMAND test_data-struct-stack)
 
-add_executable(test_data-struct-linked-list data_struct/test/linked-list.c)
-target_include_directories(test_data-struct-linked-list PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(test_data-struct-linked-list PUBLIC madd)
-add_test(NAME DataStruct-LinkedList
-         COMMAND test_data-struct-linked-list)
-
 add_executable(test_data-struct-queue data_struct/test/queue.c)
 target_include_directories(test_data-struct-queue PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_data-struct-queue PUBLIC madd)
