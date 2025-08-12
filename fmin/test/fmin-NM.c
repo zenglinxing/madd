@@ -38,11 +38,11 @@ int main() {
     // 设置本地化环境以支持宽字符输出
     setlocale(LC_ALL, "");
     
-    Madd_Print(L"===== Nelder-Mead算法测试 =====");
+    Madd_Print(L"===== Nelder-Mead算法测试 =====\n");
     
     /* 测试1：Rosenbrock函数优化 */
     {
-        Madd_Print(L"\n测试1：Rosenbrock函数优化（预期最小值在(1,1)处）");
+        Madd_Print(L"\n测试1：Rosenbrock函数优化（预期最小值在(1,1)处）\n");
         
         const int n_param = 2;
         const int n_points = 3; // n+1个点
@@ -77,7 +77,7 @@ int main() {
             }
         }
         
-        swprintf(info, 256, L"优化结果: 找到最小值点 (%f, %f), 函数值 = %f", 
+        swprintf(info, 256, L"优化结果: 找到最小值点 (%f, %f), 函数值 = %f\n", 
                 best_x, best_y, rosenbrock((double[]){best_x, best_y}, NULL));
         Madd_Print(info);
         
@@ -90,7 +90,7 @@ int main() {
     
     /* 测试2：Sphere函数优化 */
     {
-        Madd_Print(L"\n测试2：Sphere函数优化（预期最小值在(0,0)处）");
+        Madd_Print(L"\n测试2：Sphere函数优化（预期最小值在(0,0)处）\n");
         
         const int n_param = 2;
         const int n_points = 3; // n+1个点
@@ -104,7 +104,7 @@ int main() {
         // 设置初始单纯形（较远的点）
         start[0][0] = 10.0; start[0][1] = 10.0;  // 点1: (10,10)
         start[1][0] = 15.0; start[1][1] = 5.0;   // 点2: (15,5)
-        start[2][0] = 5.0;  start[2][1] = 15.0;  // 点3: (5,15)
+        start[2][0] = 5.0;  start[2][1] = 14.0;  // 点3: (5,15)
         
         // 运行Nelder-Mead优化
         int result = Fmin_NM(n_param, start, sphere, NULL, 
@@ -125,7 +125,7 @@ int main() {
             }
         }
         
-        swprintf(info, 256, L"优化结果: 找到最小值点 (%f, %f), 函数值 = %f", 
+        swprintf(info, 256, L"优化结果: 找到最小值点 (%f, %f), 函数值 = %f\n", 
                 best_x, best_y, sphere((double[]){best_x, best_y}, NULL));
         Madd_Print(info);
         
@@ -138,7 +138,7 @@ int main() {
     
     /* 测试3：边界情况测试（单参数） */
     {
-        Madd_Print(L"\n测试3：单参数优化（抛物线函数）");
+        Madd_Print(L"\n测试3：单参数优化（抛物线函数）\n");
         
         const int n_param = 1;
         const int n_points = 2; // n+1个点
@@ -171,7 +171,7 @@ int main() {
             }
         }
         
-        swprintf(info, 256, L"优化结果: 找到最小值点 x = %f, 函数值 = %f", 
+        swprintf(info, 256, L"优化结果: 找到最小值点 x = %f, 函数值 = %f\n", 
                 best_x, parabola(&best_x, NULL));
         Madd_Print(info);
         
@@ -182,7 +182,7 @@ int main() {
         free(start);
     }
     
-    Madd_Print(L"\n===== 测试完成 =====");
+    Madd_Print(L"\n===== 测试完成 =====\n");
     
     return 0;
 }

@@ -48,7 +48,7 @@ typedef struct{ \
 #define FMIN_NM__ALGORITHM(num_type, num_print_type, Fmin_NM_Element, Fmin_NM_Param, Fmin_NM_Compare) \
 { \
     size_t size_cpy=sizeof(num_type)*n_param /* n_param *//*, Size_cpy=size_cpy*n_param+size_cpy*/ /* n_cpy*(n_param+1) */; \
-    uint64_t ix, i_param, nx=(uint64_t)n_param+1; \
+    uint64_t ix, i_param, nx=(uint64_t)n_param+1, nn_param=nx*n_param; \
     size_t total_size = nx * (sizeof(struct Fmin_NM_Element) + sizeof(RB_Tree_Node)) \
                    + 6 * size_cpy; \
     void *space=(void*)malloc(total_size); \
@@ -70,8 +70,12 @@ typedef struct{ \
     size_t print_len, print_where; \
     int print_temp_len; \
     if (print_step){ \
-        print_len = (50 + n_param*15 + 20)*sizeof(wchar_t); \
+        print_len = (50 + (n_param*15 + 20) * (n_param + 1))*sizeof(wchar_t); \
         print_info = (wchar_t*)malloc(print_len); \
+        if (print_info == NULL){ \
+            wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to allocate mem %llu bytes for printing.", __func__, print_len); \
+        } \
     } \
  \
     /* sort the x according to y */ \
@@ -108,7 +112,10 @@ typedef struct{ \
         pe_max_less = (struct Fmin_NM_Element*)(node_max_less->key); \
         id_max = pe_max->id; \
         /* cal x_mean */ \
-        memset(x_sum, 0, size_cpy); \
+        /* set 0 */ \
+        for (i_param=0; i_param<n_param; i_param++){ \
+            x_sum[i_param] = 0; \
+        } \
         for (ix=0,pnme=nm.element; ix<nx; ix++,pnme++){ \
             if (pnme == pe_max) continue; \
             for (i_param=0; i_param<n_param; i_param++){ \
@@ -163,6 +170,7 @@ typedef struct{ \
                     flag_accept = 4; \
                 }else{ \
                     /* shrink to x[0]: x[i]=(x[0]+x[i])/2 */ \
+                    flag_accept = 0; \
                     ; \
                 } \
             }else{ \
@@ -226,6 +234,7 @@ typedef struct{ \
                 } \
                 print_where += print_temp_len; \
             } \
+            print_info[print_where] = 0; \
             Madd_Print(print_info); \
             print_next_step += print_step; \
         } \

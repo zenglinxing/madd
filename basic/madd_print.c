@@ -25,7 +25,8 @@ static char *Wide2Char(wchar_t *wstr)
     }
 
     size_t len_char = wcstombs(NULL, wstr, 0);
-    if (len_char == (size_t)-1){
+    wprintf(wstr);
+    if (len_char == (size_t)-1 || len_char == 0){
         if (madd_print_wide) wprintf(L"%hs\t%hs line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);
         else printf("%s\t%s line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
@@ -59,7 +60,7 @@ void Madd_Print(wchar_t *wstr)
 {
     if (wstr == NULL){
         if (madd_print_wide) wprintf(L"%hs\t%hs line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
-        else printf("%hs\t%hs line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +68,7 @@ void Madd_Print(wchar_t *wstr)
         wprintf(L"%ls", wstr);
     }else{
         char *str = Wide2Char(wstr);
-        printf("%hs", str);
+        printf("%s", str);
         free(str);
     }
 }
@@ -76,7 +77,7 @@ void Madd_Save(FILE *fp, wchar_t *wstr)
 {
     if (wstr == NULL){
         if (madd_print_wide) wprintf(L"%hs\t%hs line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
-        else printf("%hs\t%hs line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
+        else printf("%s\t%s line %d:\n\tMadd Exit!\tThe given wide string is NULL.", __func__, __FILE__, __LINE__);
         exit(EXIT_FAILURE);
     }
 
