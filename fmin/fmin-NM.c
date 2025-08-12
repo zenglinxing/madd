@@ -9,7 +9,6 @@ Nelder-Mead Search
 #include<stdlib.h>
 #include<stdint.h>
 #include<string.h>
-#include<stdio.h>
 #include<wchar.h>
 #include"fmin-NM.h"
 #include"../basic/basic.h"
@@ -66,6 +65,14 @@ typedef struct{ \
     RB_Tree T; \
     RB_Tree_Init(&T); \
     RB_Tree_Node *nodes=(RB_Tree_Node*)space; \
+    /* parameter print info */ \
+    wchar_t *print_info; \
+    size_t print_len, print_where; \
+    int print_temp_len; \
+    if (print_step){ \
+        print_len = (50 + n_param*15 + 20)*sizeof(wchar_t); \
+        print_info = (wchar_t*)malloc(print_len); \
+    } \
  \
     /* sort the x according to y */ \
     nm.element = (struct Fmin_NM_Element*)(nodes + nx); \
@@ -198,34 +205,36 @@ typedef struct{ \
             } \
         } \
         if (print_step && print_next_step==i_step){ \
-            wchar_t print_info[FMIN_NM_PRINT_LEN]; \
-            swprintf(print_info, FMIN_NM_PRINT_LEN, L"Step %llu: accept new value %d\n",i_step,flag_accept); \
-            Madd_Print(print_info); \
+            print_where = 0; \
+            print_temp_len = swprintf(print_info + print_where, FMIN_NM_PRINT_LEN, L"Step %llu: accept new value %d\n",i_step,flag_accept); \
+            print_where += print_temp_len; \
             node_max = RB_Tree_Maximum(&T, T.root); \
             node_min = RB_Tree_Minimum(&T, T.root); \
             for (ix=0,pnme=nm.element; ix<nx; ix++,pnme++){ \
                 /* print x */ \
                 for (i_param=0; i_param<n_param; i_param++){ \
-                    swprintf(print_info, FMIN_NM_PRINT_LEN, L"%e\t", (num_print_type)pnme->x[i_param]); \
-                    Madd_Print(print_info); \
+                    print_temp_len = swprintf(print_info + print_where, FMIN_NM_PRINT_LEN, L"%e\t", (num_print_type)pnme->x[i_param]); \
+                    print_where += print_temp_len; \
                 } \
                 /* print y */ \
                 if (pnme == (struct Fmin_NM_Element*)(node_min->key)){ \
-                    swprintf(print_info, FMIN_NM_PRINT_LEN, L"| %e MIN\n", (num_print_type)pnme->y); \
-                    Madd_Print(print_info); \
+                    print_temp_len = swprintf(print_info + print_where, FMIN_NM_PRINT_LEN, L"| %e MIN\n", (num_print_type)pnme->y); \
                 }else if (pnme == (struct Fmin_NM_Element*)(node_max->key)){ \
-                    swprintf(print_info, FMIN_NM_PRINT_LEN, L"| %e MAX\n", (num_print_type)pnme->y); \
-                    Madd_Print(print_info); \
+                    print_temp_len = swprintf(print_info + print_where, FMIN_NM_PRINT_LEN, L"| %e MAX\n", (num_print_type)pnme->y); \
                 }else{ \
-                    swprintf(print_info, FMIN_NM_PRINT_LEN, L"| %e\n", (num_print_type)pnme->y); \
-                    Madd_Print(print_info); \
+                    print_temp_len = swprintf(print_info + print_where, FMIN_NM_PRINT_LEN, L"| %e\n", (num_print_type)pnme->y); \
                 } \
+                print_where += print_temp_len; \
             } \
+            Madd_Print(print_info); \
             print_next_step += print_step; \
         } \
     } \
     /* free */ \
     free(space); \
+    if (print_step){ \
+        free(print_info); \
+    } \
     return flag_accept; \
 } \
 
