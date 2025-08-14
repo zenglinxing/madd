@@ -19,6 +19,15 @@ void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,
         Madd_Error_Add(MADD_WARNING, L"Sort_Counting: array length is less than 2, unnecessary to sort.");
         return;
     }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Counting: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Counting: array pointer is NULL.");
+        return;
+    }
+
     wchar_t err_info[MADD_ERROR_INFO_LEN];
     uint64_t i_element, key, min_key=UINT64_MAX, max_key=0, n_key;
     unsigned char *arr=arr_, *parr;

@@ -74,6 +74,15 @@ void Sort_Merge(uint64_t n_element, size_t usize, void *arr_,
         Madd_Error_Add(MADD_WARNING, L"Sort_Merge: array length is less than 2, unnecessary to sort.");
         return;
     }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Merge: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Merge: array pointer is NULL.");
+        return;
+    }
+
     unsigned char *arr=(unsigned char*)arr_, *arr_temp, *parr;
     uint64_t n1_element, log_n_element_low, log_n_element_high;
     Log2_Full(n_element, &log_n_element_low, &log_n_element_high);

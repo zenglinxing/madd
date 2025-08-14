@@ -33,3 +33,9 @@ target_include_directories(test_sort-quicksort PUBLIC ${CMAKE_CURRENT_SOURCE_DIR
 target_link_libraries(test_sort-quicksort PUBLIC madd)
 add_test(NAME Sort-Quicksort
          COMMAND test_sort-quicksort)
+
+add_executable(test_sort-shell sort/test/sort-shell.c)
+target_include_directories(test_sort-shell PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort-shell PUBLIC madd)
+add_test(NAME Sort-ShellSort
+         COMMAND test_sort-shell)

@@ -19,6 +19,15 @@ void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
         Madd_Error_Add(MADD_WARNING, L"Sort_Insertion: array length is less than 2, unnecessary to sort.");
         return;
     }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Insertion: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Insertion: array pointer is NULL.");
+        return;
+    }
+
     unsigned char stack_temp[1024];
     unsigned char *ptemp = (usize <= sizeof(stack_temp)) ? stack_temp : malloc(usize);
     unsigned char *arr=arr_, *parr;

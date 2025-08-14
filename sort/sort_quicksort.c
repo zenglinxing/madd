@@ -115,6 +115,15 @@ void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, bool func_comp
         Madd_Error_Add(MADD_WARNING, L"Sort_Quicksort: array length is less than 2, unnecessary to sort.");
         return;
     }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort: array pointer is NULL.");
+        return;
+    }
+
     unsigned char *arr = arr_;
     unsigned char arr_pivot[1024];
     void *pivot;
