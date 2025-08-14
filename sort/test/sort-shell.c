@@ -63,7 +63,7 @@ bool verify_sorted_person(struct person* arr, uint64_t n) {
 
 // Test cases
 void test_empty() {
-    int empty_arr[0] = {};
+    int empty_arr[1] = {0};
     Sort_Shell(0, sizeof(int), empty_arr, int_compare, NULL);
     printf("Test Empty: PASSED\n");
 }
