@@ -5,6 +5,7 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./sort/sort_insertion.c
 */
+#include<stdio.h>
 #include<stdint.h>
 #include<stdlib.h>
 #include<string.h>
