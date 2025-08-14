@@ -17,6 +17,7 @@ extern "C"{
 #define MADD_SORT_SEDGEWICK_LENGTH 60
 
 static uint64_t madd_shell_sort_sedgewick[MADD_SORT_SEDGEWICK_LENGTH];
+static bool madd_shell_sort_sedgewick_init = false;
 
 class CppSedgewick{
     public:
@@ -49,6 +50,7 @@ class CppSedgewick{
         if (j == 30){
             memcpy(madd_shell_sort_sedgewick+i+j, s1+i, (30-i)*sizeof(uint64_t));
         }
+        madd_shell_sort_sedgewick_init = true;
     }
 };
 
@@ -69,8 +71,12 @@ extern "C" void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
         Madd_Error_Add(MADD_ERROR, L"Sort_Shell: array pointer is NULL.");
         return;
     }
+    if (!madd_shell_sort_sedgewick_init){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Shell: Sedgewick augment array did not initialized. Check Madd compilation and make sure your C++ compiler & linker works");
+        return;
+    }
 
-    unsigned char temp_element[1024], *ptemp;
+    unsigned char temp_element[1024], *ptemp, *arr=(unsigned char*)arr_;
     if (usize > 1024){
         ptemp = (unsigned char*)malloc(usize);
         if (ptemp == NULL){
@@ -83,39 +89,32 @@ extern "C" void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
         ptemp = temp_element;
     }
 
-    int low = 0;
-    int high = MADD_SORT_SEDGEWICK_LENGTH - 1;
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (madd_shell_sort_sedgewick[mid] < n_element) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
-        }
+    int gap_index = 0;
+    while (gap_index < MADD_SORT_SEDGEWICK_LENGTH && 
+           madd_shell_sort_sedgewick[gap_index] < n_element) {
+        gap_index++;
     }
-    int start_gap = low; // first gap less than n_element
-
-    unsigned char *arr = (unsigned char*)arr_;
-
-    uint64_t gap;
-    for (int gap_index = start_gap - 1; gap_index >= 0; gap_index--) {
-        uint64_t gap = madd_shell_sort_sedgewick[gap_index];
+    
+    for (int i = gap_index - 1; i >= 0; i--) {
+        uint64_t gap = madd_shell_sort_sedgewick[i];
         
-        for (uint64_t i = gap; i < n_element; i++) {
-            memcpy(ptemp, arr + i * usize, usize);
+        for (uint64_t i_element = gap; i_element < n_element; i_element++) {
+            memcpy(ptemp, arr + i_element * usize, usize);
             
-            uint64_t j = i;
-            while (j >= gap) {
-                void *prev_element = arr + (j - gap) * usize;
+            uint64_t j_element = i_element;
+            while (j_element >= gap) {
+                uint64_t prev_index = j_element - gap;
+                void* prev_element = arr + prev_index * usize;
+                
                 if (func_compare(ptemp, prev_element, other_param)) {
-                    memcpy(arr + j * usize, prev_element, usize);
-                    j -= gap;
+                    memcpy(arr + j_element * usize, prev_element, usize);
+                    j_element = prev_index;
                 } else {
                     break;
                 }
             }
-            if (j != i) {
-                memcpy(arr + j * usize, ptemp, usize);
+            if (j_element != i_element) {
+                memcpy(arr + j_element * usize, ptemp, usize);
             }
         }
     }
