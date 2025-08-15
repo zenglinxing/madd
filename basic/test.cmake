@@ -65,3 +65,9 @@ if (ENABLE_CUDA)
     add_test(NAME Basic-Madd-cudaBase
             COMMAND test_basic-cuda-base)
 endif()
+
+add_executable(test_basic-hash-float basic/test/hash-float.c)
+target_include_directories(test_basic-hash-float PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_basic-hash-float PUBLIC madd)
+add_test(NAME Basic-HashFloat
+         COMMAND test_basic-hash-float)
