@@ -60,4 +60,28 @@ bool Queue_Dequeue(Queue *queue, void *element);
 bool Queue_Get_Head(Queue *queue, void *element);
 bool Queue_Get_Last(Queue *queue, void *element);
 
+/* singly linked list */
+struct _Singly_Linked_List_Node{
+    void *key;
+    struct _Singly_Linked_List_Node *next;
+};
+typedef struct _Singly_Linked_List_Node Singly_Linked_List_Node;
+
+typedef struct{
+    bool flag_multithread;
+    Singly_Linked_List_Node *head, *tail;
+    RWLock rwlock;
+} Singly_Linked_List;
+
+void Singly_Linked_List_Init(Singly_Linked_List *list);
+bool Singly_Linked_List_Enable_Multithread(Singly_Linked_List *list);
+bool Singly_Linked_List_Empty(Singly_Linked_List *list);
+bool Singly_Linked_List_Insert_Tail(Singly_Linked_List *list, Singly_Linked_List_Node *node);
+bool Singly_Linked_List_Insert_After(Singly_Linked_List *list, Singly_Linked_List_Node *prev, Singly_Linked_List_Node *node);
+bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node *node);
+bool Singly_Linked_List_Delete_After(Singly_Linked_List *list, Singly_Linked_List_Node *prev);
+bool Singly_Linked_List_Has_Loop(Singly_Linked_List *list);
+Singly_Linked_List_Node *Singly_Linked_List_Loop_Start_Node(Singly_Linked_List *list);
+void Singly_Linked_List_Link_Node(Singly_Linked_List_Node *prev, Singly_Linked_List_Node *next);
+
 #endif /* _DATA_STRUCT_H */
