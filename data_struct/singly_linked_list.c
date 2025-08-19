@@ -358,7 +358,7 @@ void Singly_Linked_List_Reverse(Singly_Linked_List *list)
         write_unlock(list);
         return;
     }
-    Singly_Linked_List_Node *prev=list->head, *cur=prev->next, *next=cur-next;
+    Singly_Linked_List_Node *prev=list->head, *cur=prev->next, *next=cur->next;
     /* the next of head will be processed at the end of while loop */
     while (next != tail){
         cur->next = prev;
