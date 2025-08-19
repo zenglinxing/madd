@@ -156,7 +156,7 @@ bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node
 
     write_lock(list);
     /* find the previous node */
-    Singly_Linked_List_Node *prev = NULL, *cur = list->head, *head = list->head, *head_next;
+    Singly_Linked_List_Node *prev = NULL, *cur = list->head, *head = list->head;
     if (list->head == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"Singly_Linked_List_Delete: singly linked list at %p is empty.", list);
@@ -164,7 +164,6 @@ bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node
         write_unlock(list);
         return false;
     }
-    head_next = head->next;
     if (list->head == node){
         list->head = node->next;
         if (list->tail == node){
@@ -173,24 +172,24 @@ bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node
         node->next = NULL;
         write_unlock(list);
         return true;
-    }else{
-        do {
-            prev = cur;
-            cur = cur->next;
-        } while (cur != node && cur != list->head && cur != NULL);
-        if (cur != node){
-            wchar_t error_info[MADD_ERROR_INFO_LEN];
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"Singly_Linked_List_Delete: node %p is not in singly linked list %p.", node, list);
-            Madd_Error_Add(MADD_ERROR, error_info);
-            write_unlock(list);
-            return false;
-        }
-        if (list->tail == node){
-            list->tail = prev;
-        }
-        prev->next = node->next;
-        node->next = NULL;
     }
+    do {
+        prev = cur;
+        cur = cur->next;
+    } while (cur != node && cur != list->head && cur != NULL);
+    if (cur != node){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"Singly_Linked_List_Delete: node %p is not in singly linked list %p.", node, list);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        write_unlock(list);
+        return false;
+    }
+    if (list->tail == node){
+        list->tail = prev;
+    }
+    prev->next = node->next;
+    node->next = NULL;
+
     write_unlock(list);
     return true;
 }
@@ -249,18 +248,22 @@ bool Singly_Linked_List_Delete_After(Singly_Linked_List *list, Singly_Linked_Lis
     return true;
 }
 
-static bool Singly_Linked_List_Has_Loop_Internal(Singly_Linked_List *list, Singly_Linked_List_Node **fast_)
+bool Singly_Linked_List_Find_Loop(Singly_Linked_List_Node *head, Singly_Linked_List_Node **fast_)
 {
-    *fast_ = NULL;
-    if (list->head == NULL){
+    if (fast_ != NULL){
+        *fast_ = NULL;
+    }
+    if (head == NULL){
         return false;
     }
-    Singly_Linked_List_Node *slow=list->head, *fast=list->head;
+    Singly_Linked_List_Node *slow=head, *fast=head;
     while (fast && fast->next){
         slow = slow->next;
         fast = fast->next->next;
         if (slow == fast){
-            *fast_ = fast;
+            if (fast_ != NULL){
+                *fast_ = fast;
+            }
             return true;
         }
     }
@@ -278,7 +281,7 @@ bool Singly_Linked_List_Has_Loop(Singly_Linked_List *list)
 
     read_lock(list);
     Singly_Linked_List_Node *lap;
-    bool res = Singly_Linked_List_Has_Loop_Internal(list, &lap);
+    bool res = Singly_Linked_List_Find_Loop(list->head, &lap);
     read_unlock(list);
     return res;
 }
@@ -295,7 +298,7 @@ Singly_Linked_List_Node *Singly_Linked_List_Loop_Start_Node(Singly_Linked_List *
     read_lock(list);
     Singly_Linked_List_Node *lap = NULL;
     bool flag_has_loop;
-    flag_has_loop = Singly_Linked_List_Has_Loop_Internal(list, &lap);
+    flag_has_loop = Singly_Linked_List_Find_Loop(list->head, &lap);
     if (!flag_has_loop){
         read_unlock(list);
         return NULL;
@@ -309,7 +312,65 @@ Singly_Linked_List_Node *Singly_Linked_List_Loop_Start_Node(Singly_Linked_List *
     return p1;
 }
 
-void Singly_Linked_List_Link_Node(Singly_Linked_List_Node *prev, Singly_Linked_List_Node *next)
+bool Singly_Linked_List_Link_Node(Singly_Linked_List_Node *prev, Singly_Linked_List_Node *next)
 {
+    if (prev == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Singly_Linked_List_Link_Node: prev is NULL.");
+        return false;
+    }
     prev->next = next;
+    return true;
+}
+
+bool Singly_Linked_List_Unlink_Node(Singly_Linked_List_Node *prev)
+{
+    if (prev == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Singly_Linked_List_Unlink_Node: prev is NULL.");
+        return false;
+    }
+    prev->next = NULL;
+    return true;
+}
+
+void Singly_Linked_List_Reverse(Singly_Linked_List *list)
+{
+    if (list == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Singly_Linked_List_Reverse: list is NULL.");
+        return;
+    }
+
+    write_lock(list);
+    if (list->head == NULL){ /* 0 node in list */
+        write_unlock(list);
+        return;
+    }
+
+    if (list->head == list->tail){ /* 1 node in list */
+        write_unlock(list);
+        return;
+    }
+    Singly_Linked_List_Node *head = list->head, *tail = list->tail;
+    if (list->head->next == list->tail){ /* 2 nodes in list */
+        head->next = tail;
+        tail->next = (tail->next == head) ? head : NULL;
+        list->head = tail;
+        list->tail = head;
+        write_unlock(list);
+        return;
+    }
+    Singly_Linked_List_Node *prev=list->head, *cur=prev->next, *next=cur-next;
+    /* the next of head will be processed at the end of while loop */
+    while (next != tail){
+        cur->next = prev;
+        prev = cur;
+        cur = next;
+        next = next->next;
+    }
+    cur->next = prev;
+    head->next = (tail->next == head) ? tail : NULL;
+    tail->next = cur;
+
+    list->head = tail;
+    list->tail = head;
+    write_unlock(list);
 }

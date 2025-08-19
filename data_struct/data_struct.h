@@ -80,8 +80,11 @@ bool Singly_Linked_List_Insert_Tail(Singly_Linked_List *list, Singly_Linked_List
 bool Singly_Linked_List_Insert_After(Singly_Linked_List *list, Singly_Linked_List_Node *prev, Singly_Linked_List_Node *node);
 bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node *node);
 bool Singly_Linked_List_Delete_After(Singly_Linked_List *list, Singly_Linked_List_Node *prev);
+bool Singly_Linked_List_Find_Loop(Singly_Linked_List_Node *head, Singly_Linked_List_Node **fast_);
 bool Singly_Linked_List_Has_Loop(Singly_Linked_List *list);
 Singly_Linked_List_Node *Singly_Linked_List_Loop_Start_Node(Singly_Linked_List *list);
-void Singly_Linked_List_Link_Node(Singly_Linked_List_Node *prev, Singly_Linked_List_Node *next);
+bool Singly_Linked_List_Link_Node(Singly_Linked_List_Node *prev, Singly_Linked_List_Node *next);
+bool Singly_Linked_List_Unlink_Node(Singly_Linked_List_Node *prev);
+void Singly_Linked_List_Reverse(Singly_Linked_List *list);
 
 #endif /* _DATA_STRUCT_H */
