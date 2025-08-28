@@ -30,5 +30,10 @@ void Sort__Merge_Right(uint64_t n_left, uint64_t n_right, size_t usize,
                        bool func_compare(void *a, void *b, void *other_param), void *other_param);
 void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
                 bool func_compare(void*, void*, void*), void *other_param);
+void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
+                        bool func_compare(void*, void*, void*), void *other_param,
+                        void *ptemp);
+void Sort_Heap(uint64_t n, size_t usize, void *arr_,
+                    bool func_compare(void*, void*, void*), void *other_param);
 
 #endif /* _SORT_H */
