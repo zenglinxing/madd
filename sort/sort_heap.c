@@ -3,6 +3,7 @@
 #include<string.h>
 #include<stdint.h>
 #include<stdbool.h>
+#include"../basic/basic.h"
 
 static inline void swap_elements(void *a, void *b, size_t usize, void *temp) {
     if (a == b) return;
@@ -36,9 +37,18 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
                         bool func_compare(void*, void*, void*), void *other_param,
                         void *ptemp)
 {
-    if (n<2) return;
-    if (usize == 0) return;
-    if (arr_ == NULL) return;
+    if (n < 2){
+        Madd_Error_Add(MADD_WARNING, L"Sort_Heap_Internal: array length is less than 2, unnecessary to sort.");
+        return;
+    }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Heap_Internal: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Heap_Internal: array pointer is NULL.");
+        return;
+    }
 
     unsigned char *arr = (unsigned char*)arr_;
     uint64_t i;
@@ -57,9 +67,18 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
 void Sort_Heap(uint64_t n, size_t usize, void *arr_,
                bool func_compare(void*, void*, void*), void *other_param)
 {
-    if (n<2) return;
-    if (usize == 0) return;
-    if (arr_ == NULL) return;
+    if (n < 2){
+        Madd_Error_Add(MADD_WARNING, L"Sort_Heap: array length is less than 2, unnecessary to sort.");
+        return;
+    }
+    if (usize == 0){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Heap: usize is 0.");
+        return;
+    }
+    if (arr_ == NULL){
+        Madd_Error_Add(MADD_ERROR, L"Sort_Heap: array pointer is NULL.");
+        return;
+    }
 
     unsigned char *arr = (unsigned char*)arr_, *ptemp;
     unsigned char temp_element[1024];
