@@ -22,6 +22,12 @@ target_link_libraries(test_sort_binary-search-insert PUBLIC madd)
 add_test(NAME Sort-BinarySearchInsertFunc
          COMMAND test_sort_binary-search-insert)
 
+add_executable(test_sort-heap sort/test/sort-heap.c)
+target_include_directories(test_sort-heap PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_sort-heap PUBLIC madd)
+add_test(NAME Sort-Heap
+         COMMAND test_sort-heap)
+
 add_executable(test_sort-insertion sort/test/sort-insertion.c)
 target_include_directories(test_sort-insertion PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_sort-insertion PUBLIC madd)

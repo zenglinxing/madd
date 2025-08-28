@@ -36,6 +36,14 @@ int main(int argc, char *argv[])
     double time_counting = (clock_counting2 - clock_counting1) / (double)CLOCKS_PER_SEC;
     printf("counting sort:\t%f sec\n", time_counting);
 
+    /* heap sort */
+    memcpy(arr_sorted, arr, n*sizeof(uint64_t));
+    clock_t clock_heap1=clock(), clock_heap2;
+    Sort_Heap(n, sizeof(uint64_t), arr_sorted, func_compare, NULL);
+    clock_heap2 = clock();
+    double time_heap = (clock_heap2 - clock_heap1) / (double)CLOCKS_PER_SEC;
+    printf("heap sort:\t%f sec\n", time_heap);
+
     /* insertion sort */
     memcpy(arr_sorted, arr, n*sizeof(uint64_t));
     clock_t clock_insertion1=clock(), clock_insertion2;
