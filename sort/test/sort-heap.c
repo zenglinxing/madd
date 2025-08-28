@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>
+#include<stdbool.h>
 #include"madd.h"
 
 /* ================== TEST FRAMEWORK ================== */
@@ -148,6 +149,16 @@ void test_int_sort() {
     }
 }
 
+typedef struct {
+    char data[1025]; // 1025-byte struct
+    int key;
+} BigStruct;
+
+bool compare_big_struct(void* a, void* b, void* unused) {
+    (void)unused;
+    return ((BigStruct*)a)->key <= ((BigStruct*)b)->key;
+}
+
 // 测试结构体排序
 void test_struct_sort() {
     printf("\n===== Testing Struct Sorting =====\n");
@@ -191,10 +202,6 @@ void test_struct_sort() {
     }
     
     // Test 3: Large struct with big element size (>1024 bytes)
-    typedef struct {
-        char data[1025]; // 1025-byte struct
-        int key;
-    } BigStruct;
     
     uint64_t n3 = 10;
     BigStruct* big_arr = malloc(n3 * sizeof(BigStruct));
@@ -209,10 +216,7 @@ void test_struct_sort() {
     }
     
     printf("\nTest 3: Sorting large structs (1025 bytes each)\n");
-    bool compare_big_struct(void* a, void* b, void* unused) {
-        (void)unused;
-        return ((BigStruct*)a)->key <= ((BigStruct*)b)->key;
-    }
+
     
     Sort_Heap(n3, sizeof(BigStruct), big_arr, compare_big_struct, NULL);
     
