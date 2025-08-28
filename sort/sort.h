@@ -10,8 +10,16 @@ This file is part of Math Addition, in ./sort/sort.h
 
 #include"binary_search.h"
 
+typedef struct{
+    uint64_t (*get_key_func)(void*, void*);
+    void *other_param;
+} Sort_Key_Func_to_Compare_Func_Param;
+
+bool Sort_Key_Func_to_Compare_Func(void *a, void *b, void *input_param);
+
 void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,
                    uint64_t get_key(void *element, void *other_param), void *other_param);
+
 void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
                     bool func_compare(void *a1, void *a2, void *other_param), void *other_param);
 void Sort_Merge_merge_array(uint64_t n1, void *arr1_,
