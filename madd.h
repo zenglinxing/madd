@@ -21,6 +21,7 @@ extern "C" {
 #include"fmin/fmin.h"
 #include"integrate/integrate.h"
 #include"large_number/large_uint.h"
+#include"polynomial/polynomial.h"
 #include"rng/rng.h"
 #include"sort/sort.h"
 #include"thread_base/thread_base.h"

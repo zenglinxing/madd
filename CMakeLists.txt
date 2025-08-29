@@ -74,6 +74,7 @@ add_subdirectory(fmin)
 add_subdirectory(integrate)
 add_subdirectory(rng)
 add_subdirectory(large_number)
+add_subdirectory(polynomial)
 add_subdirectory(sort)
 set(MADD_SRC_LIST_THREAD_BASE)
 if (ENABLE_MULTITHREAD)
@@ -99,6 +100,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_INTEGRATE} # integrate/
             ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
+            ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
             ${MADD_SRC_LIST_SORT} # sort/
             ${MADD_SRC_LIST_THREAD_BASE} # thread_base
 )
@@ -146,6 +148,7 @@ if (ENABLE_TEST)
     include(integrate/test.cmake)
     include(rng/test.cmake)
     include(large_number/test.cmake)
+    include(polynomial/test.cmake)
     include(sort/test.cmake)
     if (ENABLE_MULTITHREAD)
         include(thread_base/test.cmake)
