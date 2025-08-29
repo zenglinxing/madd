@@ -12,9 +12,9 @@ This file is part of Math Addition, in ./basic/cnum.c
 #include<stdbool.h>
 #include"constant.h"
 
-#if defined(__GNUC__) && __STDC_VERSION__ >= 199901L && !defined(__clang__)
+#ifdef ENABLE_QUADPRECISION
 #include<quadmath.h>
-#endif /* __GNUC__ __STDC_VERSION__ */
+#endif /* ENABLE_QUADPRECISION */
 
 typedef struct{
     double real, imag;
