@@ -10,7 +10,7 @@ Nelder-Mead Search
 #include<stdint.h>
 #include<string.h>
 #include<wchar.h>
-#include"fmin-NM.h"
+#include"fmin.h"
 #include"../basic/basic.h"
 #include"../data_struct/RB_tree.h"
 
