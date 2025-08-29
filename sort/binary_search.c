@@ -40,7 +40,7 @@ uint64_t Binary_Search(uint64_t n, size_t usize, void *arr_, void *element,
         }
         if (i1==i1_last && i2==i2_last){
             swprintf(err_info, MADD_ERROR_INFO_LEN, L"Binary_Search: the given element (0x%llx) could not be found in the given array (0x%llx).", element, arr_);
-            Madd_Error_Add(MADD_ERROR, err_info);
+            Madd_Error_Add(MADD_WARNING, err_info);
             return i_middle;
         }
         i_middle = (i1 + i2) >> 1;
