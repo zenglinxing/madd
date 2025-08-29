@@ -19,6 +19,7 @@ extern "C" {
 #include"basic/basic.h"
 #include"data_struct/data_struct.h"
 #include"fmin/fmin.h"
+#include"integrate/integrate.h"
 #include"large_number/large_uint.h"
 #include"rng/rng.h"
 #include"sort/sort.h"
