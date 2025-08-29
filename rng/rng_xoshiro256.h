@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_xoshiro256.h
 */
-#ifndef _RNG_XOSHIRO256_H
-#define _RNG_XOSHIRO256_H
+#ifndef MADD_RNG_XOSHIRO256_H
+#define MADD_RNG_XOSHIRO256_H
 
 #include<stdio.h>
 #include<stdint.h>
@@ -53,4 +53,4 @@ RNG_Xoshiro256_Param RNG_Xoshiro256p_Read_LE(FILE *fp);
 void RNG_Xoshiro256p_Write_BE(RNG_Xoshiro256_Param *rxp, FILE *fp);
 void RNG_Xoshiro256p_Write_LE(RNG_Xoshiro256_Param *rxp, FILE *fp);
 
-#endif /* _RNG_XOSHIRO256_H */
+#endif /* MADD_RNG_XOSHIRO256_H */

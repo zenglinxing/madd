@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./basic/cnum.c
 */
-#ifndef _CNUM_H
-#define _CNUM_H
+#ifndef MADD_CNUM_H
+#define MADD_CNUM_H
 
 #include<math.h>
 #include<stdbool.h>
@@ -371,4 +371,4 @@ inline Cnum_f128 Cnum_Pole_f128(__float128 radius, __float128 angle)
 CNUM_POLE__ALGORITHM(Cnum_f128,cosq, sinq)
 #endif /* ENABLE_QUADPRECISION */
 
-#endif /* _CNUM_H */
+#endif /* MADD_CNUM_H */

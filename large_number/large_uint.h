@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./large_number/large_uint.h
 */
-#ifndef _LARGE_UINT_H
-#define _LARGE_UINT_H
+#ifndef MADD_LARGE_UINT_H
+#define MADD_LARGE_UINT_H
 
 #include<stdint.h>
 
@@ -45,4 +45,4 @@ Uint256_LE Uint128_Mul_256(Uint128_LE n1, Uint128_LE n2);
 Uint128_LE Uint128_Mul(Uint128_LE n1, Uint128_LE n2);
 void Uint128_Log2(Uint128_LE num, uint64_t *log2_low, uint64_t *log2_high);
 
-#endif /* _LARGE_UINT_H */
+#endif /* MADD_LARGE_UINT_H */

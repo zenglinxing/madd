@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./data_struct/binary_search_tree.h
 */
-#ifndef _BINARY_SEARCH_TREE_H
-#define _BINARY_SEARCH_TREE_H
+#ifndef MADD_BINARY_SEARCH_TREE_H
+#define MADD_BINARY_SEARCH_TREE_H
 
 #include<stdint.h>
 #include<stdlib.h>
@@ -40,4 +40,4 @@ void Binary_Search_Tree_Transplant(Binary_Search_Tree *T,
                                    Binary_Search_Tree_Node *u, Binary_Search_Tree_Node *v);
 void Binary_Search_Tree_Delete(Binary_Search_Tree *T, Binary_Search_Tree_Node *z);
 
-#endif /* _BINARY_SEARCH_TREE_H */
+#endif /* MADD_BINARY_SEARCH_TREE_H */

@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./basic/data_struct.h
 */
-#ifndef _DATA_STRUCT_H
-#define _DATA_STRUCT_H
+#ifndef MADD_DATA_STRUCT_H
+#define MADD_DATA_STRUCT_H
 
 #include<stdint.h>
 #include<stddef.h>
@@ -90,4 +90,4 @@ bool Singly_Linked_List_Unlink_Node(Singly_Linked_List_Node *prev);
 bool Singly_Linked_List_Reverse(Singly_Linked_List *list);
 void Singly_Linked_List_Reverse_Nodes(Singly_Linked_List_Node *head);
 
-#endif /* _DATA_STRUCT_H */
+#endif /* MADD_DATA_STRUCT_H */

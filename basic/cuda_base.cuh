@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./basic/cuda_base.cuh
 */
-#ifndef _CUDA_BASE_CUH
-#define _CUDA_BASE_CUH
+#ifndef MADD_CUDA_BASE_CUH
+#define MADD_CUDA_BASE_CUH
 
 typedef struct{
     int n_device;
@@ -17,4 +17,4 @@ int Madd_N_cuda_GPU(void);
 Madd_cuda_Device_Properties Madd_cuda_Get_Device_Property(void);
 void Madd_cuda_Get_Device_Mem(int i_dev, size_t *free_mem, size_t *total_mem);
 
-#endif
+#endif /* MADD_CUDA_BASE_H */

@@ -1,6 +1,13 @@
 /* coding: utf-8 */
-#ifndef _FMIN_H
-#define _FMIN_H
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./fmin/fmin.h
+Nelder-Mead Search
+*/
+#ifndef MADD_FMIN_H
+#define MADD_FMIN_H
 
 #include<stdint.h>
 #include"../rng/rng.h"
@@ -68,4 +75,4 @@ void Fmin_PSO_f128(uint64_t n_param, uint64_t n_bird, __float128 **start,
                    __float128 **velocity, __float128 dt, RNG_Param *rng);
 #endif /* ENABLE_QUADPRECISION */
 
-#endif /* _FMIN_H */
+#endif /* MADD_FMIN_H */

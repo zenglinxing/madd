@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./sort/sort.h
 */
-#ifndef _SORT_H
-#define _SORT_H
+#ifndef MADD_SORT_H
+#define MADD_SORT_H
 
 #include"binary_search.h"
 
@@ -44,4 +44,4 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
 void Sort_Heap(uint64_t n, size_t usize, void *arr_,
                     bool func_compare(void*, void*, void*), void *other_param);
 
-#endif /* _SORT_H */
+#endif /* MADD_SORT_H */

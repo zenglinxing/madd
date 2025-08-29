@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_xorshift64.h
 */
-#ifndef _RNG_XORSHIFT64_H
-#define _RNG_XORSHIFT64_H
+#ifndef MADD_RNG_XORSHIFT64_H
+#define MADD_RNG_XORSHIFT64_H
 
 #include<stdio.h>
 #include<stdint.h>
@@ -48,4 +48,4 @@ RNG_Xorshift64_Param RNG_Xorshift64s_Read_LE(FILE *fp);
 void RNG_Xorshift64s_Write_BE(RNG_Xorshift64_Param *rxp, FILE *fp);
 void RNG_Xorshift64s_Write_LE(RNG_Xorshift64_Param *rxp, FILE *fp);
 
-#endif /* _RNG_XORSHIFT64_H */
+#endif /* MADD_RNG_XORSHIFT64_H */

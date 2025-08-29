@@ -7,8 +7,8 @@ This file is part of Math Addition, in ./basic/basic.h
 
 This file is aimed to collect majority of prevalent constants used in math and physics.
 */
-#ifndef _BASIC_H
-#define _BASIC_H
+#ifndef MADD_BASIC_H
+#define MADD_BASIC_H
 
 #include<stdio.h>
 #include<time.h>
@@ -281,4 +281,4 @@ inline uint32_t Hash_IEEE754_float_to_uint32(float x)
     }
 }
 
-#endif /* _BASIC_H */
+#endif /* MADD_BASIC_H */

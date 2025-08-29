@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./data_struct/Fibonacci_Heap.h
 */
-#ifndef _FIBONACCI_HEAP_H
-#define _FIBONACCI_HEAP_H
+#ifndef MADD_FIBONACCI_HEAP_H
+#define MADD_FIBONACCI_HEAP_H
 
 #include<stdint.h>
 #include<stdlib.h>
@@ -54,4 +54,4 @@ char Fibonacci_Heap_Delete__Func(void *key1, void *key2, void *other_delete_para
 void Fibonacci_Heap_Delete(Fibonacci_Heap *H, Fibonacci_Heap_Node *x,
                            char func(void *key1,void *key2,void *other_param), void *other_param);
 
-#endif /* _FIBONACCI_HEAP_H */
+#endif /* MADD_FIBONACCI_HEAP_H */

@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_clib.h
 */
-#ifndef _RNG_CLIB_H
-#define _RNG_CLIB_H
+#ifndef MADD_RNG_CLIB_H
+#define MADD_RNG_CLIB_H
 
 #include<stdint.h>
 
@@ -21,4 +21,4 @@ long double Rand_Clib_fl(void);
 __float128 Rand_Clib_f128(void);
 #endif /* ENABLE_QUADPRECISION */
 
-#endif /* _RNG_CLIB_H */
+#endif /* MADD_RNG_CLIB_H */

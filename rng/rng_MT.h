@@ -7,8 +7,8 @@ This file is part of Math Addition, in ./rng/rng_MT.H
 Mersenne Twister Generator
 MT19937-64
 */
-#ifndef _RNG_MT_H
-#define _RNG_MT_H
+#ifndef MADD_RNG_MT_H
+#define MADD_RNG_MT_H
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -56,4 +56,4 @@ RNG_MT_Param RNG_MT_Read_LE(FILE *fp);
 void RNG_MT_Write_BE(RNG_MT_Param *mt, FILE *fp);
 void RNG_MT_Write_LE(RNG_MT_Param *mt, FILE *fp);
 
-#endif /* _RNG_MT_H */
+#endif /* MADD_RNG_MT_H */

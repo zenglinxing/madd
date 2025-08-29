@@ -5,8 +5,8 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./rng/rng_x86.h
 */
-#ifndef _RNG_X86_H
-#define _RNG_X86_H
+#ifndef MADD_RNG_X86_H
+#define MADD_RNG_X86_H
 
 #if defined(__x86_64__) || defined(_M_X64)
 
@@ -33,4 +33,4 @@ __float128 Rand_x86_param_f128(void);
 
 #endif /* __x86_64__ */
 
-#endif /* _RNG_X86_H */
+#endif /* MADD_RNG_X86_H */

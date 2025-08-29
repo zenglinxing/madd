@@ -7,8 +7,8 @@ This file is part of Math Addition, in ./basic/constant.h
 
 This file is aimed to collect majority of prevalent constants used in math.
 */
-#ifndef _CONSTANT_H
-#define _CONSTANT_H
+#ifndef MADD_CONSTANT_H
+#define MADD_CONSTANT_H
 
 #include<float.h>
 #include<math.h>
@@ -79,4 +79,4 @@ extern __float128 Pi_f128, E_Nat_f128, Inf_f128, NaN_f128;
 
 extern uint8_t binary_number_of_1_8bit[256];
 
-#endif /* _CONSTANT_H */
+#endif /* MADD_CONSTANT_H */
