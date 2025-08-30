@@ -45,4 +45,23 @@ float Integrate_Gauss_Legendre_via_xw_f32(float func(float, void *), float x1, f
 float Integrate_Gauss_Legendre_f32(float func(float, void *), float x1, float x2,
                                    uint32_t n_int, void *other_param);
 
+/* Gauss-Laguerre integrate */
+/*
+suppose h(x) = func(x) * exp(-exp_index * x)
+return \int_{xmin}^{$\infty$} h(x) dx
+*/
+/* uint64_t & double */
+bool Integrate_Gauss_Laguerre_xw(uint64_t n_int, double *x_int, double *w_int);
+double Integrate_Gauss_Laguerre_via_xw(double func(double, void*), double xmin, double exp_index,
+                                       uint64_t n_int, void *other_param,
+                                       double *x_int, double *w_int);
+double Integrate_Gauss_Laguerre(double func(double, void*), double xmin, double exp_index,
+                                uint64_t n_int, void *other_param);
+/* uint32_t & float */
+bool Integrate_Gauss_Laguerre_xw_f32(uint32_t n_int, float *x_int, float *w_int);
+float Integrate_Gauss_Laguerre_via_xw_f32(float func(float, void*), float xmin, float exp_index,
+                                          uint32_t n_int, void *other_param,
+                                          float *x_int, float *w_int);
+float Integrate_Gauss_Laguerre_f32(float func(float, void*), float xmin, float exp_index,
+                                   uint32_t n_int, void *other_param);
 #endif /* MADD_INTEGRATE_H */
