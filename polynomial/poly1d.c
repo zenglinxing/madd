@@ -292,7 +292,7 @@ Poly1d Poly1d_Integrate_N_order(Poly1d *poly, uint64_t n_order, double *log_coef
         *log_coefficient = poly->a[n_neg_order] * rate;
         rate /= n_neg_order;
         for (i_order=1; i_order<poly->_n-n_order; i_order++){
-            ipoly.a[-i_order+n_neg_order];
+            ipoly.a[-i_order] = poly->a[-i_order+n_neg_order] * rate;
             rate *= -i_order/(-i_order+n_neg_order);
         }
     }
