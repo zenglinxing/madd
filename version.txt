@@ -1,0 +1,1 @@
+This version saves the old Integrate_Gauss_Legendre, with LAPACKE_dsyev but slower than LAPACKE_dsteqr.
