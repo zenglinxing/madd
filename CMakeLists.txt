@@ -76,6 +76,7 @@ add_subdirectory(rng)
 add_subdirectory(large_number)
 add_subdirectory(polynomial)
 add_subdirectory(sort)
+add_subdirectory(special_func)
 set(MADD_SRC_LIST_THREAD_BASE)
 if (ENABLE_MULTITHREAD)
     add_subdirectory(thread_base)
@@ -102,6 +103,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
             ${MADD_SRC_LIST_SORT} # sort/
+            ${MADD_SRC_LIST_SPECIAL_FUNC} # special_func/
             ${MADD_SRC_LIST_THREAD_BASE} # thread_base
 )
 # link OpenBLAS
@@ -113,7 +115,7 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL
     target_link_libraries(madd PUBLIC m)
 endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
-    target_compile_options(madd PUBLIC "-O2")
+    target_compile_options(madd PUBLIC $<$<CONFIG:Release>:-O2>)
 else()
     target_compile_options(madd PUBLIC "-O3")
 endif()
@@ -146,10 +148,11 @@ if (ENABLE_TEST)
     include(data_struct/test.cmake)
     include(fmin/test.cmake)
     include(integrate/test.cmake)
-    include(rng/test.cmake)
     include(large_number/test.cmake)
     include(polynomial/test.cmake)
+    include(rng/test.cmake)
     include(sort/test.cmake)
+    include(special_func/test.cmake)
     if (ENABLE_MULTITHREAD)
         include(thread_base/test.cmake)
     endif ()

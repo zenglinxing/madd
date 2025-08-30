@@ -24,6 +24,7 @@ extern "C" {
 #include"polynomial/polynomial.h"
 #include"rng/rng.h"
 #include"sort/sort.h"
+#include"special_func/special_func.h"
 #include"thread_base/thread_base.h"
 
 #ifdef __cplusplus
