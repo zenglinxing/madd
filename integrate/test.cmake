@@ -1,3 +1,9 @@
+add_executable(test_integrate-Trapeze integrate/test/trapeze.c)
+target_include_directories(test_integrate-Trapeze PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_integrate-Trapeze PUBLIC madd)
+add_test(NAME Integrate_Trapeze
+         COMMAND test_integrate-Trapeze)
+
 add_executable(test_integrate-Simpson integrate/test/Simpson.c)
 target_include_directories(test_integrate-Simpson PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_integrate-Simpson PUBLIC madd)
