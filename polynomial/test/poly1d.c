@@ -6,9 +6,15 @@
 #define N 3
 #define _N 3
 
+double func(double x, void *other_param)
+{
+    return Poly1d_Value(x, (Poly1d*)other_param);
+}
+
 int main(int argc,char *argv[])
 {
     madd_error_keep_print = true;
+    int i;
     double a[_N+N+1]={-1.,-2.,-3.,4.,3.,2.,1.}, x, value;
 
     printf("====\nTest Init\n====\n");
@@ -34,7 +40,7 @@ int main(int argc,char *argv[])
 
     printf("====\nTest Derivative\n====\n");
     Cnum ca[_N+N+1];
-    Cnum cx, value;
+    Cnum cx;
     ca[0] = Cnum_Value(-1., 0.);
     ca[1] = Cnum_Value(-2., 0.);
     ca[2] = Cnum_Value(-3., 0.);
@@ -53,7 +59,7 @@ int main(int argc,char *argv[])
 
     printf("====\nTest Integrate\n====\n");
     Poly1d ipoly=Poly1d_Create(N+1,_N-1);
-    log_coefficient=Poly1d_Integrate(&poly, &ipoly);
+    double log_coefficient=Poly1d_Integrate(&poly, &ipoly);
     for (i=ipoly._n; i>0; i--){
         printf("-%d\t%f\n", i, ipoly.a[-i]);
     }
