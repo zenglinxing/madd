@@ -93,19 +93,12 @@ double Integrate_Gauss_Legendre_via_xw(double func(double, void *), double x1, d
 
 double Integrate_Gauss_Legendre(double func(double, void *), double x1, double x2, uint64_t n_int, void *other_param)
 {
-    double *x_int=(double*)malloc(n_int*sizeof(double)), *w_int=(double*)malloc(n_int*sizeof(double));
-    if (x_int == NULL || w_int == NULL){
+    double *x_int=(double*)malloc(2*(uint64_t)n_int*sizeof(double)), *w_int=x_int+n_int;
+    if (x_int == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        if (x_int != NULL){
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for w_int.", __func__, n_int*sizeof(double));
-            free(x_int);
-        }else if (w_int != NULL){
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for x_int.", __func__, n_int*sizeof(double));
-            free(w_int);
-        }else{
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for x_int & w_int.", __func__, 2*n_int*sizeof(double));
-        }
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for x_int & w_int.", __func__, 2*n_int*sizeof(double));
         Madd_Error_Add(MADD_ERROR, error_info);
+        free(x_int);
         return 0;
     }
     /* root */
@@ -114,6 +107,7 @@ double Integrate_Gauss_Legendre(double func(double, void *), double x1, double x
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: error when preparing integrate points (x). See info from %hs.", __func__, "Integrate_Gauss_Legendre_x");
         Madd_Error_Add(MADD_ERROR, error_info);
+        free(x_int);
         return 0;
     }
     bool flag_w_int = Integrate_Gauss_Legendre_w(n_int, x_int, w_int);
@@ -121,11 +115,11 @@ double Integrate_Gauss_Legendre(double func(double, void *), double x1, double x
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: error when preparing integrate weights (w). See info from %hs.", __func__, "Integrate_Gauss_Legendre_w");
         Madd_Error_Add(MADD_ERROR, error_info);
+        free(x_int);
         return 0;
     }
     double res = Integrate_Gauss_Legendre_via_xw(func, x1, x2, n_int, other_param, x_int, w_int);
     /* free */
     free(x_int);
-    free(w_int);
     return res;
 }
