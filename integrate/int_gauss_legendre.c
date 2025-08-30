@@ -17,39 +17,49 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 #include"../special_func/special_func.h"
 #include"../basic/basic.h"
 
-#define INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(num_type, integer_type, sqrt, LAPACKE_dsyev) \
+#define INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(num_type, integer_type, sqrt, LAPACKE_dsteqr) \
 { \
-    integer_type n_int = n_int_; \
-    uint64_t nn=(uint64_t)n_int*n_int, i, j; \
-    size_t nn_size = nn*sizeof(num_type); \
-    num_type *mat=(num_type*)malloc(nn*sizeof(num_type)), b; \
-    if (mat == NULL){ \
+    if (n_int_ == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for matrix.", __func__, nn_size); \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given n_int is 0.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+    if (x_int == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given x_int is NULL.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+ \
+    integer_type n_int = n_int_; \
+    uint64_t nn=(uint64_t)n_int*n_int, i; \
+    size_t n1_size = (uint64_t)(n_int-1)*sizeof(num_type); \
+    num_type *subdiag=(num_type*)malloc(n1_size), b; \
+    if (subdiag == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for matrix.", __func__, n1_size); \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
     } \
-    for (i=0; i<n_int; i++){ \
-        for (j=0; j<n_int; j++){ \
-            mat[i*n_int + j] = 0; \
-        } \
-    } \
+    x_int[0] = 0; \
     for (i=1; i<n_int; i++){ \
         b = i/sqrt(4.*i*i-1); \
-        mat[(i-1)*n_int + i] = mat[i*n_int + i-1] = b; \
+        subdiag[i-1] = b; \
+        x_int[i] = 0; \
     } \
     /* eigen */ \
-    char jobz = 'V', uplo = 'U'; \
-    lapack_int info = LAPACKE_dsyev(LAPACK_ROW_MAJOR, jobz, uplo, n_int, mat, n_int, x_int); \
+    char compz = 'N'; /* cal eigenvalues only, without eigenvectors */ \
+    lapack_int info = LAPACKE_dsteqr(LAPACK_ROW_MAJOR, compz, n_int, x_int, subdiag, NULL, n_int); \
  \
-    free(mat); \
+    free(subdiag); \
  \
     if (info){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         if (info < 0){ \
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: (source file: %hs)(line: %d) from LAPACKE_dsyev: the %d-th argument had an illegal value.", __func__, __FILE__, __LINE__, -info); \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: (source file: %hs)(line: %d) from LAPACKE_dsteqr: the %d-th argument had an illegal value.", __func__, __FILE__, __LINE__, -info); \
         }else{ \
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: (source file: %hs)(line: %d) from LAPACKE_dsyev: the algorithm failed to converge; %d off-diagonal elements of an intermediate tridiagonal form did not converge to zero.", __func__, __FILE__, __LINE__, info); \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: (source file: %hs)(line: %d) from LAPACKE_dsteqr: the algorithm has failed to find all the eigenvalues in a total of 30*N iterations; %d elements of E have not converged to zero; on exit, D and E contain the elements of a symmetric tridiagonal matrix which is orthogonally similar to the original matrix.", __func__, __FILE__, __LINE__, info); \
         } \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
@@ -59,6 +69,25 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 
 #define INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(integer_type, Poly1d, Poly1d_Create, Special_Func_Legendre, Poly1d_Derivative, Poly1d_Value, Poly1d_Free) \
 { \
+    if (n_int == 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given n_int is 0.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+    if (x_int == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given x_int is NULL.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+    if (w_int == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given w_int is NULL.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+ \
     integer_type i; \
     Poly1d poly = Poly1d_Create(n_int, 0), dpoly = Poly1d_Create(n_int-1, 0); \
     Special_Func_Legendre(&poly); \
@@ -87,6 +116,25 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 
 #define INTEGRATE_GAUSS_LEGENDRE_VIA_XW__ALGORITHM(num_type, integer_type) \
 { \
+    if (n_int == 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given n_int is 0.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+    if (x_int == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given x_int is NULL.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+    if (w_int == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: given w_int is NULL.", __func__); \
+        Madd_Error_Add(MADD_WARNING, error_info); \
+        return false; \
+    } \
+ \
     num_type x_range = x2 - x1, x_mod = x_range/2, x_mid = (x1 + x2)/2, x, res = 0; \
     integer_type i; \
     for (i=0; i<n_int; i++){ \
@@ -131,7 +179,7 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 
 /* uint64_t & double */
 bool Integrate_Gauss_Legendre_x(uint64_t n_int_, double *x_int)
-INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(double, uint64_t, sqrt, LAPACKE_dsyev)
+INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(double, uint64_t, sqrt, LAPACKE_dsteqr)
 
 bool Integrate_Gauss_Legendre_w(uint64_t n_int, double *x_int, double *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint64_t, Poly1d, Poly1d_Create, Special_Func_Legendre, Poly1d_Derivative, Poly1d_Value, Poly1d_Free)
@@ -144,7 +192,7 @@ INTEGRATE_GAUSS_LEGENDRE__ALGORITHM(double, Integrate_Gauss_Legendre_x, "Integra
 
 /* uint32_t & float */
 bool Integrate_Gauss_Legendre_x_f32(uint32_t n_int_, float *x_int)
-INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(float, uint32_t, sqrtf, LAPACKE_ssyev)
+INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(float, uint32_t, sqrtf, LAPACKE_ssteqr)
 
 bool Integrate_Gauss_Legendre_w_f32(uint32_t n_int, float *x_int, float *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint32_t, Poly1d_f32, Poly1d_Create_f32, Special_Func_Legendre_f32, Poly1d_Derivative_f32, Poly1d_Value_f32, Poly1d_Free_f32)
