@@ -17,10 +17,10 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 #include"../special_func/special_func.h"
 #include"../basic/basic.h"
 
-#define INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(num_type, integer_type, LAPACKE_dsyev) \
+#define INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(num_type, integer_type, sqrt, LAPACKE_dsyev) \
 { \
-    integer_type n_int = n_int_, i, j; \
-    uint64_t nn=(uint64_t)n_int*n_int; \
+    integer_type n_int = n_int_; \
+    uint64_t nn=(uint64_t)n_int*n_int, i, j; \
     size_t nn_size = nn*sizeof(num_type); \
     num_type *mat=(num_type*)malloc(nn*sizeof(num_type)), b; \
     if (mat == NULL){ \
@@ -29,11 +29,14 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
     } \
-    mat[0] = 0; \
+    for (i=0; i<n_int; i++){ \
+        for (j=0; j<n_int; j++){ \
+            mat[i*n_int + j] = 0; \
+        } \
+    } \
     for (i=1; i<n_int; i++){ \
         b = i/sqrt(4.*i*i-1); \
         mat[(i-1)*n_int + i] = mat[i*n_int + i-1] = b; \
-        mat[i*n_int + i] = 0; \
     } \
     /* eigen */ \
     char jobz = 'V', uplo = 'U'; \
@@ -120,7 +123,7 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
         free(x_int); \
         return 0; \
     } \
-    double res = Integrate_Gauss_Legendre_via_xw(func, x1, x2, n_int, other_param, x_int, w_int); \
+    num_type res = Integrate_Gauss_Legendre_via_xw(func, x1, x2, n_int, other_param, x_int, w_int); \
     /* free */ \
     free(x_int); \
     return res; \
@@ -128,7 +131,7 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 
 /* uint64_t & double */
 bool Integrate_Gauss_Legendre_x(uint64_t n_int_, double *x_int)
-INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(double, uint64_t, LAPACKE_dsyev)
+INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(double, uint64_t, sqrt, LAPACKE_dsyev)
 
 bool Integrate_Gauss_Legendre_w(uint64_t n_int, double *x_int, double *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint64_t, Poly1d, Poly1d_Create, Special_Func_Legendre, Poly1d_Derivative, Poly1d_Value, Poly1d_Free)
@@ -141,13 +144,13 @@ INTEGRATE_GAUSS_LEGENDRE__ALGORITHM(double, Integrate_Gauss_Legendre_x, "Integra
 
 /* uint32_t & float */
 bool Integrate_Gauss_Legendre_x_f32(uint32_t n_int_, float *x_int)
-INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(float, uint32_t, LAPACKE_ssyev)
+INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(float, uint32_t, sqrtf, LAPACKE_ssyev)
 
 bool Integrate_Gauss_Legendre_w_f32(uint32_t n_int, float *x_int, float *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint32_t, Poly1d_f32, Poly1d_Create_f32, Special_Func_Legendre_f32, Poly1d_Derivative_f32, Poly1d_Value_f32, Poly1d_Free_f32)
 
 float Integrate_Gauss_Legendre_via_xw_f32(float func(float, void *), float x1, float x2, uint32_t n_int, void *other_param, float *x_int, float *w_int)
-INTEGRATE_GAUSS_LEGENDRE_VIA_XW__ALGORITHM(double, uint32_t)
+INTEGRATE_GAUSS_LEGENDRE_VIA_XW__ALGORITHM(float, uint32_t)
 
 float Integrate_Gauss_Legendre_f32(float func(float, void *), float x1, float x2, uint32_t n_int, void *other_param)
 INTEGRATE_GAUSS_LEGENDRE__ALGORITHM(float, Integrate_Gauss_Legendre_x_f32, "Integrate_Gauss_Legendre_x_f32", Integrate_Gauss_Legendre_w_f32, "Integrate_Gauss_Legendre_w_f32", Integrate_Gauss_Legendre_via_xw_f32)
