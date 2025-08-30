@@ -56,7 +56,10 @@ if (ENABLE_QUADPRECISION)
 endif()
 
 # latex document
-option(LATEX_DOCUMENT "Build LaTeX document guide. Requires LaTeX compiler." ON)
+#option(LATEX_DOCUMENT "Build LaTeX document guide. Requires LaTeX compiler." ON)
+
+# markdown document
+option(BUILD_DOCUMENT "Build documentation." OFF)
 
 # test
 option(ENABLE_TEST "Enable test to check the functions work well." ON)
@@ -86,7 +89,7 @@ else()
 endif()
 message(STATUS "thread base src: ${MADD_SRC_LIST_THREAD_BASE}")
 
-if (LATEX_DOCUMENT)
+if (BUILD_DOCUMENT)
     add_subdirectory(doc)
 endif ()
 

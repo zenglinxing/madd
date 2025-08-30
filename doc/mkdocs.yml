@@ -1,0 +1,8 @@
+site_name: Guide of Math Addition (Madd)
+theme: readthedocs
+
+nav:
+  - Home: intro-home.md
+  - Quick Start:
+    - Build & Install: intro-build.md
+    - Include & Link: intro-include.md

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Madd-document)
 
-find_package(LATEX COMPONENTS PDFLATEX BIBTEX REQUIRED)
+#[[find_package(LATEX COMPONENTS PDFLATEX BIBTEX REQUIRED)
 
 set(TEX_SOURCES madd-guide.tex)
 
@@ -31,4 +31,23 @@ add_custom_target(madd_latex_pdf ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/madd-gu
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/madd-guide.pdf
     DESTINATION share/doc/madd
+)
+]]#
+
+find_program(MKDOCS_EXECUTABLE mkdocs REQUIRED)
+message(STATUS "mkdocs: ${MKDOCS_EXECUTABLE}")
+
+file(GLOB_RECURSE MARKDOWN_SOURCE 
+     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
+     "*.md")
+
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/search.html
+    COMMAND ${MKDOCS_EXECUTABLE} build -d ${CMAKE_CURRENT_BINARY_DIR}/doc --dirty
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Building documentation with MkDocs..."
+    VERBATIM
+)
+
+add_custom_target(md_doc
+    ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/search.html
 )
