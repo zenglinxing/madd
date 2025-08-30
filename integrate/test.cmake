@@ -3,3 +3,9 @@ target_include_directories(test_integrate-Simpson PUBLIC ${CMAKE_CURRENT_SOURCE_
 target_link_libraries(test_integrate-Simpson PUBLIC madd)
 add_test(NAME Integrate_Simpson
          COMMAND test_integrate-Simpson)
+
+add_executable(test_integrate-Gauss-Legendre integrate/test/Gauss-Legendre.c)
+target_include_directories(test_integrate-Gauss-Legendre PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_integrate-Gauss-Legendre PUBLIC madd)
+add_test(NAME Integrate_GaussLegendre
+         COMMAND test_integrate-Gauss-Legendre)

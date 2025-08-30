@@ -29,6 +29,7 @@ project(madd
         )
 
 find_package(OpenBLAS REQUIRED)
+message(STATUS "OpenBLAS include: ${OpenBLAS_INCLUDE_DIRS}")
 message(STATUS "OpenBLAS library: ${OpenBLAS_LIBRARY}")
 
 #message(STATUS "C compiler ID: ${CMAKE_C_COMPILER_ID}")

@@ -9,21 +9,31 @@ This file is part of Math Addition, in ./integrate/integrate.h
 #define MADD_INTEGRATE_H
 
 #include<stdint.h>
+#include<stdbool.h>
 
 /* Simpson integrate */
 double Integrate_Simpson(double func(double,void*),
                          double xmin, double xmax,
-                         uint64_t n,void *other_param);
+                         uint64_t n_int,void *other_param);
 float Integrate_Simpson_f32(float func(float,void*),
                             float xmin, float xmax,
-                            uint32_t n, void *other_param);
+                            uint32_t n_int, void *other_param);
 long double Integrate_Simpson_fl(long double func(long double,void*),
                                  long double xmin, long double xmax,
-                                 uint64_t n, void *other_param);
+                                 uint64_t n_int, void *other_param);
 #ifdef ENABLE_QUADPRECISION
-__float128 Int_Simpson_f128(__float128 func(__float128,void*),
-                            __float128 xmin, __float128 xmax,
-                            uint64_t n, void *other_param);
+__float128 Integrate_Simpson_f128(__float128 func(__float128,void*),
+                                  __float128 xmin, __float128 xmax,
+                                  uint64_t n_int, void *other_param);
 #endif /* ENABLE_QUADPRECISION */
+
+/* Gauss-Legendre integrate */
+bool Integrate_Gauss_Legendre_x(uint64_t n_int_, double *x_int);
+bool Integrate_Gauss_Legendre_w(uint64_t n_int, double *x_int, double *w_int);
+double Integrate_Gauss_Legendre_via_xw(double func(double, void *), double xmin, double xmax,
+                                       uint64_t n_int, void *other_param,
+                                       double *x_int, double *w_int);
+double Integrate_Gauss_Legendre(double func(double, void *), double xmin, double xmax,
+                                uint64_t n_int, void *other_param);
 
 #endif /* MADD_INTEGRATE_H */
