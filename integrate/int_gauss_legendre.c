@@ -10,6 +10,7 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
 #include<stdint.h>
 #include<wchar.h>
 #include<stdbool.h>
+#define HAVE_LAPACK_CONFIG_H
 #include<lapacke.h>
 #include"integrate.h"
 #include"../polynomial/poly1d.h"
