@@ -12,13 +12,13 @@ int main(int argc, char *argv[])
     printf("b:\t%f\t%f\n", b[0], b[1]);
 
     printf("BE:\n");
-    FILE *fp=fopen("test_file-endian_BE", "wb");
+    FILE *fp=fopen("test_basic-file-endian_BE", "wb");
     Write_1byte(fp, &endian_type);
     Write_Array_BE(fp, a, sizeof(a)/sizeof(uint64_t), sizeof(uint64_t));
     Write_Array_BE(fp, b, sizeof(b)/sizeof(double), sizeof(double));
     fclose(fp);
 
-    fp = fopen("test_file-endian_BE", "rb");
+    fp = fopen("test_basic-file-endian_BE", "rb");
     r_endian = Read_1byte(fp).u;
     Read_Array_BE(fp, aa, sizeof(a)/sizeof(uint64_t), sizeof(uint64_t));
     Read_Array_BE(fp, bb, sizeof(b)/sizeof(uint64_t), sizeof(uint64_t));
@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
     printf("bb:\t%f\t%f\n", bb[0], bb[1]);
 
     printf("LE:\n");
-    fp=fopen("test_file-endian_LE", "wb");
+    fp=fopen("test_basic-file-endian_LE", "wb");
     Write_1byte(fp, &endian_type);
     Write_Array_LE(fp, a, sizeof(a)/sizeof(uint64_t), sizeof(uint64_t));
     Write_Array_LE(fp, b, sizeof(b)/sizeof(double), sizeof(double));
     fclose(fp);
 
-    fp = fopen("test_file-endian_LE", "rb");
+    fp = fopen("test_basic-file-endian_LE", "rb");
     r_endian = Read_1byte(fp).u;
     Read_Array_LE(fp, aa, sizeof(a)/sizeof(uint64_t), sizeof(uint64_t));
     Read_Array_LE(fp, bb, sizeof(b)/sizeof(uint64_t), sizeof(uint64_t));
