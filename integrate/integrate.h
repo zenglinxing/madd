@@ -36,4 +36,13 @@ double Integrate_Gauss_Legendre_via_xw(double func(double, void *), double xmin,
 double Integrate_Gauss_Legendre(double func(double, void *), double xmin, double xmax,
                                 uint64_t n_int, void *other_param);
 
+/* uint32_t & float */
+bool Integrate_Gauss_Legendre_x_f32(uint32_t n_int_, float *x_int);
+bool Integrate_Gauss_Legendre_w_f32(uint32_t n_int, float *x_int, float *w_int);
+float Integrate_Gauss_Legendre_via_xw_f32(float func(float, void *), float x1, float x2,
+                                          uint32_t n_int, void *other_param,
+                                          float *x_int, float *w_int);
+float Integrate_Gauss_Legendre_f32(float func(float, void *), float x1, float x2,
+                                   uint32_t n_int, void *other_param);
+
 #endif /* MADD_INTEGRATE_H */
