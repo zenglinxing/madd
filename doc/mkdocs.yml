@@ -12,3 +12,8 @@ nav:
     - Error & Warning: basic-error-warning.md
     - Binary Number: basic-binary.md
     - Other: basic-other.md
+  - Random Number Generator:
+    - Instruction: rng-intro.md
+  - Sort:
+    - Introduction: sort-intro.md
+    - Functions: sort-func.md
