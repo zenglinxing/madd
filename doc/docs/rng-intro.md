@@ -37,7 +37,7 @@ void RNG_<algorithm>_Write_LE(RNG_<algorithm>_Param *rng, FILE *fp);
 
 # Optional Algorithms
 
-Here lists the algorithms and the corresponding $<$algorithm$>$ in the struct and functions.
+Here lists the algorithms and the corresponding \<algorithm\> in the struct and functions.
 
 * **Mersenne Twister**: \<algorithm\>=MT. Here only apply the MT19937-64 parameters. 
 
