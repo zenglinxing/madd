@@ -1,0 +1,1 @@
+﻿This is the last version with LaTeX documentation. The future version will remove LaTeX doc and migrate to Markdown.
