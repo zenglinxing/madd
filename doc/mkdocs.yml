@@ -17,6 +17,7 @@ nav:
     - Introduction: integrate-intro.md
     - Trapezoidal Integral: integrate-trapeze.md
     - Simpson Integral: integrate-Simpson.md
+    - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
   - Random Number Generator:
     - Instruction: rng-intro.md
   - Sort:
