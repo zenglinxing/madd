@@ -19,3 +19,14 @@ Dependencies & Requirements
 * [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS)
 
 Your machine should be binary 64-bit, supporting 64-bit float number (double precision).
+
+Third-Parties Licences
+---
+
+1. [OpenBLAS](https://www.openblas.net) - BSD-3
+
+https://opensource.org/licenses/BSD-3-Clause
+
+2. [KaTeX](https://katex.org/) - MIT
+
+https://opensource.org/licenses/MIT
