@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{{ super() }}
+<script>
+// 检查本地存储或系统偏好，自动设置主题
+if (localStorage.getItem('theme') === 'dark' || 
+    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark-theme');
+} else {
+    document.documentElement.classList.remove('dark-theme');
+}
+
+// 切换主题函数
+function toggleTheme() {
+    if (document.documentElement.classList.contains('dark-theme')) {
+        document.documentElement.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<!-- 主题切换按钮（可根据需要调整样式/位置） -->
+<button onclick="toggleTheme()" class="theme-toggle">Switch Themes</button>
+{% endblock %}

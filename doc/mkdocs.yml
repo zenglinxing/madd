@@ -1,6 +1,10 @@
 ﻿site_name: Guide of Math Addition (Madd)
 theme: 
   name: readthedocs
+  custom_dir: docs/overrides
+
+extra_css:
+  - css/dark_theme.css
 
 nav:
   - Home: intro-home.md
