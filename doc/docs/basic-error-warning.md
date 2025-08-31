@@ -26,7 +26,7 @@ void Madd_Error_Set_Logfile(FILE *fp);
 void Madd_Error_Close_Logfile(void);
 ```
 
-Get Last Manually
+Get Last Item Manually
 ---
 
 If you already call the `Madd_Error_Enable_Logfile` and then call `Madd_Error_Set_Logfile`, the file from `Madd_Error_Enable_Logfile` will be closed and Madd will detour to the new FILE in `Madd_Error_Set_Logfile`.
@@ -43,7 +43,7 @@ Global Variables
 ---
 
 * `madd_error_keep_print` if `true`, Madd keeps print the error/warning item at any time it pops.
-* `madd_error_exit` if `true`, Madd will exit immediately when an *error* is popped. I **strongly recommend** you to set it `true` in your main function, because Madd won't guarantee the correctness of the calcualtion after an error circumstances.
+* `madd_error_exit` if `true`, Madd will exit immediately when an *error* is popped. I **strongly recommend** you to set it `true` in your main function, because Madd won't guarantee the correctness after an error.
 * `madd_warning_exit` if `true`, Madd will exit immediately when a *warning* is popped.
 * `madd_error_n` number of error & warning items.
 * `madd_error.n_error` & `madd_error.n_warning` number of error / warning items.

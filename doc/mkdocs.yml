@@ -13,6 +13,10 @@ nav:
     - Constants: basic-constant.md
     - Binary Number: basic-binary.md
     - Other: basic-other.md
+  - Integrate:
+    - Introduction: integrate-intro.md
+    - Trapezoidal Integral: integrate-trapeze.md
+    - Simpson Integral: integrate-Simpson.md
   - Random Number Generator:
     - Instruction: rng-intro.md
   - Sort:
