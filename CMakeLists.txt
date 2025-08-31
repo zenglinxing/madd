@@ -55,9 +55,6 @@ if (ENABLE_QUADPRECISION)
     set(MADD_DEF_ENABLE_QUADPRECISION "#define ENABLE_QUADPRECISION")
 endif()
 
-# latex document
-#option(LATEX_DOCUMENT "Build LaTeX document guide. Requires LaTeX compiler." ON)
-
 # markdown document
 option(BUILD_DOCUMENT "Build documentation." OFF)
 
