@@ -10,6 +10,7 @@ nav:
   - Basic Functions:
     - Introduction: basic-intro.md
     - Error & Warning: basic-error-warning.md
+    - Constants: basic-constant.md
     - Binary Number: basic-binary.md
     - Other: basic-other.md
   - Random Number Generator:

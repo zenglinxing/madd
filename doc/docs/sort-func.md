@@ -20,10 +20,10 @@ void Sort_Heap(uint64_t n, size_t usize, void *arr_,
                     bool func_compare(void*, void*, void*), void *other_param);
 ```
 
-*arr_* is the pointer to your array. *usize* is the size of element.
+`arr_` is the pointer to your array. `usize` is the size of element.
 
-The function *Sort_Heap_Internal* has one more parameter than *Sort_Heap* \*ptemp.
-I suppose you had prepare memory space of \*ptemp by *usize* bytes.
+The function `Sort_Heap_Internal` has one more parameter than `Sort_Heap` `*ptemp`.
+I suppose you had prepare memory space of `*ptemp` by `usize` bytes.
 
 get-key function to compare function
 ---

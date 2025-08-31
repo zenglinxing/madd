@@ -96,6 +96,10 @@ Endian Type
 
 The endian type on different platforms may be varied. The function `Endian_Type` returns 1 if your machine is big endian, or returns 0 if little endian.
 
+```C
+inline bool Endian_Type(void);
+```
+
 Hash IEEE-754 Float to Integer
 ---
 

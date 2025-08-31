@@ -127,7 +127,7 @@ void RNG_Write_LE(RNG_Param *rng, FILE *fp);
 
 The unified RNG interfaces are much convenient since you don't need to concern about the details of algorithm. However, `RNG_Param` consumes more memory space than any specific algorithm's parameters.
 
-One thing to note is that not every algorithm return a random integer of type `uint64_t`.
+One thing to note is that not every algorithm return a random integer ranging from 0 to BIN64.
 
 # Example
 
