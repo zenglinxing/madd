@@ -60,3 +60,20 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+Binary Search
+---
+
+```C
+uint64_t Binary_Search(uint64_t n, size_t usize, void *arr_, void *element,
+                       char func_compare(void *a, void *b, void *other_param), void *other_param);
+uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *element,
+                              bool func_compare(void *a, void *b, void *other_param), void *other_param);
+```
+
+The binary-search is an efficient method to search for element in a **sorted** array.
+`Binary_Search` searches for the element in array, and returns where it is.
+If the element is not found, it will returns the possible (maybe not accurate) place to insert the element and pops warning to Madd.
+`Binary_Search_Insert` returns where to insert the element.
+
+Important difference! `func_compare` you provide to `Binary_Search` should only return `MADD_LESS` / `MADD_SAME` / `MADD_GREATER`.
