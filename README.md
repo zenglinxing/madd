@@ -27,10 +27,13 @@ ctest
 cmake --install .
 ```
 
-Usage
+Documentation
 ---
 
-If you had built the document madd-guide.pdf when configuring and building the library, you should find it at share/doc/madd in your install path. This document elucidate the functions of madd.
+If you had built the document (with `-DBUILD_DOCUMENT=ON`, **mkdocs** is required for building) when configuring and building the library, you should find it at share/madd in your install path. This document elucidate the functions of madd.
+
+Build & Link
+---
 
 In C source
 

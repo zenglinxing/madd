@@ -15,7 +15,8 @@ Link Madd when building
 gcc main.c -o main -lmadd
 ```
 
-# Link through CMake
+Link through CMake
+---
 
 If you want to use Madd in your CMake project.
 

@@ -1,6 +1,9 @@
 Build & Install
 ===
 
+Configure & Build
+---
+
 ```bash
 mkdir build
 cd build
@@ -12,7 +15,8 @@ cmake --install .
 
 If your generator is Visual Studio, you should use `cmake --build . --config Release`, `ctest -C Release` and `cmake --install . --config Release` instead.
 
-# Build Options & Environments
+Build Options & Environments
+---
 
 Apart from common options `-DCMAKE_BUILD_TYPE=Release` and `-DCMAKE_INSTALL_PREFIX=`, there are multiple options & variables to set.
 
