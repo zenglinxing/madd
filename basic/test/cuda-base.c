@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         printf("max grid size:\t\t\t(%d, %d, %d)\n", dp.maxGridSize[0], dp.maxGridSize[1], dp.maxGridSize[2]);
         printf("total constant mem:\t\t%zd bytes | %.1f kb\n", dp.totalConstMem, dp.totalConstMem/1024.);
         printf("computation capability:\t\t%d.%d\n", dp.major, dp.minor);
-        printf("clock rate:\t\t\t%d kHz | %.1f MHz | %.2f GHz\n", dp.clockRate, dp.clockRate/1.e3, dp.clockRate/1.e6);
+        //printf("clock rate:\t\t\t%d kHz | %.1f MHz | %.2f GHz\n", dp.clockRate, dp.clockRate/1.e3, dp.clockRate/1.e6);
         printf("texture alignment:\t\t%zd\n", dp.textureAlignment);
         if (dp.deviceOverlap){
             printf("device overlap:\t\t\tTrue\n");
@@ -37,11 +37,11 @@ int main(int argc, char *argv[])
             printf("device overlap:\t\t\tFalse");
         }
         printf("multi processorCount:\t\t%d\n", dp.multiProcessorCount);
-        if (dp.kernelExecTimeoutEnabled){
+        /*if (dp.kernelExecTimeoutEnabled){
             printf("kernel execution time out:\tenabled\n");
         }else{
             printf("kernel execution time out:\tdisabled\n");
-        }
+        }*/
         if (dp.integrated){
             printf("integrated GPU:\t\t\tTrue\n");
         }else{
