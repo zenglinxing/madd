@@ -78,6 +78,7 @@ add_subdirectory(large_number)
 add_subdirectory(polynomial)
 add_subdirectory(sort)
 add_subdirectory(special_func)
+add_subdirectory(statistics)
 set(MADD_SRC_LIST_THREAD_BASE)
 if (ENABLE_MULTITHREAD)
     add_subdirectory(thread_base)
@@ -105,6 +106,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
             ${MADD_SRC_LIST_SORT} # sort/
             ${MADD_SRC_LIST_SPECIAL_FUNC} # special_func/
+            ${MADD_SRC_LIST_STATISTICS} # statistics/
             ${MADD_SRC_LIST_THREAD_BASE} # thread_base
 )
 # link OpenBLAS
@@ -154,6 +156,7 @@ if (ENABLE_TEST)
     include(rng/test.cmake)
     include(sort/test.cmake)
     include(special_func/test.cmake)
+    include(statistics/test.cmake)
     if (ENABLE_MULTITHREAD)
         include(thread_base/test.cmake)
     endif ()
