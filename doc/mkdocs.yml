@@ -7,21 +7,25 @@ extra_css:
   - css/dark_theme.css
 
 nav:
-  - Home: intro-home.md
-  - Quick Start:
-    - Build & Install: intro-build.md
-    - Include & Link: intro-include.md
+  - Home:
+    - Introduction: intro-home.md
+    - Quick Start:
+      - Build & Install: intro-build.md
+      - Include & Link: intro-include.md
   - Basic Functions:
     - Introduction: basic-intro.md
-    - Error & Warning: basic-error-warning.md
-    - Constants: basic-constant.md
-    - Binary Number: basic-binary.md
+    - Basic contents:
+      - Error & Warning: basic-error-warning.md
+      - Constants: basic-constant.md
+      - Binary Number: basic-binary.md
     - Other: basic-other.md
   - Integrate:
     - Introduction: integrate-intro.md
-    - Trapezoidal Integral: integrate-trapeze.md
-    - Simpson Integral: integrate-Simpson.md
-    - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
+    - Fundamental Integral:
+      - Trapezoidal Integral: integrate-trapeze.md
+      - Simpson Integral: integrate-Simpson.md
+    - Gauss Quadrature:
+      - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
   - Random Number Generator:
     - Instruction: rng-intro.md
   - Sort:
