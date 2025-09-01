@@ -56,6 +56,11 @@ inline Cnum_f128 Kahan_Summation_Step_c128(Cnum_f128 sum, Cnum_f128 add, Cnum_f1
 KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnum_f128, Cnum_Sub_f128, Cnum_Add_f128)
 #endif /* ENABLE_QUADPRECISION */
 
-double Kahan_Summation(uint64_t n, double *arr);
+double      Kahan_Summation(uint64_t n, double *arr);
+float       Kahan_Summation_f32(uint32_t n, float *arr);
+long double Kahan_Summation_fl(uint64_t n, long double *arr);
+Cnum        Kahan_Summation_c(uint64_t n, Cnum *arr);
+Cnum_f32    Kahan_Summation_c32(uint64_t n, Cnum_f32 *arr);
+Cnum_fl     Kahan_Summation_cl(uint64_t n, Cnum_fl *arr);
 
 #endif /* MADD_STATISTICS_H */

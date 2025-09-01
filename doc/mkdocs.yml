@@ -27,3 +27,7 @@ nav:
   - Sort:
     - Introduction: sort-intro.md
     - Functions: sort-func.md
+  - Statistics:
+    - Introduction: statistics-intro.md
+    - Sum, Mean, etc:
+      - Kahan Summation: statistics-kahan-sum.md
