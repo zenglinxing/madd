@@ -44,4 +44,81 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
 void Sort_Heap(uint64_t n, size_t usize, void *arr_,
                     bool func_compare(void*, void*, void*), void *other_param);
 
+/* less or equal */
+bool Sort_leq_f64(void *a, void *b, void *other_param);
+bool Sort_leq_f32(void *a, void *b, void *other_param);
+bool Sort_leq_fl(void *a, void *b, void *other_param);
+bool Sort_leq_i8(void *a, void *b, void *other_param);
+bool Sort_leq_u8(void *a, void *b, void *other_param);
+bool Sort_leq_i16(void *a, void *b, void *other_param);
+bool Sort_leq_u16(void *a, void *b, void *other_param);
+bool Sort_leq_i32(void *a, void *b, void *other_param);
+bool Sort_leq_u32(void *a, void *b, void *other_param);
+bool Sort_leq_i64(void *a, void *b, void *other_param);
+bool Sort_leq_u64(void *a, void *b, void *other_param);
+
+/* less */
+bool Sort_le_f64(void *a, void *b, void *other_param);
+bool Sort_le_f32(void *a, void *b, void *other_param);
+bool Sort_le_fl(void *a, void *b, void *other_param);
+bool Sort_le_i8(void *a, void *b, void *other_param);
+bool Sort_le_u8(void *a, void *b, void *other_param);
+bool Sort_le_i16(void *a, void *b, void *other_param);
+bool Sort_le_u16(void *a, void *b, void *other_param);
+bool Sort_le_i32(void *a, void *b, void *other_param);
+bool Sort_le_u32(void *a, void *b, void *other_param);
+bool Sort_le_i64(void *a, void *b, void *other_param);
+bool Sort_le_u64(void *a, void *b, void *other_param);
+
+/* greater or equal */
+bool Sort_geq_f64(void *a, void *b, void *other_param);
+bool Sort_geq_f32(void *a, void *b, void *other_param);
+bool Sort_geq_fl(void *a, void *b, void *other_param);
+bool Sort_geq_i8(void *a, void *b, void *other_param);
+bool Sort_geq_u8(void *a, void *b, void *other_param);
+bool Sort_geq_i16(void *a, void *b, void *other_param);
+bool Sort_geq_u16(void *a, void *b, void *other_param);
+bool Sort_geq_i32(void *a, void *b, void *other_param);
+bool Sort_geq_u32(void *a, void *b, void *other_param);
+bool Sort_geq_i64(void *a, void *b, void *other_param);
+bool Sort_geq_u64(void *a, void *b, void *other_param);
+
+/* less */
+bool Sort_ge_f64(void *a, void *b, void *other_param);
+bool Sort_ge_f32(void *a, void *b, void *other_param);
+bool Sort_ge_fl(void *a, void *b, void *other_param);
+bool Sort_ge_i8(void *a, void *b, void *other_param);
+bool Sort_ge_u8(void *a, void *b, void *other_param);
+bool Sort_ge_i16(void *a, void *b, void *other_param);
+bool Sort_ge_u16(void *a, void *b, void *other_param);
+bool Sort_ge_i32(void *a, void *b, void *other_param);
+bool Sort_ge_u32(void *a, void *b, void *other_param);
+bool Sort_ge_i64(void *a, void *b, void *other_param);
+bool Sort_ge_u64(void *a, void *b, void *other_param);
+
+/* compare */
+char Sort_Compare_Ascending_f64(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_f32(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_fl(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_i8(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_u8(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_i16(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_u16(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_i32(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_u32(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_i64(void *a, void *b, void *other_param);
+char Sort_Compare_Ascending_u64(void *a, void *b, void *other_param);
+
+char Sort_Compare_Descending_f64(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_f32(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_fl(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_i8(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_u8(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_i16(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_u16(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_i32(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_u32(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_i64(void *a, void *b, void *other_param);
+char Sort_Compare_Descending_u64(void *a, void *b, void *other_param);
+
 #endif /* MADD_SORT_H */
