@@ -19,7 +19,7 @@ char int_compare(void *a1, void *a2, void *other_param) {
 
 // 比较函数：字符串
 char str_compare(void *a1, void *a2, void *other_param) {
-    int res = strcmp(*(char**)a1, *(char**)a2) < 0
+    int res = strcmp(*(char**)a1, *(char**)a2) < 0;
     if (res < 0) return MADD_LESS;
     else if (res > 0) return MADD_GREATER;
     else return MADD_SAME;
