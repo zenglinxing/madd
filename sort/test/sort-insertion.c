@@ -6,7 +6,7 @@
 #include <time.h>
 #include"madd.h"
 
-typedef bool (*compare_func_t)(void *a, void *b, void *other_param);
+typedef char (*compare_func_t)(void *a, void *b, void *other_param);
 
 // ================= 测试工具函数 =================
 
@@ -66,7 +66,7 @@ char int_descending(void *a, void *b, void *param) {
 
 // 字符串升序比较 (字典序)
 char str_ascending(void *a, void *b, void *param) {
-    char res = strcmp(*(char **)a, *(char **)b)
+    char res = strcmp(*(char **)a, *(char **)b);
     if (res < 0) return MADD_LESS;
     else if (res > 0) return MADD_GREATER;
     else return MADD_SAME;
