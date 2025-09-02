@@ -47,11 +47,11 @@ char student_compare(void *a, void *b, void *other_param) {
 
 // 辅助函数：验证数组是否已排序
 bool verify_sorted(void *arr, uint64_t n, size_t size, 
-                  bool (*cmp)(void*, void*, void*), void *param) {
+                   char (*cmp)(void*, void*, void*), void *param) {
     for (uint64_t i = 1; i < n; i++) {
         void *prev = (char*)arr + (i-1)*size;
         void *curr = (char*)arr + i*size;
-        if (!cmp(prev, curr, param)) {
+        if (cmp(prev, curr, param) == MADD_GREATER) {
             printf("Validation failed at position %lu\n", i);
             return false;
         }
@@ -235,14 +235,16 @@ void test_performance() {
 }
 
 // 比较函数
-bool large_compare(void *a, void *b, void *param) {
+char large_compare(void *a, void *b, void *param) {
     (void)param;
     double sum_a = 0, sum_b = 0;
     for (int i = 0; i < 200; i++) {
         sum_a += ((LargeStruct*)a)->data[i];
         sum_b += ((LargeStruct*)b)->data[i];
     }
-    return sum_a <= sum_b;
+    if (sum_a < sum_b) return MADD_LESS;
+    else if (sum_a > sum_b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 6. 内存测试（大元素大小）

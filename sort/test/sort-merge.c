@@ -30,8 +30,8 @@ bool is_sorted(void *arr, uint64_t n, size_t usize,
                char (*compare)(void*, void*, void *other_param), void *other_param) {
     unsigned char *p = (unsigned char*)arr;
     for (uint64_t i = 0; i < n-1; i++) {
-        if (!compare(p, p + usize, other_param) && 
-            compare(p + usize, p, other_param)) { // 检查相邻元素顺序
+        if (compare(p, p + usize, other_param) == MADD_GREATER && 
+            compare(p + usize, p, other_param) == MADD_LESS) { // 检查相邻元素顺序
             return false;
         }
         p += usize;

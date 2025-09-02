@@ -37,7 +37,7 @@ bool verify_sorted(void *arr, size_t n, size_t size,
     for (size_t i = 0; i < n - 1; i++) {
         void *a = bytes + i * size;
         void *b = bytes + (i + 1) * size;
-        if (!compare(a, b, param)) {
+        if (compare(a, b, param) == MADD_GREATER) {
             printf("Order violation at position %zu: ", i);
             if (size == sizeof(int)) {
                 printf("%d > %d\n", *(int *)a, *(int *)b);
