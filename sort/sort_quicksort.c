@@ -1,4 +1,4 @@
-/* coding: utf-8 */
+﻿/* coding: utf-8 */
 /*
 Author: Lin-Xing Zeng
 Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
@@ -41,20 +41,22 @@ static bool Sort_Quicksort_Internal(Stack *stack, void *pivot)
     uint64_t i_left = 0, i_right = qp.len - 1;
     memcpy(pivot, left, qp.usize);
 
-    while (i_left != i_right){
-        if (left_turn){
-            if (qp.func_compare(left, pivot, qp.other_param) == MADD_LESS){
+    while (i_left != i_right) {
+        if (left_turn) {
+            char cmp = qp.func_compare(left, pivot, qp.other_param);
+            if (cmp == MADD_LESS || cmp == MADD_SAME) {  // 允许相等时移动
                 left += qp.usize;
-                i_left ++;
-            }else{
+                i_left++;
+            } else {
                 memcpy(right, left, qp.usize);
                 left_turn = false;
             }
-        }else{
-            if (qp.func_compare(pivot, right, qp.other_param) == MADD_LESS){
+        } else {
+            char cmp = qp.func_compare(pivot, right, qp.other_param);
+            if (cmp == MADD_LESS || cmp == MADD_SAME) {  // 允许相等时移动
                 right -= qp.usize;
-                i_right --;
-            }else{
+                i_right--;
+            } else {
                 memcpy(left, right, qp.usize);
                 left_turn = true;
             }
@@ -65,36 +67,36 @@ static bool Sort_Quicksort_Internal(Stack *stack, void *pivot)
     uint64_t len_left = i_left, len_right = qp.len - i_left - 1;
     Quicksort_Param left_array={.len=len_left, .usize=qp.usize, .arr=qp.arr, .func_compare=qp.func_compare, .other_param=qp.other_param};
     Quicksort_Param right_array={.len=len_right, .usize=qp.usize, .arr=qp.arr+(i_left+1)*qp.usize, .func_compare=qp.func_compare, .other_param=qp.other_param};
-    bool res_push;
-    if (len_left > len_right){
-        if (len_right >= 2){
-            res_push = Stack_Push(stack, &right_array);
-            if (!res_push){
-                Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
-            }
-            return false;
-        }
+    bool res_push = true;
+    if (len_left >= len_right){
         if (len_left >= 2){
             res_push = Stack_Push(stack, &left_array);
             if (!res_push){
                 Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
+                return false;
             }
-            return false;
+        }
+        if (len_right >= 2){
+            res_push = Stack_Push(stack, &right_array);
+            if (!res_push){
+                Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
+                return false;
+            }
         }
     }else{
-        if (len_left >= 2){
-            res_push = Stack_Push(stack, &left_array);
-            if (!res_push){
-                Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
-            }
-            return false;
-        }
         if (len_right >= 2){
             res_push = Stack_Push(stack, &right_array);
             if (!res_push){
                 Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
+                return false;
             }
-            return false;
+        }
+        if (len_left >= 2){
+            res_push = Stack_Push(stack, &left_array);
+            if (!res_push){
+                Madd_Error_Add(MADD_ERROR, L"Sort_Quicksort_Internal: unable to push param into stack. See info from Stack_Push.");
+                return false;
+            }
         }
     }
     return true;

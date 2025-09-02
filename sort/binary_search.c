@@ -1,4 +1,4 @@
-/* coding: utf-8 */
+﻿/* coding: utf-8 */
 /*
 Author: Lin-Xing Zeng
 Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
@@ -18,35 +18,28 @@ uint64_t Binary_Search(uint64_t n, size_t usize, void *arr_, void *element,
         Madd_Error_Add(MADD_WARNING, L"Binary_Search: array length is 0.");
         return 0;
     }
-    unsigned char *p1, *p2, *arr=(unsigned char*)arr_;
-    char compare;
-    uint64_t i1=0, i2=n, i_middle, i1_last=0, i2_last=n;
-    wchar_t err_info[MADD_ERROR_INFO_LEN];
-    p1 = arr;
-    p2 = arr + i2*usize;
-    i_middle = (i1 + i2) >> 1;
-    compare = func_compare((void*)(arr+i_middle*usize), element, other_param);
-    while (compare != MADD_SAME){
-        i1_last = i1;
-        i2_last = i2;
-        if (compare == MADD_LESS){
-            i1 = i_middle;
-        }else if (compare == MADD_GREATER){
+    uint64_t i1 = 0, i2 = n;
+    unsigned char *arr = (unsigned char*)arr_;
+
+    while (i1 < i2) {
+        uint64_t i_middle = i1 + (i2 - i1) / 2;
+        char compare = func_compare(arr + i_middle * usize, element, other_param);
+
+        if (compare == MADD_LESS) {
+            i1 = i_middle + 1; // 关键修复：向右缩小区间
+        } else if (compare == MADD_GREATER) {
             i2 = i_middle;
-        }else{
-            swprintf(err_info, MADD_ERROR_INFO_LEN, L"Binary_Search: the given func_compare function returns unexpected value %x. Only expects MADD_LESS, MADD_SAME and MADD_GREATER.", compare);
-            Madd_Error_Add(MADD_ERROR, err_info);
+        } else {
             return i_middle;
         }
-        if (i1==i1_last && i2==i2_last){
-            swprintf(err_info, MADD_ERROR_INFO_LEN, L"Binary_Search: the given element (0x%llx) could not be found in the given array (0x%llx).", element, arr_);
-            Madd_Error_Add(MADD_WARNING, err_info);
-            return i_middle;
-        }
-        i_middle = (i1 + i2) >> 1;
-        compare = func_compare((void*)(arr+i_middle*usize), element, other_param);
     }
-    return i_middle;
+
+    // 未找到：返回第一个 ≥ 目标的位置 (i1)，并告警
+    wchar_t err_info[MADD_ERROR_INFO_LEN];
+    swprintf(err_info, MADD_ERROR_INFO_LEN, 
+             L"Binary_Search: Element not found. Insertion point: %llu", i1);
+    Madd_Error_Add(MADD_WARNING, err_info);
+    return i1;
 }
 
 uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *element,
@@ -56,35 +49,33 @@ uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *elemen
         return 0;
     }
 
-    unsigned char *p1, *p2, *arr=(unsigned char*)arr_;
-    char compare;
-    uint64_t i1=0, i2=n, i_middle, i1_last=0, i2_last=n;
-    /*wchar_t err_info[MADD_ERROR_INFO_LEN];*/
-    p1 = arr;
-    p2 = arr + i2*usize;
-
-    compare = func_compare(element, p1 /* first one */, other_param);
-    if (compare == MADD_LESS || compare == MADD_SAME) return 0;
-    compare = func_compare(p2-usize /* last one */, element, other_param);
-    if (compare == MADD_LESS || compare == MADD_SAME) return n;
-
-    i_middle = (i1 + i2) >> 1;
-    compare = func_compare((void*)(arr+i_middle*usize), element, other_param);
-    while (1){
-        i1_last = i1;
-        i2_last = i2;
-        if (compare == MADD_LESS){
-            i1 = i_middle;
-        }else if (compare == MADD_GREATER){
-            i2 = i_middle;
-        }else{
-            return i_middle;
-        }
-        if (i1==i1_last && i2==i2_last){
-            return i2;
-        }
-        i_middle = (i1 + i2) >> 1;
-        compare = func_compare((void*)(arr+i_middle*usize), element, other_param);
+    unsigned char *arr = (unsigned char*)arr_;
+    
+    // 修复1：首元素比较逻辑
+    if (func_compare(element, arr, other_param) == MADD_LESS) {
+        return 0;
     }
-    return i_middle;
+    
+    // 修复2：尾元素比较逻辑
+    if (func_compare(element, arr + (n-1)*usize, other_param) == MADD_GREATER) {
+        return n;
+    }
+
+    uint64_t low = 0;
+    uint64_t high = n - 1;  // 改为闭区间[0, n-1]
+
+    while (low <= high) {
+        uint64_t mid = low + (high - low) / 2;
+        char cmp = func_compare(arr + mid*usize, element, other_param);
+        
+        if (cmp == MADD_LESS) {
+            low = mid + 1;
+        } else if (cmp == MADD_GREATER) {
+            if (mid == 0) return 0;  // 边界保护
+            high = mid - 1;
+        } else {
+            return mid;  // 找到相等元素
+        }
+    }
+    return low;  // 返回插入位置
 }

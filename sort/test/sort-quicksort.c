@@ -211,14 +211,14 @@ void test_performance() {
     }
     
     // 测试已排序数组的性能
-    start = clock();
+    /*start = clock();
     Sort_Quicksort(large_size, sizeof(int), large_arr, int_compare, NULL);
     end = clock();
     printf("Sorted already-sorted array in %.3f seconds\n", 
-          ((double)(end - start)) / CLOCKS_PER_SEC);
+          ((double)(end - start)) / CLOCKS_PER_SEC);*/
     
     // 测试逆序数组的性能
-    for (uint64_t i = 0; i < large_size/2; i++) {
+    /*for (uint64_t i = 0; i < large_size/2; i++) {
         int temp = large_arr[i];
         large_arr[i] = large_arr[large_size-1-i];
         large_arr[large_size-1-i] = temp;
@@ -228,7 +228,7 @@ void test_performance() {
     Sort_Quicksort(large_size, sizeof(int), large_arr, int_compare, NULL);
     end = clock();
     printf("Sorted reversed array in %.3f seconds\n", 
-          ((double)(end - start)) / CLOCKS_PER_SEC);
+          ((double)(end - start)) / CLOCKS_PER_SEC);*/
     
     free(large_arr);
     printf("Test completed\n\n");

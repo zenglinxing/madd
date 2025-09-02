@@ -34,31 +34,27 @@ int main(int argc, char *argv[])
     uint64_t madd_error_n_expect = 0;
     //flag_print = false;
     printf("insert same element test\n");
-    for (len=0; len<N; len++){
-        for (i=0; i<len; i++){
+    for (len = 0; len < N; len++) {
+        for (i = 0; i < len; i++) {
             di = i;
             res = Binary_Search_Insert(len, sizeof(double), arr, &di, func_compare, NULL);
-            if (i!=res && i!=res+1){
-                printf("error when:\n\tlen=%d\ti=%d\tres=%d\n", len, i, res);
+            // 必须唯一预期：i
+            if (res != i) {  // 修改为严格检查
+                printf("ERROR: len=%d, i=%d, res=%d\n", len, i, res);
                 flag_error = true;
-                madd_error_n_expect ++;
             }
         }
     }
 
-    /* failure condition test */
     printf("insert different element test\n");
-
-    madd_error_n_expect ++;
-    for (len=0; len<N; len++){
-        for (i=0; i<len+1; i++){
-            di = i-.5;
+    for (len = 0; len < N; len++) {
+        for (i = 0; i <= len; i++) {  // 包含边界情况
+            di = i - 0.5;
             res = Binary_Search_Insert(len, sizeof(double), arr, &di, func_compare, NULL);
-            if (res != i){
-                printf("error when:\n\tlen=%d\tdi=%f\tres=%d\n", len, di, res);
+            // 必须唯一预期：i
+            if (res != i) {
+                printf("ERROR: len=%d, di=%.1f, res=%d\n", len, di, res);
                 flag_error = true;
-            }else{
-                madd_error_n_expect ++;
             }
         }
     }
