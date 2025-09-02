@@ -29,7 +29,7 @@ char compare_int_desc(void* a, void* b, void* unused) {
 }
 
 // 比较函数：学生按分数升序
-bool compare_student_score(void* a, void* b, void* unused) {
+char compare_student_score(void* a, void* b, void* unused) {
     (void)unused;
     if (((Student*)a)->score < ((Student*)b)->score) return MADD_LESS;
     else if (((Student*)a)->score > ((Student*)b)->score) return MADD_GREATER;
@@ -37,7 +37,7 @@ bool compare_student_score(void* a, void* b, void* unused) {
 }
 
 // 比较函数：学生按ID升序
-bool compare_student_id(void* a, void* b, void* unused) {
+char compare_student_id(void* a, void* b, void* unused) {
     (void)unused;
     if (((Student*)a)->id < ((Student*)b)->id) return MADD_LESS;
     else if (((Student*)a)->id > ((Student*)b)->id) return MADD_GREATER;
