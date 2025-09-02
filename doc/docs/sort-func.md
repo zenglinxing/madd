@@ -6,18 +6,18 @@ void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,
                    uint64_t get_key(void *element, void *other_param), void *other_param);
 
 void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
-                    bool func_compare(void *a1, void *a2, void *other_param), void *other_param);
+                    char func_compare(void *a1, void *a2, void *other_param), void *other_param);
 void Sort_Merge(uint64_t n_element, size_t usize, void *arr_,
-                bool func_compare(void *a1, void *a2, void *other_param), void *other_param);
+                char func_compare(void *a1, void *a2, void *other_param), void *other_param);
 void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_,
-                    bool func_compare(void *a, void *b, void *other_param), void *other_param);
+                    char func_compare(void *a, void *b, void *other_param), void *other_param);
 void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
-                bool func_compare(void*, void*, void*), void *other_param);
+                char func_compare(void*, void*, void*), void *other_param);
 void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
-                        bool func_compare(void*, void*, void*), void *other_param,
+                        char func_compare(void*, void*, void*), void *other_param,
                         void *ptemp);
 void Sort_Heap(uint64_t n, size_t usize, void *arr_,
-                    bool func_compare(void*, void*, void*), void *other_param);
+                    char func_compare(void*, void*, void*), void *other_param);
 ```
 
 `arr_` is the pointer to your array. `usize` is the size of element.
@@ -37,7 +37,7 @@ typedef struct{
     void *other_param;
 } Sort_Key_Func_to_Compare_Func_Param;
 
-bool Sort_Key_Func_to_Compare_Func(void *a, void *b, void *input_param);
+char Sort_Key_Func_to_Compare_Func(void *a, void *b, void *input_param);
 ```
 
 # Example
@@ -68,12 +68,10 @@ Binary Search
 uint64_t Binary_Search(uint64_t n, size_t usize, void *arr_, void *element,
                        char func_compare(void *a, void *b, void *other_param), void *other_param);
 uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *element,
-                              bool func_compare(void *a, void *b, void *other_param), void *other_param);
+                              char func_compare(void *a, void *b, void *other_param), void *other_param);
 ```
 
 The binary-search is an efficient method to search for element in a **sorted** array.
 `Binary_Search` searches for the element in array, and returns where it is.
 If the element is not found, it will returns the possible (maybe not accurate) place to insert the element and pops warning to Madd.
 `Binary_Search_Insert` returns where to insert the element.
-
-Important difference! `func_compare` you provide to `Binary_Search` should only return `MADD_LESS` / `MADD_SAME` / `MADD_GREATER`.
