@@ -31,11 +31,11 @@ int main(int argc, char *argv[])
         printf("computation capability:\t\t%d.%d\n", dp.major, dp.minor);
         //printf("clock rate:\t\t\t%d kHz | %.1f MHz | %.2f GHz\n", dp.clockRate, dp.clockRate/1.e3, dp.clockRate/1.e6);
         printf("texture alignment:\t\t%zd\n", dp.textureAlignment);
-        if (dp.deviceOverlap){
+        /*if (dp.deviceOverlap){
             printf("device overlap:\t\t\tTrue\n");
         }else{
             printf("device overlap:\t\t\tFalse");
-        }
+        }*/
         printf("multi processorCount:\t\t%d\n", dp.multiProcessorCount);
         /*if (dp.kernelExecTimeoutEnabled){
             printf("kernel execution time out:\tenabled\n");
