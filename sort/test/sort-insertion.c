@@ -51,18 +51,25 @@ bool verify_sorted(void *arr, size_t n, size_t size,
 // ================= 比较函数实现 =================
 
 // 整型升序比较
-bool int_ascending(void *a, void *b, void *param) {
-    return *(int *)a <= *(int *)b;
+char int_ascending(void *a, void *b, void *param) {
+    if (*(int *)a < *(int *)b) return MADD_LESS;
+    else if (*(int *)a > *(int *)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 整型降序比较
-bool int_descending(void *a, void *b, void *param) {
-    return *(int *)a >= *(int *)b;
+char int_descending(void *a, void *b, void *param) {
+    if (*(int *)a > *(int *)b) return MADD_LESS;
+    else if (*(int *)a < *(int *)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 字符串升序比较 (字典序)
-bool str_ascending(void *a, void *b, void *param) {
-    return strcmp(*(char **)a, *(char **)b) <= 0;
+char str_ascending(void *a, void *b, void *param) {
+    char res = strcmp(*(char **)a, *(char **)b)
+    if (res < 0) return MADD_LESS;
+    else if (res > 0) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 自定义结构体
@@ -73,10 +80,12 @@ typedef struct {
 } Student;
 
 // 学生按分数升序比较
-bool student_score_asc(void *a, void *b, void *param) {
+char student_score_asc(void *a, void *b, void *param) {
     Student *sa = (Student *)a;
     Student *sb = (Student *)b;
-    return sa->score <= sb->score;
+    if (sa->score < sb->score) return MADD_LESS;
+    else if (sa->score > sb->score) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // ================= 测试用例 =================
@@ -305,12 +314,15 @@ uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *elemen
     uint64_t high = n;
     
     // 检查是否应该插入到最前面
-    if (func_compare(element, arr, other_param)) {
+    char res;
+    res = func_compare(element, arr, other_param);
+    if (res == MADD_LESS || res == MADD_SAME) {
         return 0;
     }
     
     // 检查是否应该插入到最后面
-    if (!func_compare(arr + (n - 1) * usize, element, other_param)) {
+    res = func_compare(arr + (n - 1) * usize, element, other_param);
+    if (res == MADD_LESS || res == MADD_SAME) {
         return n;
     }
     
@@ -318,7 +330,7 @@ uint64_t Binary_Search_Insert(uint64_t n, size_t usize, void *arr_, void *elemen
         uint64_t mid = low + (high - low) / 2;
         unsigned char *mid_ptr = arr + mid * usize;
         
-        if (func_compare(mid_ptr, element, other_param)) {
+        if (func_compare(mid_ptr, element, other_param) == MADD_LESS) {
             low = mid + 1;
         } else {
             high = mid;

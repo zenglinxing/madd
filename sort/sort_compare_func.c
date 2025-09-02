@@ -6,7 +6,6 @@ Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 This file is part of Math Addition, in ./sort/sort_compare_func.c
 */
 #include<stdint.h>
-#include<stdbool.h>
 #include"../basic/basic.h"
 
 /* less or equal */

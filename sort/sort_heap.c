@@ -1,8 +1,14 @@
 /* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./sort/sort_heap.c
+*/
 #include<stdlib.h>
 #include<string.h>
 #include<stdint.h>
-#include<stdbool.h>
+#include"sort.h"
 #include"../basic/basic.h"
 
 static inline void swap_elements(void *a, void *b, size_t usize, void *temp) {
@@ -14,16 +20,16 @@ static inline void swap_elements(void *a, void *b, size_t usize, void *temp) {
 
 static void heapify(uint64_t n, size_t usize, void *arr_,
                     uint64_t start, uint64_t end,
-                    bool func_compare(void*, void*, void*), void *other_param,
+                    char func_compare(void*, void*, void*), void *other_param,
                     void *ptemp)
 {
     unsigned char *arr = (unsigned char*)arr_;
     uint64_t parent = start, child = parent * 2 + 1;
     while (child < end){
-        if (child + 1 < end && func_compare(arr+child*usize, arr+(child+1)*usize, other_param)){
+        if (child + 1 < end && func_compare(arr+child*usize, arr+(child+1)*usize, other_param) == MADD_LESS){
             child ++;
         }
-        if (func_compare(arr+child*usize, arr+parent*usize, other_param)){
+        if (func_compare(arr+child*usize, arr+parent*usize, other_param) == MADD_LESS){
             return;
         }else{
             swap_elements(arr+parent*usize, arr+child*usize, usize, ptemp);
@@ -34,7 +40,7 @@ static void heapify(uint64_t n, size_t usize, void *arr_,
 }
 
 void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
-                        bool func_compare(void*, void*, void*), void *other_param,
+                        char func_compare(void*, void*, void*), void *other_param,
                         void *ptemp)
 {
     if (n < 2){
@@ -65,7 +71,7 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
 }
 
 void Sort_Heap(uint64_t n, size_t usize, void *arr_,
-               bool func_compare(void*, void*, void*), void *other_param)
+               char func_compare(void*, void*, void*), void *other_param)
 {
     if (n < 2){
         Madd_Error_Add(MADD_WARNING, L"Sort_Heap: array length is less than 2, unnecessary to sort.");

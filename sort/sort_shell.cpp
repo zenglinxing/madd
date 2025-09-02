@@ -8,7 +8,6 @@ This file is part of Math Addition, in ./sort/sort_shell.cpp
 #include<stdlib.h>
 #include<string.h>
 #include<stdint.h>
-#include<stdbool.h>
 extern "C"{
 #include"sort.h"
 #include"../basic/basic.h"
@@ -57,7 +56,7 @@ class CppSedgewick{
 static CppSedgewick sedgewick_init;
 
 extern "C" void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
-                           bool func_compare(void*, void*, void*), void *other_param)
+                           char func_compare(void*, void*, void*), void *other_param)
 {
     if (n_element < 2){
         Madd_Error_Add(MADD_WARNING, L"Sort_Shell: array length is less than 2, unnecessary to sort.");
@@ -106,10 +105,10 @@ extern "C" void Sort_Shell(uint64_t n_element, size_t usize, void *arr_,
                 uint64_t prev_index = j_element - gap;
                 void* prev_element = arr + prev_index * usize;
                 
-                if (func_compare(ptemp, prev_element, other_param)) {
+                if (func_compare(ptemp, prev_element, other_param) == MADD_LESS){
                     memcpy(arr + j_element * usize, prev_element, usize);
                     j_element = prev_index;
-                } else {
+                }else{
                     break;
                 }
             }

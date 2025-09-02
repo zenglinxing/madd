@@ -9,12 +9,12 @@ This file is part of Math Addition, in ./sort/sort_insertion.c
 #include<stdint.h>
 #include<stdlib.h>
 #include<string.h>
-#include<stdbool.h>
+#include"sort.h"
 #include"binary_search.h"
 #include"../basic/basic.h"
 
 void Sort_Insertion(uint64_t n_element, size_t usize, void *arr_,
-                    bool func_compare(void *a1, void *a2, void *other_param), void *other_param)
+                    char func_compare(void *a1, void *a2, void *other_param), void *other_param)
 {
     if (n_element < 2){
         Madd_Error_Add(MADD_WARNING, L"Sort_Insertion: array length is less than 2, unnecessary to sort.");

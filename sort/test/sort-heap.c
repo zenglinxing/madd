@@ -13,35 +13,43 @@ typedef struct {
 } Student;
 
 // 比较函数：整数升序
-bool compare_int_asc(void* a, void* b, void* unused) {
+char compare_int_asc(void* a, void* b, void* unused) {
     (void)unused;
-    return *(int*)a <= *(int*)b;
+    if (*(int*)a < *(int*)b) return MADD_LESS;
+    else if (*(int*)a > *(int*)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 比较函数：整数降序
-bool compare_int_desc(void* a, void* b, void* unused) {
+char compare_int_desc(void* a, void* b, void* unused) {
     (void)unused;
-    return *(int*)a >= *(int*)b;
+    if (*(int*)a > *(int*)b) return MADD_LESS;
+    else if (*(int*)a < *(int*)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 比较函数：学生按分数升序
 bool compare_student_score(void* a, void* b, void* unused) {
     (void)unused;
-    return ((Student*)a)->score <= ((Student*)b)->score;
+    if (((Student*)a)->score < ((Student*)b)->score) return MADD_LESS;
+    else if (((Student*)a)->score > ((Student*)b)->score) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 比较函数：学生按ID升序
 bool compare_student_id(void* a, void* b, void* unused) {
     (void)unused;
-    return ((Student*)a)->id <= ((Student*)b)->id;
+    if (((Student*)a)->id < ((Student*)b)->id) return MADD_LESS;
+    else if (((Student*)a)->id > ((Student*)b)->id) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 验证数组是否有序
 bool is_sorted(void* arr, uint64_t n, size_t usize, 
-               bool func_compare(void*, void*, void*), void* param) {
+               char func_compare(void*, void*, void*), void* param) {
     unsigned char* base = (unsigned char*)arr;
     for (uint64_t i = 0; i < n - 1; i++) {
-        if (!func_compare(base + i*usize, base + (i+1)*usize, param)) {
+        if (func_compare(base + i*usize, base + (i+1)*usize, param) == MADD_GREATER) {
             return false;
         }
     }
@@ -154,9 +162,11 @@ typedef struct {
     int key;
 } BigStruct;
 
-bool compare_big_struct(void* a, void* b, void* unused) {
+char compare_big_struct(void* a, void* b, void* unused) {
     (void)unused;
-    return ((BigStruct*)a)->key <= ((BigStruct*)b)->key;
+    if (((BigStruct*)a)->key < ((BigStruct*)b)->key) return MADD_LESS;
+    else if (((BigStruct*)a)->key > ((BigStruct*)b)->key) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 测试结构体排序

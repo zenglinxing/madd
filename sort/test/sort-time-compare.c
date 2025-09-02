@@ -7,10 +7,12 @@
 #include<stdbool.h>
 #include"madd.h"
 
-bool func_compare(void *a, void *b, void *other_param)
+char func_compare(void *a, void *b, void *other_param)
 {
     uint64_t *aa=a, *bb=b;
-    return *aa <= *bb;
+    if (*aa < *bb) return MADD_LESS;
+    else if (*aa > *bb) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 uint64_t get_key(void *a, void *other_param)

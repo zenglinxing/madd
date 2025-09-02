@@ -8,12 +8,11 @@ This file is part of Math Addition, in ./sort/sort_quicksort.c
 #include<stdint.h>
 #include<stdlib.h>
 #include<string.h>
-#include<stdbool.h>
 #include"sort.h"
 #include"../data_struct/data_struct.h"
 #include"../basic/basic.h"
 
-typedef bool (*func_compare_t)(void*, void*, void*);
+typedef char (*func_compare_t)(void*, void*, void*);
 
 typedef struct{
     uint64_t len;
@@ -44,7 +43,7 @@ static bool Sort_Quicksort_Internal(Stack *stack, void *pivot)
 
     while (i_left != i_right){
         if (left_turn){
-            if (qp.func_compare(left, pivot, qp.other_param)){
+            if (qp.func_compare(left, pivot, qp.other_param) == MADD_LESS){
                 left += qp.usize;
                 i_left ++;
             }else{
@@ -52,7 +51,7 @@ static bool Sort_Quicksort_Internal(Stack *stack, void *pivot)
                 left_turn = false;
             }
         }else{
-            if (qp.func_compare(pivot, right, qp.other_param)){
+            if (qp.func_compare(pivot, right, qp.other_param) == MADD_LESS){
                 right -= qp.usize;
                 i_right --;
             }else{
@@ -109,7 +108,7 @@ inline void Sort_Quicksort_Clean(size_t usize, void *pivot, Stack *stack)
     Stack_Destroy(stack);
 }
 
-void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, bool func_compare(void *a, void *b, void *other_param), void *other_param)
+void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, char func_compare(void *a, void *b, void *other_param), void *other_param)
 {
     if (n_element < 2){
         Madd_Error_Add(MADD_WARNING, L"Sort_Quicksort: array length is less than 2, unnecessary to sort.");

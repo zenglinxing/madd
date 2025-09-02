@@ -8,19 +8,19 @@ This file is part of Math Addition, in ./sort/sort_merge.c
 #include<stdlib.h>
 #include<string.h>
 #include<stdint.h>
-#include<stdbool.h>
+#include"sort.h"
 #include"../basic/basic.h"
 
 /* a general merge func for 2 arrays */
 void Sort_Merge_merge_array(uint64_t n1, void *arr1_,
                             uint64_t n2, void *arr2_,
-                            size_t usize, bool func_compare(void *a1, void *a2, void *other_param), void *other_param,
+                            size_t usize, char func_compare(void *a1, void *a2, void *other_param), void *other_param,
                             unsigned char *res)
 {
     uint64_t i1=0, i2=0;
     unsigned char *p1=arr1_, *p2=arr2_, *pres=res;
     while (i1!=n1 && i2!=n2){
-        if (func_compare((void*)p1, (void*)p2, other_param)){
+        if (func_compare((void*)p1, (void*)p2, other_param) == MADD_LESS){
             memcpy(pres, p1, usize);
             p1 += usize;
             i1 ++;
@@ -43,13 +43,13 @@ Here we suppose arr2 is just after res in the memory
 */
 static void Sort_Merge_merge(uint64_t n1, unsigned char *arr1,
                              uint64_t n2, unsigned char *arr2,
-                             size_t usize, bool func_compare(void *a1, void *a2, void *other_param), void *other_param,
+                             size_t usize, char func_compare(void *a1, void *a2, void *other_param), void *other_param,
                              unsigned char *res)
 {
     uint64_t i1=0, i2=0;
     unsigned char *p1=arr1, *p2=arr2, *pres=res;
     while (i1!=n1 && i2!=n2){
-        if (func_compare((void*)p1, (void*)p2, other_param)){
+        if (func_compare((void*)p1, (void*)p2, other_param) == MADD_LESS){
             memcpy(pres, p1, usize);
             p1 += usize;
             i1 ++;
@@ -68,7 +68,7 @@ static void Sort_Merge_merge(uint64_t n1, unsigned char *arr1,
 }
 
 void Sort_Merge(uint64_t n_element, size_t usize, void *arr_,
-                bool func_compare(void *a1, void *a2, void *other_param), void *other_param)
+                char func_compare(void *a1, void *a2, void *other_param), void *other_param)
 {
     if (n_element < 2){
         Madd_Error_Add(MADD_WARNING, L"Sort_Merge: array length is less than 2, unnecessary to sort.");

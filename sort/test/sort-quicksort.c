@@ -17,14 +17,18 @@ typedef struct {
 } LargeStruct;
 
 // 测试比较函数
-bool int_compare(void *a, void *b, void *other_param) {
+char int_compare(void *a, void *b, void *other_param) {
     (void)other_param;
-    return *(int*)a <= *(int*)b;
+    if (*(int*)a < *(int*)b) return MADD_LESS;
+    else if (*(int*)a > *(int*)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
-bool float_compare(void *a, void *b, void *other_param) {
+char float_compare(void *a, void *b, void *other_param) {
     (void)other_param;
-    return *(float*)a <= *(float*)b;
+    if (*(float*)a < *(float*)b) return MADD_LESS;
+    else if (*(float*)a > *(float*)b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 结构体测试
@@ -34,9 +38,11 @@ typedef struct {
     float score;
 } Student;
 
-bool student_compare(void *a, void *b, void *other_param) {
+char student_compare(void *a, void *b, void *other_param) {
     (void)other_param;
-    return ((Student*)a)->score <= ((Student*)b)->score;
+    if (((Student*)a)->score < ((Student*)b)->score) return MADD_LESS;
+    else if (((Student*)a)->score > ((Student*)b)->score) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 辅助函数：验证数组是否已排序

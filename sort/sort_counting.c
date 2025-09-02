@@ -9,7 +9,7 @@ This file is part of Math Addition, in ./sort/sort_counting.c
 #include<stdint.h>
 #include<stdlib.h>
 #include<string.h>
-#include<stdbool.h>
+#include"sort.h"
 #include"../basic/basic.h"
 
 void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,

@@ -11,18 +11,23 @@ This test code is provided by Deepseek
 #include"madd.h"
 
 // 比较函数：整数
-bool int_compare(void *a1, void *a2, void *other_param) {
-    return (*(int*)a1) < (*(int*)a2);
+char int_compare(void *a1, void *a2, void *other_param) {
+    if ((*(int*)a1) < (*(int*)a2)) return MADD_LESS;
+    else if ((*(int*)a1) > (*(int*)a2)) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 比较函数：字符串
-bool str_compare(void *a1, void *a2, void *other_param) {
-    return strcmp(*(char**)a1, *(char**)a2) < 0;
+char str_compare(void *a1, void *a2, void *other_param) {
+    int res = strcmp(*(char**)a1, *(char**)a2) < 0
+    if (res < 0) return MADD_LESS;
+    else if (res > 0) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 // 验证数组是否有序
 bool is_sorted(void *arr, uint64_t n, size_t usize, 
-               bool (*compare)(void*, void*, void *other_param), void *other_param) {
+               char (*compare)(void*, void*, void *other_param), void *other_param) {
     unsigned char *p = (unsigned char*)arr;
     for (uint64_t i = 0; i < n-1; i++) {
         if (!compare(p, p + usize, other_param) && 

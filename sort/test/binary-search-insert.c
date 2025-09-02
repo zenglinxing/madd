@@ -7,10 +7,12 @@
 
 #define N 1000
 
-bool func_compare(void *p1, void *p2, void *other_param)
+char func_compare(void *p1, void *p2, void *other_param)
 {
     double *a=p1, *b=p2;
-    return *a < *b;
+    if (*a < *b) return MADD_LESS;
+    else if (*a > *b) return MADD_GREATER;
+    else return MADD_SAME;
 }
 
 int main(int argc, char *argv[])
