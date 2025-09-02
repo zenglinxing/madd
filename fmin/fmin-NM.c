@@ -43,6 +43,7 @@ typedef struct{ \
             return MADD_SAME; \
         } \
     } \
+    return MADD_SAME; \
 } \
 
 #define FMIN_NM__ALGORITHM(num_type, num_print_type, Fmin_NM_Element, Fmin_NM_Param, Fmin_NM_Compare) \
