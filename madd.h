@@ -18,6 +18,7 @@ extern "C" {
 
 #include"basic/basic.h"
 #include"data_struct/data_struct.h"
+#include"fft/fft.h"
 #include"fmin/fmin.h"
 #include"integrate/integrate.h"
 #include"large_number/large_uint.h"
