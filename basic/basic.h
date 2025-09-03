@@ -281,4 +281,13 @@ inline uint32_t Hash_IEEE754_float_to_uint32(float x)
     }
 }
 
+/* swap */
+/* suppose temp has enough space */
+inline void Madd_Swap(void *a, void *b, size_t usize, void *temp)
+{
+    memcpy(temp, a, usize);
+    memcpy(a, b, usize);
+    memcpy(b, temp, usize);
+}
+
 #endif /* MADD_BASIC_H */
