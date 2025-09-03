@@ -319,34 +319,23 @@ inline __float128 Cnum_Radius_f128(Cnum_f128 a)
 CNUM_RADIUS__ALGORITHM(__float128, sqrtq)
 #endif /* ENABLE_QUADPRECISION */
 
-#define CNUM_ANGLE__ALGORITHM(num_type, atan, Pi) \
+#define CNUM_ANGLE__ALGORITHM(atan2) \
 { \
-    if (a.real==0){ \
-        if (a.imag == 0){ \
-            return 0; \
-        }else{ \
-            return (a.imag > 0) ? Pi/2 : - Pi/2; \
-        } \
-    } \
-    num_type angle = atan(a.imag/a.real); \
-    if (a.real < 0){ \
-        angle = (a.imag > 0) ? Pi + angle : - Pi + angle; \
-    } \
-    return angle; \
+    return atan2(a.imag, a.real); \
 } \
 
 inline double Cnum_Angle(Cnum a)
-CNUM_ANGLE__ALGORITHM(double, atan, Pi)
+CNUM_ANGLE__ALGORITHM(atan2)
 
 inline float Cnum_Angle_f32(Cnum_f32 a)
-CNUM_ANGLE__ALGORITHM(float, atanf, Pi_f32)
+CNUM_ANGLE__ALGORITHM(atan2f)
 
 inline long double Cnum_Angle_fl(Cnum_fl a)
-CNUM_ANGLE__ALGORITHM(long double, atanl, Pi_fl)
+CNUM_ANGLE__ALGORITHM(atan2l)
 
 #ifdef ENABLE_QUADPRECISION
 inline __float128 Cnum_Angle_f128(Cnum_f128 a)
-CNUM_ANGLE__ALGORITHM(__float128, atanq, Pi_f128)
+CNUM_ANGLE__ALGORITHM(atan2q)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_POLE__ALGORITHM(Cnum, cos, sin) \
