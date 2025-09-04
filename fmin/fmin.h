@@ -4,7 +4,6 @@ Author: Lin-Xing Zeng
 Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
 
 This file is part of Math Addition, in ./fmin/fmin.h
-Nelder-Mead Search
 */
 #ifndef MADD_FMIN_H
 #define MADD_FMIN_H

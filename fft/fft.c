@@ -1,4 +1,10 @@
 /* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./fft/fft.c
+*/
 #include<stdio.h>
 #include<string.h>
 #include<math.h>
