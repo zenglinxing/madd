@@ -8,14 +8,10 @@ This file is part of Math Addition, in ./basic/cuda_base.cuh
 #ifndef MADD_CUDA_BASE_CUH
 #define MADD_CUDA_BASE_CUH
 
-#ifdef __CUDACC_VER__
-#if __CUDACC_VER__ < 100000
-
+#if defined(__CUDACC_VER__) && !defined(__CUDACC_VER_MAJOR__)
 #define __CUDACC_VER_MAJOR__ (__CUDACC_VER__/10000)
 #define __CUDACC_VER_MINOR__ ((__CUDACC_VER__/100)%100)
 #define __CUDACC_VER_BUILD__ (__CUDACC_VER__%100)
-
-#endif
 #endif
 
 typedef struct{
