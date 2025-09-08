@@ -86,7 +86,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         Madd_Error_Add(MADD_WARNING, error_info); \
         return NULL; \
     } \
-    uint64_t log2_n_ceil = Log2_Ceil(n_element), n_ceil = 1 << log2_n_ceil, i; \
+    uint64_t log2_n_ceil = Log2_Ceil(n_element), n_ceil = (uint64_t)1 << log2_n_ceil, i; \
     size_t nsize = n_ceil * sizeof(Cnum); \
     Cnum *ptr = malloc(nsize); \
     if (ptr == NULL) return NULL; \
@@ -106,7 +106,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
     } \
     if (w == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: weight pointer (w) is NULL."); \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: weight pointer (w) is NULL.", __func__); \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return; \
     } \
@@ -116,7 +116,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
     uint64_t n2 = n / 2, i; \
     if (n & 0b1){ /* n is odd */ \
         for (i=0; i<n2; i++){ \
-            uint64_t id1 = n2 - i, id2 = n2 + i + 1; \
+            uint64_t id1 = i + 1, id2 = n - id1; \
             angle = angle_base * id1; \
             real = cos(angle); \
             imag = sin(angle); \
@@ -127,7 +127,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
     }else{ /* n is even */ \
         w[n2] = Cnum_Value(-1, 0); \
         for (i=1; i<n2; i++){ \
-            uint64_t id1 = n2 - i, id2 = n2 + i; \
+            uint64_t id1 = i, id2 = n - id1; \
             angle = angle_base * id1; \
             real = cos(angle); \
             imag = sin(angle); \
@@ -135,7 +135,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
             w[id1].imag = imag; \
             w[id2].imag = -imag; \
         } \
-        if ((n & 0b11) == 0){ /* n % 4 == 0 */ \
+        if ((n & 0b11) == 0){ /* (n % 4) == 0 */ \
             uint64_t n4 = n >> 2; \
             w[n4].imag = 1; \
             w[3*n4].imag = -1; \
@@ -165,7 +165,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         return false; \
     } \
  \
-    uint64_t log2_n=Log2_Floor(n_ceil), id, id_reverse, mask=BIN64 >> (64 - log2_n); \
+    uint64_t log2_n=Log2_Floor(n_ceil), id, id_reverse, mask=(uint64_t)BIN64 >> (64 - log2_n); \
     Cnum temp; \
     /* copy arr1 -> tarr1 */ \
     for (id=0; id<n_ceil; id++){ \
@@ -214,10 +214,15 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         return; \
     } \
  \
-    uint64_t log2_n_ceil = Log2_Ceil(n), n_ceil = 1 << log2_n_ceil, i; \
+    uint64_t log2_n_ceil = Log2_Ceil(n), n_ceil = (uint64_t)1 << log2_n_ceil, i; \
  \
     Cnum *w = (Cnum*)malloc(n_ceil * sizeof(Cnum)); \
-    if (w == NULL) return; \
+    if (w == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for weight points.", __func__, n_ceil * sizeof(Cnum)); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
  \
     Fast_Fourier_Transform_w(n_ceil, w, fft_direction); \
  \
