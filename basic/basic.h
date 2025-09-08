@@ -13,6 +13,7 @@ This file is aimed to collect majority of prevalent constants used in math and p
 #include<stdio.h>
 #include<time.h>
 #include<math.h>
+#include<string.h>
 #include<stdint.h>
 #include<stdbool.h>
 #include<wchar.h>
