@@ -135,7 +135,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
             w[id1].imag = imag; \
             w[id2].imag = -imag; \
         } \
-        if (n & 0b11 == 0){ /* n % 4 == 0 */ \
+        if ((n & 0b11) == 0){ /* n % 4 == 0 */ \
             uint64_t n4 = n >> 2; \
             w[n4].imag = 1; \
             w[3*n4].imag = -1; \
