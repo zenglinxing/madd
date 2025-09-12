@@ -95,12 +95,12 @@ typedef struct{
 
 typedef struct{
     uint64_t n, _n;
-    Cnum_f32 *a, *mem;
+    Cnum32 *a, *mem;
 } Poly1d_c32;
 
 typedef struct{
     uint64_t n, _n;
-    Cnum_fl *a, *mem;
+    Cnuml *a, *mem;
 } Poly1d_cl;
 
 Poly1d_c   Poly1d_Create_c(uint64_t n, uint64_t _n);
@@ -108,16 +108,16 @@ Poly1d_c32 Poly1d_Create_c32(uint64_t n, uint64_t _n);
 Poly1d_cl  Poly1d_Create_cl(uint64_t n, uint64_t _n);
 
 Poly1d_c    Poly1d_Init_c(uint64_t n, uint64_t _n, Cnum *a);
-Poly1d_c32  Poly1d_Init_c32(uint64_t n, uint64_t _n,Cnum_f32 *a);
-Poly1d_cl   Poly1d_Init_cl(uint64_t n, uint64_t _n,Cnum_fl *a);
+Poly1d_c32  Poly1d_Init_c32(uint64_t n, uint64_t _n, Cnum32 *a);
+Poly1d_cl   Poly1d_Init_cl(uint64_t n, uint64_t _n, Cnuml *a);
 
 void Poly1d_Free_c(Poly1d_c *poly);
 void Poly1d_Free_c32(Poly1d_c32 *poly);
 void Poly1d_Free_cl(Poly1d_cl *poly);
 
 Cnum     Poly1d_Value_c(Cnum x, Poly1d_c *poly);
-Cnum_f32 Poly1d_Value_c32(Cnum_f32 x, Poly1d_c32 *poly);
-Cnum_fl  Poly1d_Value_cl(Cnum_fl x, Poly1d_cl *poly);
+Cnum32 Poly1d_Value_c32(Cnum32 x, Poly1d_c32 *poly);
+Cnuml  Poly1d_Value_cl(Cnuml x, Poly1d_cl *poly);
 
 void Poly1d_Derivative_c(Poly1d_c *poly, Poly1d_c *dpoly);
 void Poly1d_Derivative_c32(Poly1d_c32 *poly, Poly1d_c32 *dpoly);
@@ -127,16 +127,16 @@ void Poly1d_Derivative_cl(Poly1d_cl *poly, Poly1d_cl *dpoly);
 /* uint64_t & __complex128 */
 typedef struct{
     uint64_t n, _n;
-    Cnum_f128 *a, *mem;
+    Cnum128 *a, *mem;
 } Poly1d_c128;
 
-Poly1d_c128 Poly1d_Create_c128(uint64_t n,uint64_t _n);
+Poly1d_c128 Poly1d_Create_c128(uint64_t n, uint64_t _n);
 
-Poly1d_c128 Poly1d_Init_c128(uint64_t n,uint64_t _n, Cnum_f128 *a);
+Poly1d_c128 Poly1d_Init_c128(uint64_t n, uint64_t _n, Cnum128 *a);
 
 void Poly1d_Free_c128(Poly1d_c128 *poly);
 
-Cnum_f128 Poly1d_Value_c128(Cnum_f128 x, Poly1d_c128 *poly);
+Cnum128 Poly1d_Value_c128(Cnum128 x, Poly1d_c128 *poly);
 
 void Poly1d_Derivative_c128(Poly1d_c128 *poly, Poly1d_c128 *dpoly);
 #endif /* ENABLE_QUADPRECISION */

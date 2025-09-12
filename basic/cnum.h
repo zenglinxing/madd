@@ -22,16 +22,16 @@ typedef struct{
 
 typedef struct{
     float real, imag;
-} Cnum_f32;
+} Cnum32;
 
 typedef struct{
     long double real, imag;
-} Cnum_fl;
+} Cnuml;
 
 #ifdef ENABLE_QUADPRECISION
 typedef struct{
     __float128 real, imag;
-} Cnum_f128;
+} Cnum128;
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_ADD__ALGORITHM(Cnum) \
@@ -45,15 +45,15 @@ typedef struct{
 inline Cnum Cnum_Add(Cnum a, Cnum b)
 CNUM_ADD__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Add_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_ADD__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Add_c32(Cnum32 a, Cnum32 b)
+CNUM_ADD__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Add_fl(Cnum_fl a, Cnum_fl b)
-CNUM_ADD__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Add_cl(Cnuml a, Cnuml b)
+CNUM_ADD__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Add_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_ADD__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Add_c128(Cnum128 a, Cnum128 b)
+CNUM_ADD__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_SUB__ALGORITHM(Cnum) \
@@ -67,15 +67,15 @@ CNUM_ADD__ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Sub(Cnum a, Cnum b)
 CNUM_SUB__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Sub_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_SUB__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Sub_c32(Cnum32 a, Cnum32 b)
+CNUM_SUB__ALGORITHM(Cnum32)
 
- inline Cnum_fl Cnum_Sub_fl(Cnum_fl a, Cnum_fl b)
-CNUM_SUB__ALGORITHM(Cnum_fl)
+ inline Cnuml Cnum_Sub_cl(Cnuml a, Cnuml b)
+CNUM_SUB__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Sub_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_SUB__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Sub_c128(Cnum128 a, Cnum128 b)
+CNUM_SUB__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_MUL__ALGORITHM(Cnum) \
@@ -89,15 +89,15 @@ CNUM_SUB__ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Mul(Cnum a, Cnum b)
 CNUM_MUL__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Mul_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_MUL__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Mul_c32(Cnum32 a, Cnum32 b)
+CNUM_MUL__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Mul_fl(Cnum_fl a, Cnum_fl b)
-CNUM_MUL__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Mul_cl(Cnuml a, Cnuml b)
+CNUM_MUL__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Mul_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_MUL__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Mul_c128(Cnum128 a, Cnum128 b)
+CNUM_MUL__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_MUL_REAL_ALGORITHM(Cnum) \
@@ -111,15 +111,15 @@ CNUM_MUL__ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Mul_Real(Cnum a, double b)
 CNUM_MUL_REAL_ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Mul_Real_f32(Cnum_f32 a, float b)
-CNUM_MUL_REAL_ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Mul_Real_c32(Cnum32 a, float b)
+CNUM_MUL_REAL_ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Mul_Real_fl(Cnum_fl a, long double b)
-CNUM_MUL_REAL_ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Mul_Real_cl(Cnuml a, long double b)
+CNUM_MUL_REAL_ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Mul_Real_f128(Cnum_f128 a, __float128 b)
-CNUM_MUL_REAL_ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Mul_Real_c128(Cnum128 a, __float128 b)
+CNUM_MUL_REAL_ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_DIV__ALGORITHM(Cnum, num_type) \
@@ -134,15 +134,15 @@ CNUM_MUL_REAL_ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Div(Cnum a, Cnum b)
 CNUM_DIV__ALGORITHM(Cnum, double)
 
-inline Cnum_f32 Cnum_Div_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_DIV__ALGORITHM(Cnum_f32, float)
+inline Cnum32 Cnum_Div_c32(Cnum32 a, Cnum32 b)
+CNUM_DIV__ALGORITHM(Cnum32, float)
 
-inline Cnum_fl Cnum_Div_fl(Cnum_fl a, Cnum_fl b)
-CNUM_DIV__ALGORITHM(Cnum_fl, long double)
+inline Cnuml Cnum_Div_cl(Cnuml a, Cnuml b)
+CNUM_DIV__ALGORITHM(Cnuml, long double)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Div_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_DIV__ALGORITHM(Cnum_f128, __float128)
+inline Cnum128 Cnum_Div_c128(Cnum128 a, Cnum128 b)
+CNUM_DIV__ALGORITHM(Cnum128, __float128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_VALUE__ALGORITHM(Cnum) \
@@ -156,15 +156,15 @@ CNUM_DIV__ALGORITHM(Cnum_f128, __float128)
 inline Cnum Cnum_Value(double real, double imag)
 CNUM_VALUE__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Value_f32(float real, float imag)
-CNUM_VALUE__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Value_c32(float real, float imag)
+CNUM_VALUE__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Value_fl(long double real, long double imag)
-CNUM_VALUE__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Value_cl(long double real, long double imag)
+CNUM_VALUE__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Value_f128(__float128 real, __float128 imag)
-CNUM_VALUE__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Value_c128(__float128 real, __float128 imag)
+CNUM_VALUE__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_IS_EQUAL__ALGORITHM(Cnum) \
@@ -176,15 +176,15 @@ CNUM_VALUE__ALGORITHM(Cnum_f128)
 inline bool Cnum_Eq(Cnum a, Cnum b)
 CNUM_IS_EQUAL__ALGORITHM(Cnum)
 
-inline bool Cnum_Eq_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_IS_EQUAL__ALGORITHM(Cnum_f32)
+inline bool Cnum_Eq_c32(Cnum32 a, Cnum32 b)
+CNUM_IS_EQUAL__ALGORITHM(Cnum32)
 
-inline bool Cnum_Eq_fl(Cnum_fl a, Cnum_fl b)
-CNUM_IS_EQUAL__ALGORITHM(Cnum_fl)
+inline bool Cnum_Eq_cl(Cnuml a, Cnuml b)
+CNUM_IS_EQUAL__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline bool Cnum_Eq_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_IS_EQUAL__ALGORITHM(Cnum_f128)
+inline bool Cnum_Eq_c128(Cnum128 a, Cnum128 b)
+CNUM_IS_EQUAL__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_DIV_REAL__ALGORITHM(Cnum) \
@@ -198,15 +198,15 @@ CNUM_IS_EQUAL__ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Div_Real(Cnum a, double b)
 CNUM_DIV_REAL__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Div_Real_f32(Cnum_f32 a, float b)
-CNUM_DIV_REAL__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Div_Real_c32(Cnum32 a, float b)
+CNUM_DIV_REAL__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Div_Real_fl(Cnum_fl a, long double b)
-CNUM_DIV_REAL__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Div_Real_cl(Cnuml a, long double b)
+CNUM_DIV_REAL__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Div_Real_f128(Cnum_f128 a, __float128 b)
-CNUM_DIV_REAL__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Div_Real_c128(Cnum128 a, __float128 b)
+CNUM_DIV_REAL__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum, num_type) \
@@ -221,15 +221,15 @@ CNUM_DIV_REAL__ALGORITHM(Cnum_f128)
 inline Cnum Real_Div_Cnum(double a, Cnum b)
 CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum, double)
 
-inline Cnum_f32 Real_Div_Cnum_f32(float a, Cnum_f32 b)
-CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum_f32, float)
+inline Cnum32 Real_Div_Cnum_c32(float a, Cnum32 b)
+CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum32, float)
 
-inline Cnum_fl Real_Div_Cnum_fl(long double a, Cnum_fl b)
-CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum_fl, long double)
+inline Cnuml Real_Div_Cnum_cl(long double a, Cnuml b)
+CNUM_REAL_DIV_CNUM__ALGORITHM(Cnuml, long double)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Real_Div_Cnum_f128(__float128 a, Cnum_f128 b)
-CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum_f128, __float128)
+inline Cnum128 Real_Div_Cnum_c128(__float128 a, Cnum128 b)
+CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum128, __float128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_MOD2__ALGORITHM(num_type) \
@@ -241,14 +241,14 @@ CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum_f128, __float128)
 inline double Cnum_Mod2(Cnum a)
 CNUM_MOD2__ALGORITHM(double)
 
-inline float Cnum_Mod2_f32(Cnum_f32 a)
+inline float Cnum_Mod2_c32(Cnum32 a)
 CNUM_MOD2__ALGORITHM(float)
 
-inline long double Cnum_Mod2_fl(Cnum_fl a)
+inline long double Cnum_Mod2_cl(Cnuml a)
 CNUM_MOD2__ALGORITHM(long double)
 
 #ifdef ENABLE_QUADPRECISION
-inline __float128 Cnum_Mod2_f128(Cnum_f128 a)
+inline __float128 Cnum_Mod2_c128(Cnum128 a)
 CNUM_MOD2__ALGORITHM(__float128)
 #endif /* ENABLE_QUADPRECISION */
 
@@ -266,15 +266,15 @@ Cnum_Dot(x1 + x2 i, x3 + x4 i) => (x1 - x2 i) * (x3 + x4 i)
 inline Cnum Cnum_Dot(Cnum a, Cnum b)
 CNUM_DOT__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Dot_f32(Cnum_f32 a, Cnum_f32 b)
-CNUM_DOT__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Dot_c32(Cnum32 a, Cnum32 b)
+CNUM_DOT__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Dot_fl(Cnum_fl a, Cnum_fl b)
-CNUM_DOT__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Dot_cl(Cnuml a, Cnuml b)
+CNUM_DOT__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Dot_f128(Cnum_f128 a, Cnum_f128 b)
-CNUM_DOT__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Dot_c128(Cnum128 a, Cnum128 b)
+CNUM_DOT__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_CONJ__ALGORITHM(Cnum) \
@@ -288,15 +288,15 @@ CNUM_DOT__ALGORITHM(Cnum_f128)
 inline Cnum Cnum_Conj(Cnum a)
 CNUM_CONJ__ALGORITHM(Cnum)
 
-inline Cnum_f32 Cnum_Conj_f32(Cnum_f32 a)
-CNUM_CONJ__ALGORITHM(Cnum_f32)
+inline Cnum32 Cnum_Conj_c32(Cnum32 a)
+CNUM_CONJ__ALGORITHM(Cnum32)
 
-inline Cnum_fl Cnum_Conj_fl(Cnum_fl a)
-CNUM_CONJ__ALGORITHM(Cnum_fl)
+inline Cnuml Cnum_Conj_cl(Cnuml a)
+CNUM_CONJ__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Conj_f128(Cnum_f128 a)
-CNUM_CONJ__ALGORITHM(Cnum_f128)
+inline Cnum128 Cnum_Conj_c128(Cnum128 a)
+CNUM_CONJ__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define CNUM_RADIUS__ALGORITHM(num_type, sqrt) \
@@ -308,14 +308,14 @@ CNUM_CONJ__ALGORITHM(Cnum_f128)
 inline double Cnum_Radius(Cnum a)
 CNUM_RADIUS__ALGORITHM(double, sqrt)
 
-inline float Cnum_Radius_f32(Cnum_f32 a)
+inline float Cnum_Radius_c32(Cnum32 a)
 CNUM_RADIUS__ALGORITHM(float, sqrtf)
 
-inline long double Cnum_Radius_fl(Cnum_fl a)
+inline long double Cnum_Radius_cl(Cnuml a)
 CNUM_RADIUS__ALGORITHM(long double, sqrtl)
 
 #ifdef ENABLE_QUADPRECISION
-inline __float128 Cnum_Radius_f128(Cnum_f128 a)
+inline __float128 Cnum_Radius_c128(Cnum128 a)
 CNUM_RADIUS__ALGORITHM(__float128, sqrtq)
 #endif /* ENABLE_QUADPRECISION */
 
@@ -327,14 +327,14 @@ CNUM_RADIUS__ALGORITHM(__float128, sqrtq)
 inline double Cnum_Angle(Cnum a)
 CNUM_ANGLE__ALGORITHM(atan2)
 
-inline float Cnum_Angle_f32(Cnum_f32 a)
+inline float Cnum_Angle_c32(Cnum32 a)
 CNUM_ANGLE__ALGORITHM(atan2f)
 
-inline long double Cnum_Angle_fl(Cnum_fl a)
+inline long double Cnum_Angle_cl(Cnuml a)
 CNUM_ANGLE__ALGORITHM(atan2l)
 
 #ifdef ENABLE_QUADPRECISION
-inline __float128 Cnum_Angle_f128(Cnum_f128 a)
+inline __float128 Cnum_Angle_c128(Cnum128 a)
 CNUM_ANGLE__ALGORITHM(atan2q)
 #endif /* ENABLE_QUADPRECISION */
 
@@ -349,15 +349,15 @@ CNUM_ANGLE__ALGORITHM(atan2q)
 inline Cnum Cnum_Pole(double radius, double angle)
 CNUM_POLE__ALGORITHM(Cnum, cos, sin)
 
-inline Cnum_f32 Cnum_Pole_f32(float radius, float angle)
-CNUM_POLE__ALGORITHM(Cnum_f32, cosf, sinf)
+inline Cnum32 Cnum_Pole_c32(float radius, float angle)
+CNUM_POLE__ALGORITHM(Cnum32, cosf, sinf)
 
-inline Cnum_fl Cnum_Pole_fl(long double radius, long double angle)
-CNUM_POLE__ALGORITHM(Cnum_fl, cosl, sinl)
+inline Cnuml Cnum_Pole_cl(long double radius, long double angle)
+CNUM_POLE__ALGORITHM(Cnuml, cosl, sinl)
 
 #ifdef ENABLE_QUADPRECISION
-inline Cnum_f128 Cnum_Pole_f128(__float128 radius, __float128 angle)
-CNUM_POLE__ALGORITHM(Cnum_f128,cosq, sinq)
+inline Cnum128 Cnum_Pole_c128(__float128 radius, __float128 angle)
+CNUM_POLE__ALGORITHM(Cnum128, cosq, sinq)
 #endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_CNUM_H */

@@ -81,31 +81,31 @@ double Norm1(uint64_t n, double *x);
 float Norm1_f32(uint64_t n, float *x);
 long double Norm1_fl(uint64_t n, long double *x);
 double Norm1_c64(uint64_t n, Cnum *x);
-float Norm1_c32(uint64_t n, Cnum_f32 *x);
-long double Norm1_cl(uint64_t n, Cnum_fl *x);
+float Norm1_c32(uint64_t n, Cnum32 *x);
+long double Norm1_cl(uint64_t n, Cnuml *x);
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm1_f128(uint64_t n, __float128 *x);
-__float128 Norm1_c128(uint64_t n, Cnum_f128 *x);
+__float128 Norm1_c128(uint64_t n, Cnum128 *x);
 #endif /* ENABLE_QUADPRECISION */
 double Norm2(uint64_t n, double *x);
 float Norm2_f32(uint64_t n, float *x);
 long double Norm2_fl(uint64_t n, long double *x);
 double Norm2_c64(uint64_t n, Cnum *x);
-float Norm2_c32(uint64_t n, Cnum_f32 *x);
-long double Norm2_cl(uint64_t n, Cnum_fl *x);
+float Norm2_c32(uint64_t n, Cnum32 *x);
+long double Norm2_cl(uint64_t n, Cnuml *x);
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm2_f128(uint64_t n, __float128 *x);
-__float128 Norm2_c128(uint64_t n, Cnum_f128 *x);
+__float128 Norm2_c128(uint64_t n, Cnum128 *x);
 #endif /* ENABLE_QUADPRECISION */
 double Norm_Infinity(uint64_t n, double *x);
 float Norm_Infinity_f32(uint64_t n, float *x);
 long double Norm_Infinity_fl(uint64_t n, long double *x);
 double Norm_Infinity_c64(uint64_t n, Cnum *x);
-float Norm_Infinity_c32(uint64_t n, Cnum_f32 *x);
-long double Norm_Infinity_cl(uint64_t n, Cnum_fl *x);
+float Norm_Infinity_c32(uint64_t n, Cnum32 *x);
+long double Norm_Infinity_cl(uint64_t n, Cnuml *x);
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm_Infinity_f128(uint64_t n, __float128 *x);
-__float128 Norm_Infinity_c128(uint64_t n, Cnum_f128 *x);
+__float128 Norm_Infinity_c128(uint64_t n, Cnum128 *x);
 #endif /* ENABLE_QUADPRECISION */
 
 /* bit reverse*/

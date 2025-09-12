@@ -392,19 +392,19 @@ Poly1d_c Poly1d_Create_c(uint64_t n, uint64_t _n)
 POLY1D_CREATE_CNUM__ALGORITHM(Cnum, uint64_t, Poly1d_c)
 
 Poly1d_c32 Poly1d_Create_c32(uint64_t n, uint64_t _n)
-POLY1D_CREATE_CNUM__ALGORITHM(Cnum_f32, uint64_t, Poly1d_c32)
+POLY1D_CREATE_CNUM__ALGORITHM(Cnum32, uint64_t, Poly1d_c32)
 
 Poly1d_cl Poly1d_Create_LDC(uint64_t n, uint64_t _n)
-POLY1D_CREATE_CNUM__ALGORITHM(Cnum_fl, uint64_t, Poly1d_cl)
+POLY1D_CREATE_CNUM__ALGORITHM(Cnuml, uint64_t, Poly1d_cl)
 
 Poly1d_c Poly1d_Init_c(uint64_t n, uint64_t _n, Cnum *a)
 POLY1D_INIT__ALGORITHM(Cnum, Poly1d_c)
 
-Poly1d_c32 Poly1d_Init_c32(uint64_t n, uint64_t _n, Cnum_f32 *a)
-POLY1D_INIT__ALGORITHM(Cnum_f32, Poly1d_c32)
+Poly1d_c32 Poly1d_Init_c32(uint64_t n, uint64_t _n, Cnum32 *a)
+POLY1D_INIT__ALGORITHM(Cnum32, Poly1d_c32)
 
-Poly1d_cl Poly1d_Init_cl(uint64_t n, uint64_t _n, Cnum_fl *a)
-POLY1D_INIT__ALGORITHM(Cnum_fl, Poly1d_cl)
+Poly1d_cl Poly1d_Init_cl(uint64_t n, uint64_t _n, Cnuml *a)
+POLY1D_INIT__ALGORITHM(Cnuml, Poly1d_cl)
 
 void Poly1d_Free_c(Poly1d_c *poly)
 POLY1D_FREE__ALGORITHM
@@ -441,11 +441,11 @@ POLY1D_FREE__ALGORITHM
 Cnum Poly1d_Value_c(Cnum x, Poly1d_c *poly)
 POLY1D_VALUE_CNUM__ALGORITHM(Cnum, uint64_t, Cnum_Add, Real_Div_Cnum, Cnum_Div, Cnum_Mul)
 
-Cnum_f32 Poly1d_Value_c32(Cnum_f32 x, Poly1d_c32 *poly)
-POLY1D_VALUE_CNUM__ALGORITHM(Cnum_f32, uint64_t, Cnum_Add_f32, Real_Div_Cnum_f32, Cnum_Div_f32, Cnum_Mul_f32)
+Cnum32 Poly1d_Value_c32(Cnum32 x, Poly1d_c32 *poly)
+POLY1D_VALUE_CNUM__ALGORITHM(Cnum32, uint64_t, Cnum_Add_c32, Real_Div_Cnum_c32, Cnum_Div_c32, Cnum_Mul_c32)
 
-Cnum_fl Poly1d_Value_cl(Cnum_fl x, Poly1d_cl *poly)
-POLY1D_VALUE_CNUM__ALGORITHM(Cnum_fl, uint64_t, Cnum_Add_fl, Real_Div_Cnum_fl, Cnum_Div_fl, Cnum_Mul_fl)
+Cnuml Poly1d_Value_cl(Cnuml x, Poly1d_cl *poly)
+POLY1D_VALUE_CNUM__ALGORITHM(Cnuml, uint64_t, Cnum_Add_cl, Real_Div_Cnum_cl, Cnum_Div_cl, Cnum_Mul_cl)
 
 #define POLY1D_DERIVATIVE_CNUM__ALGORITHM(num_type, size_num_type, Cnum_Mul_Real, Cnum_Value) \
 { \
@@ -474,10 +474,10 @@ void Poly1d_Derivative_c(Poly1d_c *poly, Poly1d_c *dpoly)
 POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum, uint64_t, Cnum_Mul_Real, Cnum_Value)
 
 void Poly1d_Derivative_c32(Poly1d_c32 *poly, Poly1d_c32 *dpoly)
-POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum_f32, uint64_t, Cnum_Mul_Real_f32, Cnum_Value_f32)
+POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum32, uint64_t, Cnum_Mul_Real_c32, Cnum_Value_c32)
 
 void Poly1d_Derivative_cl(Poly1d_cl *poly, Poly1d_cl *dpoly)
-POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum_fl, uint64_t, Cnum_Mul_Real_fl, Cnum_Value_fl)
+POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnuml, uint64_t, Cnum_Mul_Real_cl, Cnum_Value_cl)
 
 #define POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(num_type, size_num_type, real_num_type, Cnum_Value, Cnum_Mul_Real) \
 { \
@@ -519,16 +519,16 @@ Poly1d_c Poly1d_Derivative_N_order_c(const Poly1d_c *poly, uint64_t n_order)
 POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum, uint64_t, Poly1d_c, Poly1d_Derivative_N_order_c_Allocated)
 
 void Poly1d_Derivative_N_order_c32_Allocated(const Poly1d_c32 *poly, uint64_t n_order, Poly1d_c32 *dpoly)
-POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnum_f32, uint64_t, float, Cnum_Value_f32, Cnum_Mul_Real_f32)
+POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnum32, uint64_t, float, Cnum_Value_c32, Cnum_Mul_Real_c32)
 
 Poly1d_c32 Poly1d_Derivative_N_order_c32(const Poly1d_c32 *poly, uint64_t n_order)
-POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum_f32, uint64_t, Poly1d_c32, Poly1d_Derivative_N_order_c32_Allocated)
+POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum32, uint64_t, Poly1d_c32, Poly1d_Derivative_N_order_c32_Allocated)
 
 void Poly1d_Derivative_N_order_cl_Allocated(const Poly1d_cl *poly, uint64_t n_order, Poly1d_cl *dpoly)
-POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnum_fl, uint64_t, long double, Cnum_Value_fl, Cnum_Mul_Real_fl)
+POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnuml, uint64_t, long double, Cnum_Value_cl, Cnum_Mul_Real_cl)
 
 Poly1d_cl Poly1d_Derivative_N_order_cl(const Poly1d_cl *poly, uint64_t n_order)
-POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum_fl, uint64_t, Poly1d_cl, Poly1d_Derivative_N_order_cl_Allocated)
+POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnuml, uint64_t, Poly1d_cl, Poly1d_Derivative_N_order_cl_Allocated)
 
 #define POLY1D_INTEGRATE_CNUM__ALGORITHM(num_type, size_num_type, Cnum_Value, Cnum_Div_Real) \
 { \
@@ -553,35 +553,35 @@ POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum_fl, uint64_t, Poly1d_cl, Poly1d_Deriva
 Cnum Poly1d_Integrate_c(Poly1d_c *poly,Poly1d_c *ipoly)
 POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum, uint64_t, Cnum_Value, Cnum_Div_Real)
 
-Cnum_f32 Poly1d_Integrate_c32(Poly1d_c32 *poly, Poly1d_c32 *ipoly)
-POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum_f32, uint64_t, Cnum_Value_f32, Cnum_Div_Real_f32)
+Cnum32 Poly1d_Integrate_c32(Poly1d_c32 *poly, Poly1d_c32 *ipoly)
+POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum32, uint64_t, Cnum_Value_c32, Cnum_Div_Real_c32)
 
-Cnum_fl Poly1d_Integrate_cl(Poly1d_cl *poly, Poly1d_cl *ipoly)
-POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum_fl, uint64_t, Cnum_Value_fl, Cnum_Div_Real_fl)
+Cnuml Poly1d_Integrate_cl(Poly1d_cl *poly, Poly1d_cl *ipoly)
+POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnuml, uint64_t, Cnum_Value_cl, Cnum_Div_Real_cl)
 
 #ifdef ENABLE_QUADPRECISION
 /* uint64_t & __complex128 */
 Poly1d_c128 Poly1d_Create_c128(uint64_t n, uint64_t _n)
-POLY1D_CREATE_CNUM__ALGORITHM(Cnum_f128, uint64_t, Poly1d_c128)
+POLY1D_CREATE_CNUM__ALGORITHM(Cnum128, uint64_t, Poly1d_c128)
 
-Poly1d_c128 Poly1d_Init_c128(uint64_t n, uint64_t _n, Cnum_f128 *a)
-POLY1D_INIT__ALGORITHM(Cnum_f128, Poly1d_c128)
+Poly1d_c128 Poly1d_Init_c128(uint64_t n, uint64_t _n, Cnum128 *a)
+POLY1D_INIT__ALGORITHM(Cnum128, Poly1d_c128)
 
 void Poly1d_Free_c128(Poly1d_c128 *poly)
 POLY1D_FREE__ALGORITHM
 
-Cnum_f128 Poly1d_Value_c128(Cnum_f128 x, Poly1d_c128 *poly)
-POLY1D_VALUE_CNUM__ALGORITHM(Cnum_f128, uint64_t, Cnum_Add_f128, Real_Div_Cnum_f128, Cnum_Div_f128, Cnum_Mul_f128)
+Cnum128 Poly1d_Value_c128(Cnum128 x, Poly1d_c128 *poly)
+POLY1D_VALUE_CNUM__ALGORITHM(Cnum128, uint64_t, Cnum_Add_c128, Real_Div_Cnum_c128, Cnum_Div_c128, Cnum_Mul_c128)
 
 void Poly1d_Derivative_c128(Poly1d_c128 *poly, Poly1d_c128 *dpoly)
-POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum_f128, uint64_t, Cnum_Mul_Real_f128, Cnum_Value_f128)
+POLY1D_DERIVATIVE_CNUM__ALGORITHM(Cnum128, uint64_t, Cnum_Mul_Real_c128, Cnum_Value_c128)
 
 void Poly1d_Derivative_N_order_c128_Allocated(const Poly1d_c128 *poly, uint64_t n_order, Poly1d_c128 *dpoly)
-POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnum_f128, uint64_t, __float128, Cnum_Value_f128, Cnum_Mul_Real_f128)
+POLY1D_DERIVATIVE_N_ORDER_CNUM_ALLOCATED__ALGORITHM(Cnum128, uint64_t, __float128, Cnum_Value_c128, Cnum_Mul_Real_c128)
 
 Poly1d_c128 Poly1d_Derivative_N_order_c128(const Poly1d_c128 *poly, uint64_t n_order)
-POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum_f128, uint64_t, Poly1d_c128, Poly1d_Derivative_N_order_c128_Allocated)
+POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnum128, uint64_t, Poly1d_c128, Poly1d_Derivative_N_order_c128_Allocated)
 
-Cnum_f128 Poly1d_Integrate_c128(Poly1d_c128 *poly,Poly1d_c128 *ipoly)
-POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum_f128, uint64_t, Cnum_Value_f128, Cnum_Div_Real_f128)
+Cnum128 Poly1d_Integrate_c128(Poly1d_c128 *poly, Poly1d_c128 *ipoly)
+POLY1D_INTEGRATE_CNUM__ALGORITHM(Cnum128, uint64_t, Cnum_Value_c128, Cnum_Div_Real_c128)
 #endif /* ENABLE_QUADPRECISION */

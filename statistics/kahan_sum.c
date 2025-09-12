@@ -43,16 +43,16 @@ KAHAN_SUMMATION__ALGORITHM(long double, uint64_t, Kahan_Summation_Step_fl)
 Cnum Kahan_Summation_c(uint64_t n, Cnum *arr)
 KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum, uint64_t, Kahan_Summation_Step_c)
 
-Cnum_f32 Kahan_Summation_c32(uint64_t n, Cnum_f32 *arr)
-KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum_f32, uint64_t, Kahan_Summation_Step_c32)
+Cnum32 Kahan_Summation_c32(uint64_t n, Cnum32 *arr)
+KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum32, uint64_t, Kahan_Summation_Step_c32)
 
-Cnum_fl Kahan_Summation_cl(uint64_t n, Cnum_fl *arr)
-KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum_fl, uint64_t, Kahan_Summation_Step_cl)
+Cnuml Kahan_Summation_cl(uint64_t n, Cnuml *arr)
+KAHAN_SUMMATION_CNUM__ALGORITHM(Cnuml, uint64_t, Kahan_Summation_Step_cl)
 
 #ifdef ENABLE_QUADPRECISION
 __float128 Kahan_Summation_f128(uint64_t n, __float128 *arr)
 KAHAN_SUMMATION__ALGORITHM(__float128, uint64_t, Kahan_Summation_Step_f128)
 
-Cnum_f128 Kahan_Summation_c128(uint64_t n, Cnum_f128 *arr)
-KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum_f128, uint64_t, Kahan_Summation_Step_c128)
+Cnum128 Kahan_Summation_c128(uint64_t n, Cnum128 *arr)
+KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum128, uint64_t, Kahan_Summation_Step_c128)
 #endif

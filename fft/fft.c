@@ -253,41 +253,41 @@ FFT__ALGORITHM(Cnum, Fast_Fourier_Transform_w, Fast_Fourier_Transform_Core, Cnum
 
 /* Cnum_f32 */
 void *Fast_Fourier_Transform_Malloc_f32(uint64_t n_element)
-FFT_MALLOC__ALGORITHM(Cnum_f32)
+FFT_MALLOC__ALGORITHM(Cnum32)
 
-void Fast_Fourier_Transform_w_f32(uint64_t n, Cnum_f32 *w, int sign)
-FFT_W__ALGORITHM(Cnum_f32, Cnum_Value_f32, cosf, sinf, float)
+void Fast_Fourier_Transform_w_f32(uint64_t n, Cnum32 *w, int sign)
+FFT_W__ALGORITHM(Cnum32, Cnum_Value_c32, cosf, sinf, float)
 
-bool Fast_Fourier_Transform_Core_f32(uint64_t n_ceil, Cnum_f32 *arr, const Cnum_f32 *w)
-FFT_CORE__ALGORITHM(Cnum_f32, Cnum_Mul_f32, Cnum_Add_f32, Cnum_Sub_f32)
+bool Fast_Fourier_Transform_Core_f32(uint64_t n_ceil, Cnum32 *arr, const Cnum32 *w)
+FFT_CORE__ALGORITHM(Cnum32, Cnum_Mul_c32, Cnum_Add_c32, Cnum_Sub_c32)
 
-void Fast_Fourier_Transform_f32(uint64_t n, Cnum_f32 *arr, int fft_direction)
-FFT__ALGORITHM(Cnum_f32, Fast_Fourier_Transform_w_f32, Fast_Fourier_Transform_Core_f32, Cnum_Div_Real_f32)
+void Fast_Fourier_Transform_f32(uint64_t n, Cnum32 *arr, int fft_direction)
+FFT__ALGORITHM(Cnum32, Fast_Fourier_Transform_w_f32, Fast_Fourier_Transform_Core_f32, Cnum_Div_Real_c32)
 
 /* Cnum_fl */
 void *Fast_Fourier_Transform_Malloc_fl(uint64_t n_element)
-FFT_MALLOC__ALGORITHM(Cnum_fl)
+FFT_MALLOC__ALGORITHM(Cnuml)
 
-void Fast_Fourier_Transform_w_fl(uint64_t n, Cnum_fl *w, int sign)
-FFT_W__ALGORITHM(Cnum_fl, Cnum_Value_fl, cosl, sinl, long double)
+void Fast_Fourier_Transform_w_fl(uint64_t n, Cnuml *w, int sign)
+FFT_W__ALGORITHM(Cnuml, Cnum_Value_cl, cosl, sinl, long double)
 
-bool Fast_Fourier_Transform_Core_fl(uint64_t n_ceil, Cnum_fl *arr, const Cnum_fl *w)
-FFT_CORE__ALGORITHM(Cnum_fl, Cnum_Mul_fl, Cnum_Add_fl, Cnum_Sub_fl)
+bool Fast_Fourier_Transform_Core_fl(uint64_t n_ceil, Cnuml *arr, const Cnuml *w)
+FFT_CORE__ALGORITHM(Cnuml, Cnum_Mul_cl, Cnum_Add_cl, Cnum_Sub_cl)
 
-void Fast_Fourier_Transform_fl(uint64_t n, Cnum_fl *arr, int fft_direction)
-FFT__ALGORITHM(Cnum_fl, Fast_Fourier_Transform_w_fl, Fast_Fourier_Transform_Core_fl, Cnum_Div_Real_fl)
+void Fast_Fourier_Transform_fl(uint64_t n, Cnuml *arr, int fft_direction)
+FFT__ALGORITHM(Cnuml, Fast_Fourier_Transform_w_fl, Fast_Fourier_Transform_Core_fl, Cnum_Div_Real_cl)
 
 #ifdef ENABLE_QUADPRECISION
 /* Cnum_f128 */
 void *Fast_Fourier_Transform_Malloc_f128(uint64_t n_element)
-FFT_MALLOC__ALGORITHM(Cnum_f128)
+FFT_MALLOC__ALGORITHM(Cnum128)
 
-void Fast_Fourier_Transform_w_f128(uint64_t n, Cnum_f128 *w, int sign)
-FFT_W__ALGORITHM(Cnum_f128, Cnum_Value_f128, cosq, sinq, __float128)
+void Fast_Fourier_Transform_w_f128(uint64_t n, Cnum128 *w, int sign)
+FFT_W__ALGORITHM(Cnum128, Cnum_Value_c128, cosq, sinq, __float128)
 
-bool Fast_Fourier_Transform_Core_f128(uint64_t n_ceil, Cnum_f128 *arr, const Cnum_f128 *w)
-FFT_CORE__ALGORITHM(Cnum_f128, Cnum_Mul_f128, Cnum_Add_f128, Cnum_Sub_f128)
+bool Fast_Fourier_Transform_Core_f128(uint64_t n_ceil, Cnum128 *arr, const Cnum128 *w)
+FFT_CORE__ALGORITHM(Cnum128, Cnum_Mul_c128, Cnum_Add_c128, Cnum_Sub_c128)
 
-void Fast_Fourier_Transform_f128(uint64_t n, Cnum_f128 *arr, int fft_direction)
-FFT__ALGORITHM(Cnum_f128, Fast_Fourier_Transform_w_f128, Fast_Fourier_Transform_Core_f128, Cnum_Div_Real_f128)
+void Fast_Fourier_Transform_f128(uint64_t n, Cnum128 *arr, int fft_direction)
+FFT__ALGORITHM(Cnum128, Fast_Fourier_Transform_w_f128, Fast_Fourier_Transform_Core_f128, Cnum_Div_Real_c128)
 #endif /* ENABLE_QUADPRECISION */

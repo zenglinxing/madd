@@ -38,18 +38,18 @@ NORM1__ALGORITHM(long double, fabsl)
 double Norm1_c64(uint64_t n, Cnum *x)
 NORM1__ALGORITHM(double, Cnum_Radius)
 
-float Norm1_c32(uint64_t n, Cnum_f32 *x)
-NORM1__ALGORITHM(float, Cnum_Radius_f32)
+float Norm1_c32(uint64_t n, Cnum32 *x)
+NORM1__ALGORITHM(float, Cnum_Radius_c32)
 
-long double Norm1_cl(uint64_t n, Cnum_fl *x)
-NORM1__ALGORITHM(long double, Cnum_Radius_fl)
+long double Norm1_cl(uint64_t n, Cnuml *x)
+NORM1__ALGORITHM(long double, Cnum_Radius_cl)
 
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm1_f128(uint64_t n, __float128 *x)
 NORM1__ALGORITHM(__float128, fabsq)
 
-__float128 Norm1_c128(uint64_t n, Cnum_f128 *x)
-NORM1__ALGORITHM(__float128, Cnum_Radius_f128)
+__float128 Norm1_c128(uint64_t n, Cnum128 *x)
+NORM1__ALGORITHM(__float128, Cnum_Radius_c128)
 #endif /* ENABLE_QUADPRECISION */
 
 #define NORM2__ALGORITHM(float_type, sqrt) \
@@ -90,17 +90,17 @@ NORM2__ALGORITHM(long double, sqrtl)
 double Norm2_c64(uint64_t n, Cnum *x)
 NORM2_CNUM__ALGORITHM(double, sqrt)
 
-float Norm2_c32(uint64_t n, Cnum_f32 *x)
+float Norm2_c32(uint64_t n, Cnum32 *x)
 NORM2_CNUM__ALGORITHM(float, sqrtf)
 
-long double Norm2_cl(uint64_t n, Cnum_fl *x)
+long double Norm2_cl(uint64_t n, Cnuml *x)
 NORM2_CNUM__ALGORITHM(long double, sqrtl)
 
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm2_f128(uint64_t n, __float128 *x)
 NORM2__ALGORITHM(__float128, sqrtq)
 
-__float128 Norm2_c128(uint64_t n, Cnum_f128 *x)
+__float128 Norm2_c128(uint64_t n, Cnum128 *x)
 NORM2_CNUM__ALGORITHM(__float128, sqrtq)
 #endif /* ENABLE_QUADPRECISION */
 
@@ -127,16 +127,16 @@ NORM_INFINITY__ALGORITHM(long double, fabsl)
 double Norm_Infinity_c64(uint64_t n, Cnum *x)
 NORM_INFINITY__ALGORITHM(double, Cnum_Radius)
 
-float Norm_Infinity_c32(uint64_t n, Cnum_f32 *x)
-NORM_INFINITY__ALGORITHM(float, Cnum_Radius_f32)
+float Norm_Infinity_c32(uint64_t n, Cnum32 *x)
+NORM_INFINITY__ALGORITHM(float, Cnum_Radius_c32)
 
-long double Norm_Infinity_cl(uint64_t n, Cnum_fl *x)
-NORM_INFINITY__ALGORITHM(long double, Cnum_Radius_fl)
+long double Norm_Infinity_cl(uint64_t n, Cnuml *x)
+NORM_INFINITY__ALGORITHM(long double, Cnum_Radius_cl)
 
 #ifdef ENABLE_QUADPRECISION
 __float128 Norm_Infinity_f128(uint64_t n, __float128 *x)
 NORM_INFINITY__ALGORITHM(__float128, fabsq)
 
-__float128 Norm_Infinity_c128(uint64_t n, Cnum_f128 *x)
-NORM_INFINITY__ALGORITHM(__float128, Cnum_Radius_f128)
+__float128 Norm_Infinity_c128(uint64_t n, Cnum128 *x)
+NORM_INFINITY__ALGORITHM(__float128, Cnum_Radius_c128)
 #endif /* ENABLE_QUADPRECISION */
