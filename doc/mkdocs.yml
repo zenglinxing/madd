@@ -18,6 +18,7 @@ nav:
       - Error & Warning: basic-error-warning.md
       - Constants: basic-constant.md
       - Binary Number: basic-binary.md
+    - Complex Number: basic-cnum.md
     - Other: basic-other.md
   - Integrate:
     - Introduction: integrate-intro.md
