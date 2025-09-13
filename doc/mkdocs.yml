@@ -20,6 +20,9 @@ nav:
       - Binary Number: basic-binary.md
     - Complex Number: basic-cnum.md
     - Other: basic-other.md
+  - Fast Fourier Transform:
+    - Introduction: fft-intro.md
+    - FFT Functions: fft-func.md
   - Integrate:
     - Introduction: integrate-intro.md
     - Fundamental Integral:
