@@ -156,7 +156,7 @@ int test_round_trip() {
     
     // Create a random input signal
     const uint64_t n = 16;
-    Cnum input[n];
+    Cnum input[/*n*/16];
     for (uint64_t i = 0; i < n; i++) {
         input[i].real = (double)rand() / RAND_MAX;
         input[i].imag = (double)rand() / RAND_MAX;
