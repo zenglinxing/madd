@@ -137,8 +137,8 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         } \
         if ((n & 0b11) == 0){ /* (n % 4) == 0 */ \
             uint64_t n4 = n >> 2; \
-            w[n4].imag = 1; \
-            w[3*n4].imag = -1; \
+            w[n4].imag = sign; \
+            w[3*n4].imag = -sign; \
             w[n4].real = w[3*n4].real = 0; \
         } \
     } \
@@ -160,7 +160,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
     } \
     if (w == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: weight pointer (arr) is NULL.", __func__); \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: weight pointer (w) is NULL.", __func__); \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
     } \
@@ -224,7 +224,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         return; \
     } \
  \
-    Fast_Fourier_Transform_w(n_ceil, w, fft_direction); \
+    Fast_Fourier_Transform_w(n_ceil, w, -fft_direction); \
  \
     Cnum cnum_zero = {.real=0, .imag=0}; \
     Fast_Fourier_Transform_Core(n_ceil, arr, w); \
