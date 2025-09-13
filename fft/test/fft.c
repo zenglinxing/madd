@@ -190,9 +190,12 @@ int test_non_power_of_two() {
         {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}
     };
     
-    Cnum *test_arr = malloc(5 * sizeof(Cnum));
+    Cnum *test_arr = malloc(8 * sizeof(Cnum));
     if (!test_arr) return TEST_FAILED;
     memcpy(test_arr, input, sizeof(input));
+    for (int i = 5; i < 8; i++) {
+        test_arr[i] = (Cnum){0, 0}; // Zero-padding
+    }
     
     // Forward FFT
     Fast_Fourier_Transform(5, test_arr, MADD_FFT_FORWARD);
@@ -360,5 +363,5 @@ int main() {
     }
     
     wprintf(L"All FFT tests PASSED\n");
-    return EXIT_SUCCESS;
+    return 0;
 }
