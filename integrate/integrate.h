@@ -76,4 +76,13 @@ float Integrate_Gauss_Laguerre_via_xw_f32(float func(float, void*), float xmin, 
                                           float *x_int, float *w_int);
 float Integrate_Gauss_Laguerre_f32(float func(float, void*), float xmin, float exp_index,
                                    uint32_t n_int, void *other_param);
+
+/* Clenshaw-Curtis integrate */
+bool Integrate_Clenshaw_Curtis_x(double *x_int, uint64_t n_int);
+bool Integrate_Clenshaw_Curtis_w(double *w_int, uint64_t n_int);
+double Integrate_Clenshaw_Curtis_via_xw(double func(double, void *), double xmin, double xmax,
+                                        uint64_t n_int, void *other_param,
+                                        double *x_int, double *w_int);
+double Integrate_Clenshaw_Curtis(double func(double, void *), double xmin, double xmax,
+                                 uint64_t n_int, void *other_param);
 #endif /* MADD_INTEGRATE_H */

@@ -224,7 +224,7 @@ static inline void FFT_swap(void *a, void *b, size_t usize, void *temp)
         return; \
     } \
  \
-    Fast_Fourier_Transform_w(n_ceil, w, -fft_direction); \
+    Fast_Fourier_Transform_w(n_ceil, w, fft_direction); \
  \
     Cnum cnum_zero = {.real=0, .imag=0}; \
     Fast_Fourier_Transform_Core(n_ceil, arr, w); \

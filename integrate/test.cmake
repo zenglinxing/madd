@@ -21,3 +21,9 @@ target_include_directories(test_integrate-Gauss-Laguerre PUBLIC ${CMAKE_CURRENT_
 target_link_libraries(test_integrate-Gauss-Laguerre PUBLIC madd)
 add_test(NAME Integrate_GaussLaguerre
          COMMAND test_integrate-Gauss-Laguerre)
+
+add_executable(test_integrate-Clenshaw-Curtis integrate/test/Clenshaw-Curtis.c)
+target_include_directories(test_integrate-Clenshaw-Curtis PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_integrate-Clenshaw-Curtis PUBLIC madd)
+add_test(NAME Integrate_ClenshawCurtis
+         COMMAND test_integrate-Clenshaw-Curtis)
