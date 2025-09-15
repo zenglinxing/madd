@@ -54,4 +54,6 @@ void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
 void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
+void Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
+
 #endif /* MADD_FFT_H */

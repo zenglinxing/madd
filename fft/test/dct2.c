@@ -95,14 +95,14 @@ int test_inverse_property() {
     // 正向DCT2
     Discrete_Cosine_Transform_2(n, transformed);
 
-    return compare_arrays("Inverse Property - Forward DCT2", expected, transformed, n, TOLERANCE);
+    //return compare_arrays("Inverse Property - Forward DCT2", expected, transformed, n, TOLERANCE);
     
     // 反向DCT2 (使用逆变换公式)
-    //memcpy(reconstructed, transformed, n * sizeof(double));
-    //Discrete_Cosine_Transform_3(n, reconstructed);
+    memcpy(reconstructed, transformed, n * sizeof(double));
+    Inverse_Discrete_Cosine_Transform_2(n, reconstructed);
     
     // 比较原始和重建
-    //return compare_arrays("Inverse Property", original, reconstructed, n, TOLERANCE);
+    return compare_arrays("Inverse Property", original, reconstructed, n, TOLERANCE);
 }
 
 int main() {
