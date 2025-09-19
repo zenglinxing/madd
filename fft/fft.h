@@ -47,13 +47,61 @@ bool Fast_Fourier_Transform_Core_f128(uint64_t n_ceil, Cnum128 *arr, const Cnum1
 void Fast_Fourier_Transform_f128(uint64_t n, Cnum128 *arr, int fft_direction);
 #endif /* ENABLE_QUADPRECISION */
 
+/*
+===============================================================================
+Discrete Cosine Transform
+===============================================================================
+*/
+bool Discrete_Cosine_Transform_Weight(uint64_t n, double *w);
+bool Discrete_Cosine_Transform_Weight_f32(uint32_t n, float *w);
+bool Discrete_Cosine_Transform_Weight_fl(uint64_t n, long double *w);
+#ifdef ENABLE_QUADPRECISION
+bool Discrete_Cosine_Transform_Weight_f128(uint64_t n, __float128 *w);
+#endif /* ENABLE_QUADPRECISION */
+
+/*
+===============================================================================
+DCT-2
+===============================================================================
+*/
 void Discrete_Cosine_Transform_2(uint64_t n, double *arr);
-void Discrete_Cosine_Transform_2_f32(uint64_t n, float *arr);
+void Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
 void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
 #ifdef ENABLE_QUADPRECISION
 void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
+void Discrete_Cosine_Transform_2_Base2(uint64_t n, double *arr);
+void Discrete_Cosine_Transform_2_Base2_f32(uint32_t n, float *arr);
+void Discrete_Cosine_Transform_2_Base2_fl(uint64_t n, long double *arr);
+#ifdef ENABLE_QUADPRECISION
+void Discrete_Cosine_Transform_2_Base2_f128(uint64_t n, __float128 *arr);
+#endif /* ENABLE_QUADPRECISION */
+
+bool Discrete_Cosine_Transform_2_Naive(uint64_t n, double *arr);
+bool Discrete_Cosine_Transform_2_Naive_f32(uint32_t n, float *arr);
+bool Discrete_Cosine_Transform_2_Naive_fl(uint64_t n, long double *arr);
+#ifdef ENABLE_QUADPRECISION
+bool Discrete_Cosine_Transform_2_Naive_f128(uint64_t n, __float128 *arr);
+#endif /* ENABLE_QUADPRECISION */
+
+/*
+===============================================================================
+IDCT-2
+===============================================================================
+*/
 void Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
+void Inverse_Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
+void Inverse_Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
+#ifdef ENABLE_QUADPRECISION
+void Inverse_Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
+#endif /* ENABLE_QUADPRECISION */
+
+bool Inverse_Discrete_Cosine_Transform_2_Naive(uint64_t n, double *arr);
+bool Inverse_Discrete_Cosine_Transform_2_Naive_f32(uint32_t n, float *arr);
+bool Inverse_Discrete_Cosine_Transform_2_Naive_fl(uint64_t n, long double *arr);
+#ifdef ENABLE_QUADPRECISION
+bool Inverse_Discrete_Cosine_Transform_2_Naive_f128(uint64_t n, __float128 *arr);
+#endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_FFT_H */
