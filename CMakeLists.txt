@@ -76,6 +76,7 @@ add_subdirectory(fmin)
 add_subdirectory(integrate)
 add_subdirectory(rng)
 add_subdirectory(large_number)
+add_subdirectory(linalg)
 add_subdirectory(polynomial)
 add_subdirectory(sort)
 add_subdirectory(special_func)
@@ -105,6 +106,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_INTEGRATE} # integrate/
             ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
+            ${MADD_SRC_LIST_LINALG} # linalg/
             ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
             ${MADD_SRC_LIST_SORT} # sort/
             ${MADD_SRC_LIST_SPECIAL_FUNC} # special_func/
@@ -155,6 +157,7 @@ if (ENABLE_TEST)
     include(fmin/test.cmake)
     include(integrate/test.cmake)
     include(large_number/test.cmake)
+    include(linalg/test.cmake)
     include(polynomial/test.cmake)
     include(rng/test.cmake)
     include(sort/test.cmake)
