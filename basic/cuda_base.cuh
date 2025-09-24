@@ -23,4 +23,7 @@ int Madd_N_cuda_GPU(void);
 Madd_cuda_Device_Properties Madd_cuda_Get_Device_Property(void);
 void Madd_cuda_Get_Device_Mem(int i_dev, size_t *free_mem, size_t *total_mem);
 
+void Madd_cudaMalloc_error(int ret, const char *func_name);
+void Madd_cudaSetStream_error(int ret, const char *func_name);
+
 #endif /* MADD_CUDA_BASE_H */

@@ -12,6 +12,7 @@ This file is part of Math Addition, in ./fft/fft.h
 #include<stdint.h>
 #include<stdbool.h>
 
+#include"fft.cuh"
 #include"../basic/cnum.h"
 
 #ifdef ENABLE_QUADPRECISION

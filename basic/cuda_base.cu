@@ -61,7 +61,7 @@ void Madd_cuda_Get_Device_Mem(int i_dev, size_t *free_mem, size_t *total_mem)
     cudaError_t res = cudaMemGetInfo(free_mem, total_mem);
     if (res != cudaSuccess){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
-        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"Madd_cuda_Device_Mem: cuda func cudaMemGetInfo reports an error: %s.", cudaGetErrorString(res));
+        swprintf(error_info, MADD_ERROR_INFO_LEN-1, L"Madd_cuda_Device_Mem: cuda func cudaMemGetInfo reports an error: %hs.", cudaGetErrorString(res));
         Madd_Error_Add(MADD_ERROR, error_info);
     }
     cudaSetDevice(i_current_dev);
@@ -70,6 +70,35 @@ void Madd_cuda_Get_Device_Mem(int i_dev, size_t *free_mem, size_t *total_mem)
 void Madd_cuda_Device_Property_Destroy(Madd_cuda_Device_Properties dp)
 {
     free(dp.devices);
+}
+
+void Madd_cudaMalloc_error(int ret, const char *func_name)
+{
+    wchar_t error_info[MADD_ERROR_INFO_LEN];
+    switch (ret){
+        case cudaErrorInvalidValue:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorInvalidValue): one or more of the parameters passed to the API call is not within an acceptable range of values.", func_name);
+            break;
+        case cudaErrorMemoryAllocation:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorMemoryAllocation): The API call failed because it was unable to allocate enough memory or other resources to perform the requested operation.", func_name);
+            break;
+        default:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc returns an error %x that Madd doesn't know.", func_name, ret);
+    }
+    Madd_Error_Add(MADD_ERROR, error_info);
+}
+
+void Madd_cudaSetStream_error(int ret, const char *func_name)
+{
+    wchar_t error_info[MADD_ERROR_INFO_LEN];
+    switch (ret){
+        case cudaErrorInvalidValue:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaSetStream (cudaErrorInvalidValue): one or more of the parameters passed to the API call is not within an acceptable range of values.", func_name);
+            break;
+        default:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaSetStream returns an error %x that Madd doesn't know.", func_name, ret);
+    }
+    Madd_Error_Add(MADD_ERROR, error_info);
 }
 
 }

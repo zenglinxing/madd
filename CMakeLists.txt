@@ -127,7 +127,7 @@ else()
     target_compile_options(madd PUBLIC "-O3")
 endif()
 if (ENABLE_CUDA)
-    target_link_libraries(madd PRIVATE cudart_static cublas)
+    target_link_libraries(madd PRIVATE cudart_static cublas cufft)
     target_compile_definitions(madd PRIVATE ENABLE_CUDA)
     set_target_properties(madd
                           PROPERTIES
