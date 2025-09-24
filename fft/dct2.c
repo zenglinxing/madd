@@ -23,7 +23,7 @@ In this code, we use FFT to compute it efficiently.
 #include"fft.h"
 #include"../basic/basic.h"
 
-#define DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Base2, Discrete_Cosine_Transform_2_Naive) \
+#define DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2, Discrete_Cosine_Transform_2_Naive) \
 { \
     if (n == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -47,7 +47,7 @@ In this code, we use FFT to compute it efficiently.
     uint64_t log2_n_floor, log2_n_ceil, n2 = (uint64_t)n << 1; \
     Log2_Full(n2, &log2_n_floor, &log2_n_ceil); \
     if (log2_n_floor == log2_n_ceil){ \
-        Discrete_Cosine_Transform_2_Base2(n, arr); \
+        Discrete_Cosine_Transform_2_Radix2(n, arr); \
     } \
     else{ \
         Discrete_Cosine_Transform_2_Naive(n, arr); \
@@ -55,15 +55,15 @@ In this code, we use FFT to compute it efficiently.
 } \
 
 void Discrete_Cosine_Transform_2(uint64_t n, double *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Base2, Discrete_Cosine_Transform_2_Naive)
+DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2, Discrete_Cosine_Transform_2_Naive)
 
 void Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Base2_f32, Discrete_Cosine_Transform_2_Naive_f32)
+DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_f32, Discrete_Cosine_Transform_2_Naive_f32)
 
 void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Base2_fl, Discrete_Cosine_Transform_2_Naive_fl)
+DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_fl, Discrete_Cosine_Transform_2_Naive_fl)
 
 #ifdef ENABLE_QUADPRECISION
 void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Base2_f128, Discrete_Cosine_Transform_2_Naive_f128)
+DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_f128, Discrete_Cosine_Transform_2_Naive_f128)
 #endif /* ENABLE_QUADPRECISION */

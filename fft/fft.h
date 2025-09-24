@@ -71,11 +71,11 @@ void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
 void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
-void Discrete_Cosine_Transform_2_Base2(uint64_t n, double *arr);
-void Discrete_Cosine_Transform_2_Base2_f32(uint32_t n, float *arr);
-void Discrete_Cosine_Transform_2_Base2_fl(uint64_t n, long double *arr);
+void Discrete_Cosine_Transform_2_Radix2(uint64_t n, double *arr);
+void Discrete_Cosine_Transform_2_Radix2_f32(uint32_t n, float *arr);
+void Discrete_Cosine_Transform_2_Radix2_fl(uint64_t n, long double *arr);
 #ifdef ENABLE_QUADPRECISION
-void Discrete_Cosine_Transform_2_Base2_f128(uint64_t n, __float128 *arr);
+void Discrete_Cosine_Transform_2_Radix2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
 bool Discrete_Cosine_Transform_2_Naive(uint64_t n, double *arr);
