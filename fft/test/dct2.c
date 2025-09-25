@@ -94,6 +94,10 @@ int test_inverse_property() {
     
     // 正向DCT2
     Discrete_Cosine_Transform_2(n, transformed);
+    printf("transformed:\n");
+    for (uint64_t i = 0; i < n; i++){
+        printf("i=%llu\t%f\n", i, transformed[i]);
+    }
 
     //return compare_arrays("Inverse Property - Forward DCT2", expected, transformed, n, TOLERANCE);
     

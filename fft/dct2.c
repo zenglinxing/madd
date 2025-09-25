@@ -55,11 +55,11 @@ In this code, we use FFT to compute it efficiently.
     } \
     for (i=0; i<n; i++){ \
         arr_fft[i].real = arr[i]; \
-        /*arr_fft[i].imag = 0;*/ \
+        arr_fft[i].imag = arr_fft[n + i].imag = 0; \
         arr_fft[n + i].real = arr[n - 1 - i]; \
     } \
  \
-    bool flag_fft = Fast_Fourier_Transform(n, arr_fft, MADD_FFT_FORWARD); \
+    bool flag_fft = Fast_Fourier_Transform(len_fft, arr_fft, MADD_FFT_FORWARD); \
     if (!flag_fft){ \
         free(arr_fft); \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
