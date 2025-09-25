@@ -23,47 +23,78 @@ In this code, we use FFT to compute it efficiently.
 #include"fft.h"
 #include"../basic/basic.h"
 
-#define DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2, Discrete_Cosine_Transform_2_Naive) \
+#define DCT2__ALGORITHM(Fast_Fourier_Transform, Fast_Fourier_Transform_name, \
+                        Cnum, real_type, cos, sin, sqrt) \
 { \
     if (n == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: n = 0.", __func__); \
         Madd_Error_Add(MADD_WARNING, error_info); \
-        return; \
+        return false; \
     } \
     if (arr == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: array pointer (arr) is NULL.", __func__); \
         Madd_Error_Add(MADD_ERROR, error_info); \
-        return; \
+        return false; \
     } \
     if (n > UINT64_MAX / sizeof(Cnum)){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: n is too large, causing integer overflow.", __func__); \
         Madd_Error_Add(MADD_ERROR, error_info); \
-        return; \
+        return false; \
     } \
  \
-    uint64_t log2_n_floor, log2_n_ceil, n2 = (uint64_t)n << 1; \
-    Log2_Full(n2, &log2_n_floor, &log2_n_ceil); \
-    if (log2_n_floor == log2_n_ceil){ \
-        Discrete_Cosine_Transform_2_Radix2(n, arr); \
+    uint64_t len_fft = (uint64_t)n << 1, i; \
+    Cnum *arr_fft = (Cnum*)malloc(len_fft * sizeof(Cnum)); \
+    if (arr_fft == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for FFT array.", __func__, len_fft * sizeof(Cnum)); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return false; \
     } \
-    else{ \
-        Discrete_Cosine_Transform_2_Naive(n, arr); \
+    for (i=0; i<n; i++){ \
+        arr_fft[i].real = arr[i]; \
+        /*arr_fft[i].imag = 0;*/ \
+        arr_fft[n + i].real = arr[n - 1 - i]; \
     } \
+ \
+    bool flag_fft = Fast_Fourier_Transform(n, arr_fft, MADD_FFT_FORWARD); \
+    if (!flag_fft){ \
+        free(arr_fft); \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: see error info from %hs.", __func__, Fast_Fourier_Transform_name); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return false; \
+    } \
+ \
+    const real_type scale = sqrt(2.0 / n); \
+    for (i=0; i<n; i++){ \
+        real_type theta = _CONSTANT_PI * i / (2.0 * n); \
+        real_type cos_theta = cos(theta), sin_theta = sin(theta); \
+        real_type real_part = arr_fft[i].real * cos_theta + arr_fft[i].imag * sin_theta; \
+        real_type c_i = (i == 0) ? sqrt(0.5) : 1; \
+        arr[i] = scale * c_i * real_part / 2.; \
+    } \
+ \
+    free(arr_fft); \
+    return true; \
 } \
 
-void Discrete_Cosine_Transform_2(uint64_t n, double *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2, Discrete_Cosine_Transform_2_Naive)
+bool Discrete_Cosine_Transform_2(uint64_t n, double *arr)
+DCT2__ALGORITHM(Fast_Fourier_Transform, "Fast_Fourier_Transform",
+                Cnum, double, cos, sin, sqrt)
 
-void Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_f32, Discrete_Cosine_Transform_2_Naive_f32)
+bool Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr)
+DCT2__ALGORITHM(Fast_Fourier_Transform_f32, "Fast_Fourier_Transform_f32",
+                Cnum32, float, cosf, sinf, sqrtf)
 
-void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_fl, Discrete_Cosine_Transform_2_Naive_fl)
+bool Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr)
+DCT2__ALGORITHM(Fast_Fourier_Transform_fl, "Fast_Fourier_Transform_fl",
+                Cnuml, long double, cosl, sinl, sqrtl)
 
 #ifdef ENABLE_QUADPRECISION
-void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr)
-DCT2__ALGORITHM(Discrete_Cosine_Transform_2_Radix2_f128, Discrete_Cosine_Transform_2_Naive_f128)
+bool Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr)
+DCT2__ALGORITHM(Fast_Fourier_Transform_f128, "Fast_Fourier_Transform_f128",
+                Cnum128, __float128, cosq, sinq, sqrtq)
 #endif /* ENABLE_QUADPRECISION */

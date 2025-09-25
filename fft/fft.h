@@ -40,7 +40,11 @@ Fast Fourier Transform
 ===============================================================================
 */
 bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
-bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
+bool Fast_Fourier_Transform_f32(uint32_t n, Cnum32 *arr, int fft_direction);
+bool Fast_Fourier_Transform_fl(uint64_t n, Cnuml *arr, int fft_direction);
+#ifdef ENABLE_QUADPRECISION
+bool Fast_Fourier_Transform_f128(uint64_t n, Cnum128 *arr, int fft_direction);
+#endif /* ENABLE_QUADPRECISION */
 
 /*
 FFT Radix-2
@@ -91,11 +95,11 @@ bool Discrete_Cosine_Transform_Weight_f128(uint64_t n, __float128 *w);
 DCT-2
 ===============================================================================
 */
-void Discrete_Cosine_Transform_2(uint64_t n, double *arr);
-void Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
-void Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
+bool Discrete_Cosine_Transform_2(uint64_t n, double *arr);
+bool Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
+bool Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
 #ifdef ENABLE_QUADPRECISION
-void Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
+bool Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
 void Discrete_Cosine_Transform_2_Radix2(uint64_t n, double *arr);

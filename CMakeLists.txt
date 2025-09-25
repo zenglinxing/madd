@@ -118,7 +118,7 @@ target_include_directories(madd PRIVATE ${OpenBLAS_INCLUDE_DIRS})
 target_link_libraries(madd PRIVATE ${OpenBLAS_LIBRARY})
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang")
-    target_compile_options(madd PUBLIC "-march=native")
+    target_compile_options(madd PUBLIC "-march=native" "-Wall" "-Wextra")
     target_link_libraries(madd PUBLIC m)
 endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
