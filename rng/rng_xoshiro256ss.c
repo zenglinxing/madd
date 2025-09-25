@@ -54,7 +54,7 @@ RNG_Xoshiro256_Param RNG_Xoshiro256ss_Init(uint64_t seed_)
 uint64_t RNG_Xoshiro256ss_U64(RNG_Xoshiro256_Param *rxp)
 {
     rxp->n_gen ++;
-    uint64_t *s = rxp->state,
+    uint64_t /**s = rxp->state,*/
              res = rol64(rxp->state[1]*rxp->mul1, rxp->k1) * rxp->mul2,
              t = rxp->state[1] << rxp->s1;
     rxp->state[2] ^= rxp->state[0];

@@ -21,8 +21,8 @@ MT19937-64
 #define UMASK64  0xFFFFFFFF80000000ULL
 #define LMASK64  0x000000007FFFFFFFULL
 
-static uint64_t umask64=BIN64>>31<<31,
-                lmask64=BIN64<<33>>33;
+/*static uint64_t umask64=BIN64>>31<<31,
+                lmask64=BIN64<<33>>33;*/
 
 RNG_MT_Param RNG_MT_Init(uint64_t seed)
 {

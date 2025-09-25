@@ -39,8 +39,7 @@ typedef struct{
 bool RB_Tree_Init(RB_Tree *T);
 bool RB_Tree_Enable_Multithread(RB_Tree *T);
 RB_Tree_Node *RB_Tree_Search(RB_Tree *T, RB_Tree_Node *x, void *k,
-                             char func(void *key1,void *key2,void *other_param), void *other_param,
-                             int flag_allow_same_key);
+                             char func(void *key1,void *key2,void *other_param), void *other_param);
 RB_Tree_Node *RB_Tree_Minimum(RB_Tree *T, RB_Tree_Node *x);
 RB_Tree_Node *RB_Tree_Maximum(RB_Tree *T, RB_Tree_Node *x);
 RB_Tree_Node *RB_Tree_Successor(RB_Tree *T,RB_Tree_Node *x);

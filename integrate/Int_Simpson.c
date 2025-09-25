@@ -22,9 +22,9 @@ This file is part of Math Addition, in ./integrate/int_Simpson.c
 #define INTEGRATE_SIMPSON__ALGORITHM(num_type, size_num_type, log_func, ceil) \
 { \
     register size_num_type i; \
-    register num_type nd=(num_type)n, sum=0, gap=(xmax-xmin)/nd, gap2=gap/2, a=func(xmin,other_param), b, temp,x; \
+    register num_type nd=(num_type)n, /*sum=0,*/ gap=(xmax-xmin)/nd, gap2=gap/2, a=func(xmin,other_param), b, temp,x; \
     num_type xd=xmax-xmin; \
-    const size_num_type log2_len=ceil( log_func((num_type)n)/INTEGRATE_LOG2_VALUE ) + 1; \
+    /*const size_num_type log2_len=ceil( log_func((num_type)n)/INTEGRATE_LOG2_VALUE ) + 1;*/ \
     num_type s = 0; \
     for (i=0;i<n;i++){ \
         x=xmin+xd*(i+1)/nd; \

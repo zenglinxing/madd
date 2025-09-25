@@ -74,10 +74,10 @@ add_subdirectory(data_struct)
 add_subdirectory(fft)
 add_subdirectory(fmin)
 add_subdirectory(integrate)
-add_subdirectory(rng)
 add_subdirectory(large_number)
 add_subdirectory(linalg)
 add_subdirectory(polynomial)
+add_subdirectory(rng)
 add_subdirectory(sort)
 add_subdirectory(special_func)
 add_subdirectory(statistics)
@@ -104,10 +104,10 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_FFT} # fft/
             ${MADD_SRC_LIST_FMIN} # fmin/
             ${MADD_SRC_LIST_INTEGRATE} # integrate/
-            ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_LINALG} # linalg/
             ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
+            ${MADD_SRC_LIST_RNG} # rng/
             ${MADD_SRC_LIST_SORT} # sort/
             ${MADD_SRC_LIST_SPECIAL_FUNC} # special_func/
             ${MADD_SRC_LIST_STATISTICS} # statistics/
@@ -118,7 +118,7 @@ target_include_directories(madd PRIVATE ${OpenBLAS_INCLUDE_DIRS})
 target_link_libraries(madd PRIVATE ${OpenBLAS_LIBRARY})
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang")
-    target_compile_options(madd PUBLIC "-march=native" "-Wall" "-Wextra")
+    target_compile_options(madd PUBLIC "-march=native" #[["-Wall" "-Wextra"]])
     target_link_libraries(madd PUBLIC m)
 endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")

@@ -156,7 +156,7 @@ bool Singly_Linked_List_Delete(Singly_Linked_List *list, Singly_Linked_List_Node
 
     write_lock(list);
     /* find the previous node */
-    Singly_Linked_List_Node *prev = NULL, *cur = list->head, *head = list->head;
+    Singly_Linked_List_Node *prev = NULL, *cur = list->head/*, *head = list->head */;
     if (list->head == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"Singly_Linked_List_Delete: singly linked list at %p is empty.", list);
@@ -210,7 +210,7 @@ bool Singly_Linked_List_Delete_After(Singly_Linked_List *list, Singly_Linked_Lis
     }
 
     write_lock(list);
-    Singly_Linked_List_Node *node = prev->next, *tail=list->tail, *tail_next;
+    Singly_Linked_List_Node *node = prev->next, *tail=list->tail/*, *tail_next */;
     if (node == NULL){
         wchar_t error_info[MADD_ERROR_INFO_LEN];
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"Singly_Linked_List_Delete_After: no node after prev.");
@@ -232,7 +232,7 @@ bool Singly_Linked_List_Delete_After(Singly_Linked_List *list, Singly_Linked_Lis
         write_unlock(list);
         return false;
     }
-    tail_next = tail->next;
+    /*tail_next = tail->next;*/
     prev->next = node->next;
     if (list->head == node){
         list->head = node->next;

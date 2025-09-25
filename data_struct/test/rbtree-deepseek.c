@@ -120,9 +120,10 @@ int test_basic_insertion() {
     }
     
     // 清理
-    for (RB_Tree_Node* node = RB_Tree_Minimum(&tree, tree.root); 
+    for (RB_Tree_Node *next_node, *node = RB_Tree_Minimum(&tree, tree.root); 
          node != NULL && node != &tree.nil;  // deepseek didn't add "&& node != &tree.nil"
-         node = RB_Tree_Successor(&tree, node)) {
+         /*node = RB_Tree_Successor(&tree, node)*/node = next_node) {
+        next_node = RB_Tree_Successor(&tree, node);
         free_node(node);
     }
     
@@ -220,9 +221,10 @@ int test_duplicate_keys() {
     }
     
     // 清理
-    for (RB_Tree_Node* node = RB_Tree_Minimum(&tree, tree.root); 
+    for (RB_Tree_Node *next_node, *node = RB_Tree_Minimum(&tree, tree.root); 
          node != NULL && node != &tree.nil;  // deepseek didn't add "&& node != &tree.nil"
-         node = RB_Tree_Successor(&tree, node)) {
+         /*node = RB_Tree_Successor(&tree, node)*/node = next_node) {
+        next_node = RB_Tree_Successor(&tree, node);
         free_node(node);
     }
     
@@ -319,7 +321,7 @@ int test_empty_tree() {
     }
     
     int search_val = 5;
-    RB_Tree_Node* search = RB_Tree_Search(&tree, tree.root, &search_val, int_compare, NULL, 0);
+    RB_Tree_Node* search = RB_Tree_Search(&tree, tree.root, &search_val, int_compare, NULL);
     test_result &= (search == NULL);
     if (search != NULL) {
         printf("[Test Failure] Expected NULL search, got %p\n", (void*)search);
@@ -352,7 +354,7 @@ int performance_test() {
     int delete_count = NUM_OPS / 2;
     for (int i = 0; i < delete_count; i++) {
         int search_val = rand() % (NUM_OPS * 10);
-        RB_Tree_Node* node = RB_Tree_Search(&tree, tree.root, &search_val, int_compare, NULL, 0);
+        RB_Tree_Node* node = RB_Tree_Search(&tree, tree.root, &search_val, int_compare, NULL);
         if (node && node != &tree.nil) {
             RB_Tree_Delete(&tree, node);
             free(node->key);
@@ -373,9 +375,10 @@ int performance_test() {
     }
     
     // 清理剩余节点
-    for (RB_Tree_Node* node = RB_Tree_Minimum(&tree, tree.root); 
+    for (RB_Tree_Node *next_node, *node = RB_Tree_Minimum(&tree, tree.root); 
          node != NULL && node != &tree.nil;  // deepseek didn't add "&& node != &tree.nil"
-         node = RB_Tree_Successor(&tree, node)) {
+         /*node = RB_Tree_Successor(&tree, node)*/node = next_node) {
+        next_node = RB_Tree_Successor(&tree, node);
         free_node(node);
     }
     

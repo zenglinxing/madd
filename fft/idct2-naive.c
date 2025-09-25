@@ -41,7 +41,7 @@
     } \
     memcpy(origin, arr, (uint64_t)n * sizeof(real_type)); \
     origin[0] *= sqrt(0.5); \
-    uint64_t i, j, n2 = (uint64_t)n << 1, n4 = (uint64_t)n << 2; \
+    uint64_t i, j, /*n2 = (uint64_t)n << 1,*/ n4 = (uint64_t)n << 2; \
     for (i=0; i<n; i++){ \
         arr[0] = 0; \
     } \

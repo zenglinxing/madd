@@ -33,7 +33,7 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
     } \
  \
     integer_type n_int = n_int_; \
-    uint64_t nn=(uint64_t)n_int*n_int, i; \
+    uint64_t /*nn=(uint64_t)n_int*n_int,*/ i; \
     size_t n1_size = (uint64_t)(n_int-1)*sizeof(num_type); \
     num_type *subdiag=(num_type*)malloc(n1_size), b; \
     if (subdiag == NULL){ \

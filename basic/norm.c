@@ -54,26 +54,26 @@ NORM1__ALGORITHM(__float128, Cnum_Radius_c128)
 
 #define NORM2__ALGORITHM(float_type, sqrt) \
 { \
-    float_type sum = 0, last_sum, loss=0, xx; \
+    float_type sum = 0, /*last_sum, loss=0,*/ xx; \
     uint64_t i; \
     for (i=0; i<n; i++){ \
         xx = x[i] * x[i]; \
-        last_sum = sum; \
+        /*last_sum = sum;*/ \
         sum += xx; \
-        loss = last_sum - sum + xx; \
+        /*loss = last_sum - sum + xx;*/ \
     } \
     return sqrt(sum); \
 } \
 
 #define NORM2_CNUM__ALGORITHM(float_type, sqrt) \
 { \
-    float_type sum = 0, last_sum, loss=0, xx; \
+    float_type sum = 0, /*last_sum, loss=0,*/ xx; \
     uint64_t i; \
     for (i=0; i<n; i++){ \
         xx = x[i].real*x[i].real + x[i].imag*x[i].imag; \
-        last_sum = sum; \
+        /*last_sum = sum;*/ \
         sum += xx; \
-        loss = last_sum - sum + xx; \
+        /*loss = last_sum - sum + xx;*/ \
     } \
     return sqrt(sum); \
 } \

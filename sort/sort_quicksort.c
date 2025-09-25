@@ -125,7 +125,7 @@ void Sort_Quicksort(uint64_t n_element, size_t usize, void *arr_, char func_comp
         return;
     }
 
-    unsigned char *arr = arr_;
+    /*unsigned char *arr = arr_;*/
     unsigned char arr_pivot[1024];
     void *pivot;
     if (usize > 1024){

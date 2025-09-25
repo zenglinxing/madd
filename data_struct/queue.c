@@ -92,7 +92,7 @@ void Queue_Destroy(Queue *queue)
     QUEUE_WRITE_LOCK(queue)
 #endif
 
-    Queue_Node *root_node = queue->head, *last_node = root_node->prev, *next_node = root_node->next, *current_node = root_node;
+    Queue_Node *root_node = queue->head, /* *last_node = root_node->prev, */ *next_node = root_node->next, *current_node = root_node;
     do {
         if (current_node == NULL){
             Madd_Error_Add(MADD_ERROR, L"Queue_Destroy: one node pointer of queue is NULL.");

@@ -54,7 +54,7 @@ void Sort_Counting(uint64_t n_element, size_t usize, void *arr_,
         counts[i_key] += counts[i_key-1];
     }
 
-    unsigned char *arr_sorted=(unsigned char*)malloc(n_element*usize), *parr_sorted;
+    unsigned char *arr_sorted=(unsigned char*)malloc(n_element*usize)/*, *parr_sorted*/;
     if (arr_sorted == NULL){
         swprintf(err_info, MADD_ERROR_INFO_LEN, L"Sort_Counting: Failed to allocate %llu-element buffer (%zub each)",
                  n_element, usize);

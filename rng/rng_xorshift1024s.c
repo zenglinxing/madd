@@ -25,9 +25,9 @@ uint64_t RNG_Xorshift1024s_default_jump[RNG_XORSHIFT1024S_JUMP_LEN] = {
 RNG_Xorshift1024_Param RNG_Xorshift1024s_Init(uint64_t seed_)
 {
     RNG_Xorshift1024_Param rxp;
-    uint64_t seed = (seed_) ? seed_ : 1, s;
+    uint64_t seed = (seed_) ? seed_ : 1/*, s*/;
     rxp.seed = rxp.state[0] = seed;
-    int i;
+    //int i;
     for (int i = 1; i < 16; i++) {
         rxp.state[i] = 6364136223846793005ULL * (rxp.state[i-1] ^ (rxp.state[i-1] >> 62)) + i;
     }

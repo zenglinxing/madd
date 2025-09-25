@@ -18,7 +18,7 @@ static inline void swap_elements(void *a, void *b, size_t usize, void *temp) {
     memcpy(b, temp, usize);
 }
 
-static void heapify(uint64_t n, size_t usize, void *arr_,
+static void heapify(size_t usize, void *arr_,
                     uint64_t start, uint64_t end,
                     char func_compare(void*, void*, void*), void *other_param,
                     void *ptemp)
@@ -58,14 +58,14 @@ void Sort_Heap_Internal(uint64_t n, size_t usize, void *arr_,
 
     unsigned char *arr = (unsigned char*)arr_;
     uint64_t i;
-    for (i=n/2-1; i>=0; i--){
-        heapify(n, usize, arr, i, n, func_compare, other_param, ptemp);
+    for (i=n/2-1; /*i>=0*/1; i--){
+        heapify(usize, arr, i, n, func_compare, other_param, ptemp);
         if (i==0) break;
     }
 
     for (i=n-1; i>0; i--){
         swap_elements(arr, arr+i*usize, usize, ptemp);
-        heapify(n, usize, arr, 0, i, func_compare, other_param, ptemp);
+        heapify(usize, arr, 0, i, func_compare, other_param, ptemp);
     }
 
 }
@@ -86,7 +86,7 @@ void Sort_Heap(uint64_t n, size_t usize, void *arr_,
         return;
     }
 
-    unsigned char *arr = (unsigned char*)arr_, *ptemp;
+    unsigned char /* *arr = (unsigned char*)arr_, */ *ptemp;
     unsigned char temp_element[1024];
     ptemp = (usize > 1024) ? (unsigned char*)malloc(usize) : temp_element;
 

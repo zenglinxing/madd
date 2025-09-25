@@ -180,7 +180,7 @@ POLY1D_DERIVATIVE__ALGORITHM(long double, uint64_t, Poly1d_fl)
 #define POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(num_type, size_num_type, Poly1d, Poly1d_Derivative_N_order_Allocated) \
 { \
     size_num_type n_pos, n_neg; \
-    int64_t i_order; \
+    /*int64_t i_order;*/ \
     n_pos = (poly->n > n_order) ? poly->n - n_order : 0; \
     n_neg = (poly->_n) ? poly->_n + n_order : 0; \
     /* dpoly */ \
@@ -532,7 +532,7 @@ POLY1D_DERIVATIVE_N_ORDER__ALGORITHM(Cnuml, uint64_t, Poly1d_cl, Poly1d_Derivati
 
 #define POLY1D_INTEGRATE_CNUM__ALGORITHM(num_type, size_num_type, Cnum_Value, Cnum_Div_Real) \
 { \
-    size_num_type i,n_1=poly->n+1; \
+    size_num_type i/*, n_1=poly->n+1*/; \
     num_type *a=poly->a+poly->n, *ia, zero = Cnum_Value(0, 0); \
     ipoly->a[0] = zero; \
     /*ipoly->a[0] = 0.;*/ \

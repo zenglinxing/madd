@@ -86,7 +86,7 @@ void Sort_Merge(uint64_t n_element, size_t usize, void *arr_,
     unsigned char *arr=(unsigned char*)arr_, *arr_temp, *parr;
     uint64_t n1_element, log_n_element_low, log_n_element_high;
     Log2_Full(n_element, &log_n_element_low, &log_n_element_high);
-    n1_element = (log_n_element_high==log_n_element_low) ? n_element >> 1 : 1 << log_n_element_low;
+    n1_element = (log_n_element_high==log_n_element_low) ? n_element >> 1 : (uint64_t)1 << log_n_element_low;
 
     arr_temp = (unsigned char*)malloc(n1_element*usize);
     if (arr_temp == NULL){

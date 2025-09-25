@@ -49,7 +49,7 @@
  \
     Discrete_Cosine_Transform_Weight(n, w); \
  \
-    uint64_t angle_index, angle_gap, n2 = n << 1, n4 = n << 2; \
+    uint64_t angle_index, angle_gap, /*n2 = n << 1,*/ n4 = n << 2; \
     real_type factor = sqrt(2 / (real_type)n); \
     for (i=0; i<n; i++){ \
         angle_index = i; /* angle_index = i * (2*j + 1) */ \
