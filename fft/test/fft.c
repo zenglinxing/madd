@@ -268,7 +268,7 @@ int test_malloc_function() {
     
     // Test valid allocation
     uint64_t n = 4;
-    Cnum *arr = Fast_Fourier_Transform_Malloc(n);
+    Cnum *arr = Fast_Fourier_Transform_Radix2_Malloc(n);
     if (arr == NULL) {
         wprintf(L"Failed to allocate memory for n=%llu\n", n);
         return TEST_FAILED;
@@ -287,7 +287,7 @@ int test_malloc_function() {
     free(arr);
     
     // Test n=0
-    arr = Fast_Fourier_Transform_Malloc(0);
+    arr = Fast_Fourier_Transform_Radix2_Malloc(0);
     if (arr != NULL) {
         wprintf(L"Expected NULL for n=0, got %p\n", arr);
         return TEST_FAILED;

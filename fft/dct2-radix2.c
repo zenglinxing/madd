@@ -16,7 +16,7 @@ This file is part of Math Addition, in ./fft/dct2-base2.c
 
 #define DCT2_RADIX2__ALGORITHM(Cnum, real_type, \
                               Fast_Fourier_Transform_Core_name, \
-                              Fast_Fourier_Transform_Malloc, Fast_Fourier_Transform_w, \
+                              Fast_Fourier_Transform_Malloc, Fast_Fourier_Transform_Weight, \
                               Fast_Fourier_Transform_Core, \
                               sqrt, sin, cos) \
 { \
@@ -61,7 +61,7 @@ This file is part of Math Addition, in ./fft/dct2-base2.c
         arr_fft[n + i].real = arr[n - 1 - i]; \
     } \
  \
-    Fast_Fourier_Transform_w(n_ceil, w, MADD_FFT_FORWARD); \
+    Fast_Fourier_Transform_Weight(n_ceil, w, MADD_FFT_FORWARD); \
     bool flag_fft = Fast_Fourier_Transform_Core(n_ceil, arr_fft, w); \
     if (!flag_fft){ \
         free(w); \
@@ -87,30 +87,30 @@ This file is part of Math Addition, in ./fft/dct2-base2.c
 
 void Discrete_Cosine_Transform_2_Radix2(uint64_t n, double *arr)
 DCT2_RADIX2__ALGORITHM(Cnum, double,
-                       "Fast_Fourier_Transform_Core",
-                       Fast_Fourier_Transform_Malloc, Fast_Fourier_Transform_w,
-                       Fast_Fourier_Transform_Core,
+                       "Fast_Fourier_Transform_Radix2_Core",
+                       Fast_Fourier_Transform_Radix2_Malloc, Fast_Fourier_Transform_Weight,
+                       Fast_Fourier_Transform_Radix2_Core,
                        sqrt, sin, cos)
 
 void Discrete_Cosine_Transform_2_Radix2_f32(uint32_t n, float *arr)
 DCT2_RADIX2__ALGORITHM(Cnum32, float,
-                       "Fast_Fourier_Transform_Core_f32",
-                       Fast_Fourier_Transform_Malloc_f32, Fast_Fourier_Transform_w_f32,
-                       Fast_Fourier_Transform_Core_f32,
+                       "Fast_Fourier_Transform_Radix2_Core_f32",
+                       Fast_Fourier_Transform_Radix2_Malloc_f32, Fast_Fourier_Transform_Weight_f32,
+                       Fast_Fourier_Transform_Radix2_Core_f32,
                        sqrtf, sinf, cosf)
 
 void Discrete_Cosine_Transform_2_Radix2_fl(uint64_t n, long double *arr)
 DCT2_RADIX2__ALGORITHM(Cnuml, long double,
-                       "Fast_Fourier_Transform_Core_fl",
-                       Fast_Fourier_Transform_Malloc_fl, Fast_Fourier_Transform_w_fl,
-                       Fast_Fourier_Transform_Core_fl,
+                       "Fast_Fourier_Transform_Radix2_Core_fl",
+                       Fast_Fourier_Transform_Radix2_Malloc_fl, Fast_Fourier_Transform_Weight_fl,
+                       Fast_Fourier_Transform_Radix2_Core_fl,
                        sqrtl, sinl, cosl)
 
 #ifdef ENABLE_QUADPRECISION
 void Discrete_Cosine_Transform_2_Radix2_f128(uint64_t n, __float128 *arr)
 DCT2_RADIX2__ALGORITHM(Cnum128, __float128,
-                       "Fast_Fourier_Transform_Core_f128",
-                       Fast_Fourier_Transform_Malloc_f128, Fast_Fourier_Transform_w_f128,
-                       Fast_Fourier_Transform_Core_f128,
+                       "Fast_Fourier_Transform_Radix2_Core_f128",
+                       Fast_Fourier_Transform_Radix2_Malloc_f128, Fast_Fourier_Transform_Weight_f128,
+                       Fast_Fourier_Transform_Radix2_Core_f128,
                        sqrtq, sinq, cosq)
 #endif /* ENABLE_QUADPRECISION */
