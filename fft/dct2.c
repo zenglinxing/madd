@@ -68,9 +68,9 @@ In this code, we use FFT to compute it efficiently.
         return false; \
     } \
  \
-    const real_type scale = sqrt(2.0 / n); \
+    const real_type scale = sqrt(2.0 / n), angle_base = _CONSTANT_PI / len_fft; \
     for (i=0; i<n; i++){ \
-        real_type theta = _CONSTANT_PI * i / (2.0 * n); \
+        real_type theta = angle_base * i; \
         real_type cos_theta = cos(theta), sin_theta = sin(theta); \
         real_type real_part = arr_fft[i].real * cos_theta + arr_fft[i].imag * sin_theta; \
         real_type c_i = (i == 0) ? sqrt(0.5) : 1; \
