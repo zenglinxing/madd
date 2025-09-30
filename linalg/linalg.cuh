@@ -35,4 +35,12 @@ cublas error
 void Madd_cublasCreate_error(int ret, const char *func_name);
 void Madd_cublasSetStream_error(int ret, const char *func_name);
 
+/*
+===============================================================================
+cusolver error
+===============================================================================
+*/
+void Madd_cusolverDnCreate_error(int ret, const char *func_name);
+void Madd_cusolverDnSetStream_error(int ret, const char *func_name);
+
 #endif /* MADD_LINALG_CUH */
