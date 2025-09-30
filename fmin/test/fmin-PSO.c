@@ -25,7 +25,7 @@ int main(int argc,char *argv[])
     }
     Fmin_PSO(2, n_bird, x,
              func, NULL,
-             1e6, .9, .4, 2., 2., velocity, 1.e-1, &rng);
+             1e4, .9, .4, 2., 2., velocity, 1.e-1, &rng);
     for (i=0;i<n_bird;i++){
         for (j=0;j<2;j++){
             printf("%f\t",x[i][j]);

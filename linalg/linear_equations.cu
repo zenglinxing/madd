@@ -156,14 +156,11 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
         cusolverDnDestroy(handle); \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         if (info < 0){ \
-            wchar_t error_info[MADD_ERROR_INFO_LEN]; \
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the %d-th argument had an illegal value.", __func__, -info); \
-            Madd_Error_Add(MADD_ERROR, error_info); \
         }else{ \
-            wchar_t error_info[MADD_ERROR_INFO_LEN]; \
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: U(%d,%d) is exactly zero.  The factorization has been completed, but the factor U is exactly singular, so the solution could not be computed.", __func__, info, info); \
-            Madd_Error_Add(MADD_ERROR, error_info); \
         } \
+        Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
     } \
  \
