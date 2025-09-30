@@ -47,7 +47,7 @@ void Madd_cufftPlan1d_error(int ret_plan, char *func_name)
         //    swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cufftPlan1d (CUFFT_NVJITLINK_FAILURE): nvJitLink encountered an error during planning.", func_name);
         //    break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cufftPlan1d returns an error %x that Madd doesn't know.", func_name, ret_plan);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cufftPlan1d returns an error 0x%x that Madd doesn't know.", func_name, ret_plan);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }
@@ -72,7 +72,7 @@ void Madd_cufftExec_error(int ret, const char *func_name, const char *func_exec_
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs (CUFFT_SETUP_FAILED): The cuFFT library failed to initialize.", func_name, func_exec_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs returns an error %x that Madd doesn't know.", func_name, func_exec_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs returns an error 0x%x that Madd doesn't know.", func_name, func_exec_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }

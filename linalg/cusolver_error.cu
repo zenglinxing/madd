@@ -30,7 +30,7 @@ void Madd_cusolverDnCreate_error(int ret, const char *func_name)
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: The device only supports compute capability 5.0 and above.", func_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnCreate returns an error %x that Madd doesn't know.", func_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnCreate returns an error 0x%x that Madd doesn't know.", func_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }
@@ -44,7 +44,7 @@ void Madd_cusolverDnSetStream_error(int ret, const char *func_name)
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: The library was not initialized.", func_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnCreate returns an error %x that Madd doesn't know.", func_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnCreate returns an error 0x%x that Madd doesn't know.", func_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }

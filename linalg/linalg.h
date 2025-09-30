@@ -65,6 +65,12 @@ matrix multiply
 */
 bool Matrix_Multiply(int m, int n, int l,
                      double *a, double *b, double *res);
+bool Matrix_Multiply_f32(int m, int n, int l,
+                         float *a, float *b, float *res);
+bool Matrix_Multiply_c64(int m, int n, int l,
+                         Cnum *a, Cnum *b, Cnum *res);
+bool Matrix_Multiply_c32(int m, int n, int l,
+                         Cnum32 *a, Cnum32 *b, Cnum32 *res);
 
 bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
                            double *a, double *b, double *res);

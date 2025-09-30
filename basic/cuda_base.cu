@@ -83,7 +83,7 @@ void Madd_cudaMalloc_error(int ret, const char *func_name)
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorMemoryAllocation): The API call failed because it was unable to allocate enough memory or other resources to perform the requested operation.", func_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc returns an error %x that Madd doesn't know.", func_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc returns an error 0x%x that Madd doesn't know.", func_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }
@@ -96,7 +96,7 @@ void Madd_cudaSetStream_error(int ret, const char *func_name)
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaSetStream (cudaErrorInvalidValue): one or more of the parameters passed to the API call is not within an acceptable range of values.", func_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaSetStream returns an error %x that Madd doesn't know.", func_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaSetStream returns an error 0x%x that Madd doesn't know.", func_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }
