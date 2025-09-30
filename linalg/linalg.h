@@ -69,4 +69,16 @@ bool Matrix_Multiply(int m, int n, int l,
 bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
                            double *a, double *b, double *res);
 
+/*
+===============================================================================
+linear equations
+===============================================================================
+eq: n x n
+vector: n x n_vector
+*/
+bool Linear_Equations(int n, double *eq, int n_vector, double *vector);
+bool Linear_Equations_f32(int n, float *eq, int n_vector, float *vector);
+bool Linear_Equations_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
+bool Linear_Equations_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
+
 #endif /* MADD_LINALG_H */

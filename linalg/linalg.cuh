@@ -26,6 +26,17 @@ bool Matrix_Multiply_cuda_c64(int64_t m, int64_t n, int64_t l,
 bool Matrix_Multiply_cuda_c32(int64_t m, int64_t n, int64_t l,
                               Cnum32 *a, Cnum32 *b, Cnum32 *res);
 
+/*
+===============================================================================
+linear equations
+===============================================================================
+eq: n x n
+vector: n x n_vector
+*/
+bool Linear_Equations_cuda(int n, double *eq, int n_vector, double *vector);
+bool Linear_Equations_cuda_f32(int n, float *eq, int n_vector, float *vector);
+bool Linear_Equations_cuda_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
+bool Linear_Equations_cuda_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
 
 /*
 ===============================================================================
