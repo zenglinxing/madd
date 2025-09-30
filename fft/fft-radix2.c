@@ -146,33 +146,33 @@ bool Fast_Fourier_Transform_Radix2(uint64_t n, Cnum *arr, int fft_direction)
 FFT_RADIX2__ALGORITHM(Cnum, Fast_Fourier_Transform_Weight, Fast_Fourier_Transform_Radix2_Core, Cnum_Div_Real)
 
 /* Cnum_f32 */
-void *Fast_Fourier_Transform_Radix2_Malloc_f32(uint64_t n_element)
+void *Fast_Fourier_Transform_Radix2_Malloc_c32(uint64_t n_element)
 FFT_RADIX2_MALLOC__ALGORITHM(Cnum32)
 
-bool Fast_Fourier_Transform_Radix2_Core_f32(uint64_t n_ceil, Cnum32 *arr, const Cnum32 *w)
+bool Fast_Fourier_Transform_Radix2_Core_c32(uint64_t n_ceil, Cnum32 *arr, const Cnum32 *w)
 FFT_RADIX2_CORE__ALGORITHM(Cnum32, Cnum_Mul_c32, Cnum_Add_c32, Cnum_Sub_c32)
 
-bool Fast_Fourier_Transform_Radix2_f32(uint64_t n, Cnum32 *arr, int fft_direction)
-FFT_RADIX2__ALGORITHM(Cnum32, Fast_Fourier_Transform_Weight_f32, Fast_Fourier_Transform_Radix2_Core_f32, Cnum_Div_Real_c32)
+bool Fast_Fourier_Transform_Radix2_c32(uint64_t n, Cnum32 *arr, int fft_direction)
+FFT_RADIX2__ALGORITHM(Cnum32, Fast_Fourier_Transform_Weight_c32, Fast_Fourier_Transform_Radix2_Core_c32, Cnum_Div_Real_c32)
 
 /* Cnum_fl */
-void *Fast_Fourier_Transform_Radix2_Malloc_fl(uint64_t n_element)
+void *Fast_Fourier_Transform_Radix2_Malloc_cl(uint64_t n_element)
 FFT_RADIX2_MALLOC__ALGORITHM(Cnuml)
 
-bool Fast_Fourier_Transform_Radix2_Core_fl(uint64_t n_ceil, Cnuml *arr, const Cnuml *w)
+bool Fast_Fourier_Transform_Radix2_Core_cl(uint64_t n_ceil, Cnuml *arr, const Cnuml *w)
 FFT_RADIX2_CORE__ALGORITHM(Cnuml, Cnum_Mul_cl, Cnum_Add_cl, Cnum_Sub_cl)
 
-bool Fast_Fourier_Transform_Radix2_fl(uint64_t n, Cnuml *arr, int fft_direction)
-FFT_RADIX2__ALGORITHM(Cnuml, Fast_Fourier_Transform_Weight_fl, Fast_Fourier_Transform_Radix2_Core_fl, Cnum_Div_Real_cl)
+bool Fast_Fourier_Transform_Radix2_cl(uint64_t n, Cnuml *arr, int fft_direction)
+FFT_RADIX2__ALGORITHM(Cnuml, Fast_Fourier_Transform_Weight_cl, Fast_Fourier_Transform_Radix2_Core_cl, Cnum_Div_Real_cl)
 
 #ifdef ENABLE_QUADPRECISION
 /* Cnum_f128 */
-void *Fast_Fourier_Transform_Radix2_Malloc_f128(uint64_t n_element)
+void *Fast_Fourier_Transform_Radix2_Malloc_c128(uint64_t n_element)
 FFT_RADIX2_MALLOC__ALGORITHM(Cnum128)
 
-bool Fast_Fourier_Transform_Radix2_Core_f128(uint64_t n_ceil, Cnum128 *arr, const Cnum128 *w)
+bool Fast_Fourier_Transform_Radix2_Core_c128(uint64_t n_ceil, Cnum128 *arr, const Cnum128 *w)
 FFT_RADIX2_CORE__ALGORITHM(Cnum128, Cnum_Mul_c128, Cnum_Add_c128, Cnum_Sub_c128)
 
-bool Fast_Fourier_Transform_Radix2_f128(uint64_t n, Cnum128 *arr, int fft_direction)
-FFT_RADIX2__ALGORITHM(Cnum128, Fast_Fourier_Transform_Weight_f128, Fast_Fourier_Transform_Radix2_Core_f128, Cnum_Div_Real_c128)
+bool Fast_Fourier_Transform_Radix2_c128(uint64_t n, Cnum128 *arr, int fft_direction)
+FFT_RADIX2__ALGORITHM(Cnum128, Fast_Fourier_Transform_Weight_c128, Fast_Fourier_Transform_Radix2_Core_c128, Cnum_Div_Real_c128)
 #endif /* ENABLE_QUADPRECISION */

@@ -86,15 +86,15 @@ DCT2__ALGORITHM(Fast_Fourier_Transform, "Fast_Fourier_Transform",
                 Cnum, double, cos, sin, sqrt)
 
 bool Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr)
-DCT2__ALGORITHM(Fast_Fourier_Transform_f32, "Fast_Fourier_Transform_f32",
+DCT2__ALGORITHM(Fast_Fourier_Transform_c32, "Fast_Fourier_Transform_c32",
                 Cnum32, float, cosf, sinf, sqrtf)
 
 bool Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr)
-DCT2__ALGORITHM(Fast_Fourier_Transform_fl, "Fast_Fourier_Transform_fl",
+DCT2__ALGORITHM(Fast_Fourier_Transform_cl, "Fast_Fourier_Transform_cl",
                 Cnuml, long double, cosl, sinl, sqrtl)
 
 #ifdef ENABLE_QUADPRECISION
 bool Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr)
-DCT2__ALGORITHM(Fast_Fourier_Transform_f128, "Fast_Fourier_Transform_f128",
+DCT2__ALGORITHM(Fast_Fourier_Transform_c128, "Fast_Fourier_Transform_c128",
                 Cnum128, __float128, cosq, sinq, sqrtq)
 #endif /* ENABLE_QUADPRECISION */

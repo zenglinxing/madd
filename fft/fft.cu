@@ -100,7 +100,7 @@ FFT_CUDA__ALGORITHM(Cnum, CUFFT_Z2Z,
                     cufftExecZ2Z, "cufftExecZ2Z",
                     Cnum_Div)
 
-bool Fast_Fourier_Transform_cuda_f32(int n, Cnum32 *arr, int fft_direction)
+bool Fast_Fourier_Transform_cuda_c32(int n, Cnum32 *arr, int fft_direction)
 FFT_CUDA__ALGORITHM(Cnum32, CUFFT_C2C,
                     cufftComplex,
                     cufftExecC2C, "cufftExecC2C",

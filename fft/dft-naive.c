@@ -82,16 +82,16 @@ bool Discrete_Fourier_Transform_Naive(uint64_t n, Cnum *arr, int fft_direction)
 DFT_NAIVE__ALGORITHM(uint64_t, Cnum, Cnum_Value, Cnum_Add, Cnum_Mul, Cnum_Div_Real,
                      Fast_Fourier_Transform_Weight)
 
-bool Discrete_Fourier_Transform_Naive_f32(uint32_t n, Cnum32 *arr, int fft_direction)
+bool Discrete_Fourier_Transform_Naive_c32(uint32_t n, Cnum32 *arr, int fft_direction)
 DFT_NAIVE__ALGORITHM(uint32_t, Cnum32, Cnum_Value_c32, Cnum_Add_c32, Cnum_Mul_c32, Cnum_Div_Real_c32,
-                     Fast_Fourier_Transform_Weight_f32)
+                     Fast_Fourier_Transform_Weight_c32)
 
-bool Discrete_Fourier_Transform_Naive_fl(uint64_t n, Cnuml *arr, int fft_direction)
+bool Discrete_Fourier_Transform_Naive_cl(uint64_t n, Cnuml *arr, int fft_direction)
 DFT_NAIVE__ALGORITHM(uint64_t, Cnuml, Cnum_Value_cl, Cnum_Add_cl, Cnum_Mul_cl, Cnum_Div_Real_cl,
-                     Fast_Fourier_Transform_Weight_fl)
+                     Fast_Fourier_Transform_Weight_cl)
 
 #ifdef ENABLE_QUADPRECISION
-bool Discrete_Fourier_Transform_Naive_f128(uint64_t n, Cnum128 *arr, int fft_direction)
+bool Discrete_Fourier_Transform_Naive_c128(uint64_t n, Cnum128 *arr, int fft_direction)
 DFT_NAIVE__ALGORITHM(uint64_t, Cnum128, Cnum_Value_c128, Cnum_Add_c128, Cnum_Mul_c128, Cnum_Div_Real_c128,
-                     Fast_Fourier_Transform_Weight_f128)
+                     Fast_Fourier_Transform_Weight_c128)
 #endif /* ENABLE_QUADPRECISION */

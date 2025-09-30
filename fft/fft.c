@@ -61,16 +61,16 @@ bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction)
 FFT__ALGORITHM(Fast_Fourier_Transform_Radix2, "Fast_Fourier_Transform_Radix2",
                Discrete_Fourier_Transform_Naive, "Discrete_Fourier_Transform_Naive")
 
-bool Fast_Fourier_Transform_f32(uint32_t n, Cnum32 *arr, int fft_direction)
-FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_f32, "Fast_Fourier_Transform_Radix2_f32",
-               Discrete_Fourier_Transform_Naive_f32, "Discrete_Fourier_Transform_Naive_f32")
+bool Fast_Fourier_Transform_c32(uint32_t n, Cnum32 *arr, int fft_direction)
+FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_c32, "Fast_Fourier_Transform_Radix2_c32",
+               Discrete_Fourier_Transform_Naive_c32, "Discrete_Fourier_Transform_Naive_c32")
 
-bool Fast_Fourier_Transform_fl(uint64_t n, Cnuml *arr, int fft_direction)
-FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_fl, "Fast_Fourier_Transform_Radix2_fl",
-               Discrete_Fourier_Transform_Naive_fl, "Discrete_Fourier_Transform_Naive_fl")
+bool Fast_Fourier_Transform_cl(uint64_t n, Cnuml *arr, int fft_direction)
+FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_cl, "Fast_Fourier_Transform_Radix2_cl",
+               Discrete_Fourier_Transform_Naive_cl, "Discrete_Fourier_Transform_Naive_cl")
 
 #ifdef ENABLE_QUADPRECISION
-bool Fast_Fourier_Transform_f128(uint64_t n, Cnum128 *arr, int fft_direction)
-FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_f128, "Fast_Fourier_Transform_Radix2_f128",
-               Discrete_Fourier_Transform_Naive_f128, "Discrete_Fourier_Transform_Naive_f128")
+bool Fast_Fourier_Transform_c128(uint64_t n, Cnum128 *arr, int fft_direction)
+FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_c128, "Fast_Fourier_Transform_Radix2_c128",
+               Discrete_Fourier_Transform_Naive_c128, "Discrete_Fourier_Transform_Naive_c128")
 #endif /* ENABLE_QUADPRECISION */

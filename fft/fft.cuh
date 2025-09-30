@@ -14,7 +14,7 @@ This file is part of Math Addition, in ./fft/fft.cuh
 #include"../basic/cnum.h"
 
 bool Fast_Fourier_Transform_cuda(int n, Cnum *arr, int fft_direction);
-bool Fast_Fourier_Transform_cuda_f32(int n, Cnum32 *arr, int fft_direction);
+bool Fast_Fourier_Transform_cuda_c32(int n, Cnum32 *arr, int fft_direction);
 
 void Madd_cufftPlan1d_error(int ret_plan, const char *func_name);
 void Madd_cufftExec_error(int ret, const char *func_name, const char *func_exec_name);

@@ -118,13 +118,13 @@ This file is part of Math Addition, in ./fft/fft-weight.c
 void Fast_Fourier_Transform_Weight(uint64_t n, Cnum *w, int sign)
 FFT_W__ALGORITHM(Cnum, Cnum_Value, cos, sin, double)
 
-void Fast_Fourier_Transform_Weight_f32(uint64_t n, Cnum32 *w, int sign)
+void Fast_Fourier_Transform_Weight_c32(uint64_t n, Cnum32 *w, int sign)
 FFT_W__ALGORITHM(Cnum32, Cnum_Value_c32, cosf, sinf, float)
 
-void Fast_Fourier_Transform_Weight_fl(uint64_t n, Cnuml *w, int sign)
+void Fast_Fourier_Transform_Weight_cl(uint64_t n, Cnuml *w, int sign)
 FFT_W__ALGORITHM(Cnuml, Cnum_Value_cl, cosl, sinl, long double)
 
 #ifdef ENABLE_QUADPRECISION
-void Fast_Fourier_Transform_Weight_f128(uint64_t n, Cnum128 *w, int sign)
+void Fast_Fourier_Transform_Weight_c128(uint64_t n, Cnum128 *w, int sign)
 FFT_W__ALGORITHM(Cnum128, Cnum_Value_c128, cosq, sinq, __float128)
 #endif /* ENABLE_QUADPRECISION */

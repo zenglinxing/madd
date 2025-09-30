@@ -28,10 +28,10 @@ FFT weight
 ===============================================================================
 */
 void Fast_Fourier_Transform_Weight(uint64_t n, Cnum *w, int sign);
-void Fast_Fourier_Transform_Weight_f32(uint64_t n, Cnum32 *w, int sign);
-void Fast_Fourier_Transform_Weight_fl(uint64_t n, Cnuml *w, int sign);
+void Fast_Fourier_Transform_Weight_c32(uint64_t n, Cnum32 *w, int sign);
+void Fast_Fourier_Transform_Weight_cl(uint64_t n, Cnuml *w, int sign);
 #ifdef ENABLE_QUADPRECISION
-void Fast_Fourier_Transform_Weight_f128(uint64_t n, Cnum128 *w, int sign);
+void Fast_Fourier_Transform_Weight_c128(uint64_t n, Cnum128 *w, int sign);
 #endif /* ENABLE_QUADPRECISION */
 
 /*
@@ -40,10 +40,10 @@ Fast Fourier Transform
 ===============================================================================
 */
 bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
-bool Fast_Fourier_Transform_f32(uint32_t n, Cnum32 *arr, int fft_direction);
-bool Fast_Fourier_Transform_fl(uint64_t n, Cnuml *arr, int fft_direction);
+bool Fast_Fourier_Transform_c32(uint32_t n, Cnum32 *arr, int fft_direction);
+bool Fast_Fourier_Transform_cl(uint64_t n, Cnuml *arr, int fft_direction);
 #ifdef ENABLE_QUADPRECISION
-bool Fast_Fourier_Transform_f128(uint64_t n, Cnum128 *arr, int fft_direction);
+bool Fast_Fourier_Transform_c128(uint64_t n, Cnum128 *arr, int fft_direction);
 #endif /* ENABLE_QUADPRECISION */
 
 /*
@@ -55,27 +55,27 @@ bool Fast_Fourier_Transform_Radix2_Core(uint64_t n_ceil, Cnum *arr, const Cnum *
 bool Fast_Fourier_Transform_Radix2(uint64_t n, Cnum *arr, int fft_direction);
 
 /* Cnum32 */
-void *Fast_Fourier_Transform_Radix2_Malloc_f32(uint64_t n_element);
-bool Fast_Fourier_Transform_Radix2_Core_f32(uint64_t n_ceil, Cnum32 *arr, const Cnum32 *w);
-bool Fast_Fourier_Transform_Radix2_f32(uint64_t n, Cnum32 *arr, int fft_direction);
+void *Fast_Fourier_Transform_Radix2_Malloc_c32(uint64_t n_element);
+bool Fast_Fourier_Transform_Radix2_Core_c32(uint64_t n_ceil, Cnum32 *arr, const Cnum32 *w);
+bool Fast_Fourier_Transform_Radix2_c32(uint64_t n, Cnum32 *arr, int fft_direction);
 
 /* Cnuml */
-void *Fast_Fourier_Transform_Radix2_Malloc_fl(uint64_t n_element);
-bool Fast_Fourier_Transform_Radix2_Core_fl(uint64_t n_ceil, Cnuml *arr, const Cnuml *w);
-bool Fast_Fourier_Transform_Radix2_fl(uint64_t n, Cnuml *arr, int fft_direction);
+void *Fast_Fourier_Transform_Radix2_Malloc_cl(uint64_t n_element);
+bool Fast_Fourier_Transform_Radix2_Core_cl(uint64_t n_ceil, Cnuml *arr, const Cnuml *w);
+bool Fast_Fourier_Transform_Radix2_cl(uint64_t n, Cnuml *arr, int fft_direction);
 
 #ifdef ENABLE_QUADPRECISION
 /* Cnum128 */
-void *Fast_Fourier_Transform_Radix2_Malloc_f128(uint64_t n_element);
-bool Fast_Fourier_Transform_Radix2_Core_f128(uint64_t n_ceil, Cnum128 *arr, const Cnum128 *w);
-bool Fast_Fourier_Transform_Radix2_f128(uint64_t n, Cnum128 *arr, int fft_direction);
+void *Fast_Fourier_Transform_Radix2_Malloc_c128(uint64_t n_element);
+bool Fast_Fourier_Transform_Radix2_Core_c128(uint64_t n_ceil, Cnum128 *arr, const Cnum128 *w);
+bool Fast_Fourier_Transform_Radix2_c128(uint64_t n, Cnum128 *arr, int fft_direction);
 #endif /* ENABLE_QUADPRECISION */
 
 bool Discrete_Fourier_Transform_Naive(uint64_t n, Cnum *arr, int fft_direction);
-bool Discrete_Fourier_Transform_Naive_f32(uint32_t n, Cnum32 *arr, int fft_direction);
-bool Discrete_Fourier_Transform_Naive_fl(uint64_t n, Cnuml *arr, int fft_direction);
+bool Discrete_Fourier_Transform_Naive_c32(uint32_t n, Cnum32 *arr, int fft_direction);
+bool Discrete_Fourier_Transform_Naive_cl(uint64_t n, Cnuml *arr, int fft_direction);
 #ifdef ENABLE_QUADPRECISION
-bool Discrete_Fourier_Transform_Naive_f128(uint64_t n, Cnum128 *arr, int fft_direction);
+bool Discrete_Fourier_Transform_Naive_c128(uint64_t n, Cnum128 *arr, int fft_direction);
 #endif /* ENABLE_QUADPRECISION */
 
 /*
