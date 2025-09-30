@@ -26,4 +26,13 @@ bool Matrix_Multiply_cuda_c64(int64_t m, int64_t n, int64_t l,
 bool Matrix_Multiply_cuda_c32(int64_t m, int64_t n, int64_t l,
                               Cnum32 *a, Cnum32 *b, Cnum32 *res);
 
+
+/*
+===============================================================================
+cublas error
+===============================================================================
+*/
+void Madd_cublasCreate_error(int ret, const char *func_name);
+void Madd_cublasSetStream_error(int ret, const char *func_name);
+
 #endif /* MADD_LINALG_CUH */
