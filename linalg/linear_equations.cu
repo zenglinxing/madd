@@ -76,9 +76,6 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
         return false; \
     } \
  \
-    Matrix_Transpose(n, n, eq); \
-    Matrix_Transpose(n, n_vector, vector); \
- \
     size_t size_arr = (uint64_t)n*n*sizeof(double), size_vector = (uint64_t)n*n_vector*sizeof(double), size_ipiv = (uint64_t)n*sizeof(int), size_info = sizeof(int); \
     void *d_temp_space; \
     double *d_arr, *d_vector, *d_result; \
@@ -94,6 +91,8 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     d_info = (int*)(d_ipiv + n); \
     d_result = (double*)(d_info + 1); \
  \
+    Matrix_Transpose(n, n, eq); \
+    Matrix_Transpose(n, n_vector, vector); \
     cudaMemcpy(d_arr, eq, size_arr, cudaMemcpyHostToDevice); \
     cudaMemcpy(d_vector, vector, size_vector, cudaMemcpyHostToDevice); \
     Matrix_Transpose(n, n, eq); \
