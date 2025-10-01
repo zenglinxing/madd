@@ -18,10 +18,12 @@ The following function is defined for FFT.
 <!--Do note that the length of `arr` should be the least number greater than `n` that is a power of 2, even if your `n` is not a power of 2.-->
 `fft_direction` should be either `MADD_FFT_FORWARD` or `MADD_FFT_INVERSE`.
 
+If the function succeeds, it returns `true`.
+
 ```C
-void Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
+bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
 // if CUDA is available
-void Fast_Fourier_Transform_cuda(uint64_t n, Cnum *arr, int fft_direction);
+bool Fast_Fourier_Transform_cuda(uint64_t n, Cnum *arr, int fft_direction);
 ```
 
 Example
