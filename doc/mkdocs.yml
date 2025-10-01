@@ -23,6 +23,7 @@ nav:
   - Fast Fourier Transform:
     - Introduction: fft-intro.md
     - FFT Functions: fft-func.md
+    - DCT Functions: fft-dct.md
   - Integrate:
     - Introduction: integrate-intro.md
     - Fundamental Integral:
