@@ -121,11 +121,11 @@ bool Discrete_Cosine_Transform_2_Naive_f128(uint64_t n, __float128 *arr);
 IDCT-2
 ===============================================================================
 */
-void Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
-void Inverse_Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
-void Inverse_Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
+bool Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
+bool Inverse_Discrete_Cosine_Transform_2_f32(uint32_t n, float *arr);
+bool Inverse_Discrete_Cosine_Transform_2_fl(uint64_t n, long double *arr);
 #ifdef ENABLE_QUADPRECISION
-void Inverse_Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
+bool Inverse_Discrete_Cosine_Transform_2_f128(uint64_t n, __float128 *arr);
 #endif /* ENABLE_QUADPRECISION */
 
 bool Inverse_Discrete_Cosine_Transform_2_Naive(uint64_t n, double *arr);
