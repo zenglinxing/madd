@@ -304,6 +304,7 @@ void NxN_Complex_Matrix_Eigen_Test()
 
 int main(int argc, char *argv[])
 {
+    madd_error_keep_print = true;
     uint64_t seed = 10;
     if (argc >= 2){
         n = atoi(argv[1]);
