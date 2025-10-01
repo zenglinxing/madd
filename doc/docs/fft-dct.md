@@ -10,5 +10,5 @@ DCT Function
 
 ```C
 bool Discrete_Cosine_Transform_2(uint64_t n, double *arr);
-void Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
+bool Inverse_Discrete_Cosine_Transform_2(uint64_t n, double *arr);
 ```
