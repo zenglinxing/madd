@@ -20,6 +20,8 @@ The following function is defined for FFT.
 
 ```C
 void Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction);
+// if CUDA is available
+void Fast_Fourier_Transform_cuda(uint64_t n, Cnum *arr, int fft_direction);
 ```
 
 Example
