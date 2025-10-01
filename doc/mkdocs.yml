@@ -31,6 +31,12 @@ nav:
       - Simpson Integral: integrate-Simpson.md
     - Gauss Quadrature:
       - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
+  - Linear Algebra:
+    - Introduction: linalg-intro.md
+    - Transpose: linalg-transpose.md
+    - Matrix:
+      - Multiply: linalg-matrix-multiply.md
+      - Linear Equation: linalg-linear-equation.md
   - Random Number Generator:
     - Instruction: rng-intro.md
   - Sort:
