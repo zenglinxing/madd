@@ -87,4 +87,13 @@ bool Linear_Equations_f32(int n, float *eq, int n_vector, float *vector);
 bool Linear_Equations_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
 bool Linear_Equations_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
 
+/*
+===============================================================================
+eigenvalue & eigenvector
+===============================================================================
+*/
+bool Eigen(int n, double *matrix, Cnum *eigenvalue,
+           bool flag_left, Cnum *eigenvector_left,
+           bool flag_right, Cnum *eigenvector_right);
+
 #endif /* MADD_LINALG_H */
