@@ -17,13 +17,22 @@ This file is part of Math Addition, in ./linalg/linalg.cuh
 matrix multiply
 ===============================================================================
 */
-bool Matrix_Multiply_cuda(int64_t m, int64_t n, int64_t l,
+bool Matrix_Multiply_cuda(int m, int n, int l,
                           double *a, double *b, double *res);
-bool Matrix_Multiply_cuda_f32(int64_t m, int64_t n, int64_t l,
+bool Matrix_Multiply_cuda_f32(int m, int n, int l,
                               float *a, float *b, float *res);
-bool Matrix_Multiply_cuda_c64(int64_t m, int64_t n, int64_t l,
+bool Matrix_Multiply_cuda_c64(int m, int n, int l,
                               Cnum *a, Cnum *b, Cnum *res);
-bool Matrix_Multiply_cuda_c32(int64_t m, int64_t n, int64_t l,
+bool Matrix_Multiply_cuda_c32(int m, int n, int l,
+                              Cnum32 *a, Cnum32 *b, Cnum32 *res);
+
+bool Matrix_Multiply_cuda64(int64_t m, int64_t n, int64_t l,
+                          double *a, double *b, double *res);
+bool Matrix_Multiply_cuda64_f32(int64_t m, int64_t n, int64_t l,
+                              float *a, float *b, float *res);
+bool Matrix_Multiply_cuda64_c64(int64_t m, int64_t n, int64_t l,
+                              Cnum *a, Cnum *b, Cnum *res);
+bool Matrix_Multiply_cuda64_c32(int64_t m, int64_t n, int64_t l,
                               Cnum32 *a, Cnum32 *b, Cnum32 *res);
 
 /*

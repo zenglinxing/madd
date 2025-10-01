@@ -1,4 +1,10 @@
-// coding: utf-8
+/* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./linalg/matrix_multiply_64.cu
+*/
 #include<stdlib.h>
 #include<stdint.h>
 #include<stdbool.h>
@@ -9,7 +15,9 @@ extern "C"{
 #include"../basic/basic.h"
 }
 
-#define MATRIX_MULTIPLY_CUDA__ALGORITHM(num_type, cublasDgemm, Matrix_Transpose) \
+#if __CUDACC_VER_MAJOR__ >=12
+
+#define MATRIX_MULTIPLY_CUDA64__ALGORITHM(num_type, cublasDgemm, Matrix_Transpose) \
 { \
     if (m == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -98,7 +106,7 @@ extern "C"{
     return true; \
 } \
 
-#define MATRIX_MULTIPLY_CUDA_CNUM__ALGORITHM(num_type, cublasDgemm, Matrix_Transpose) \
+#define MATRIX_MULTIPLY_CUDA64_CNUM__ALGORITHM(num_type, cublasDgemm, Matrix_Transpose) \
 { \
     if (m == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -189,18 +197,20 @@ extern "C"{
     return true; \
 } \
 
-bool Matrix_Multiply_cuda(int m, int n, int l,
+bool Matrix_Multiply_cuda64(int64_t m, int64_t n, int64_t l,
                           double *a, double *b, double *res)
-MATRIX_MULTIPLY_CUDA__ALGORITHM(double, cublasDgemm, Matrix_Transpose)
+MATRIX_MULTIPLY_CUDA64__ALGORITHM(double, cublasDgemm_64, Matrix_Transpose)
 
-bool Matrix_Multiply_cuda_f32(int m, int n, int l,
+bool Matrix_Multiply_cuda64_f32(int64_t m, int64_t n, int64_t l,
                               float *a, float *b, float *res)
-MATRIX_MULTIPLY_CUDA__ALGORITHM(float, cublasSgemm, Matrix_Transpose_f32)
+MATRIX_MULTIPLY_CUDA64__ALGORITHM(float, cublasSgemm_64, Matrix_Transpose_f32)
 
-bool Matrix_Multiply_cuda_c64(int m, int n, int l,
+bool Matrix_Multiply_cuda64_c64(int64_t m, int64_t n, int64_t l,
                               Cnum *a, Cnum *b, Cnum *res)
-MATRIX_MULTIPLY_CUDA_CNUM__ALGORITHM(cuDoubleComplex, cublasZgemm, Matrix_Transpose_c64)
+MATRIX_MULTIPLY_CUDA64_CNUM__ALGORITHM(cuDoubleComplex, cublasZgemm_64, Matrix_Transpose_c64)
 
-bool Matrix_Multiply_cuda_c32(int m, int n, int l,
+bool Matrix_Multiply_cuda64_c32(int64_t m, int64_t n, int64_t l,
                               Cnum32 *a, Cnum32 *b, Cnum32 *res)
-MATRIX_MULTIPLY_CUDA_CNUM__ALGORITHM(cuComplex, cublasCgemm, Matrix_Transpose_c32)
+MATRIX_MULTIPLY_CUDA64_CNUM__ALGORITHM(cuComplex, cublasCgemm_64, Matrix_Transpose_c32)
+
+#endif /* __CUDACC_VER_MAJOR__ >= 12 */

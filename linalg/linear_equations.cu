@@ -1,4 +1,10 @@
 /* coding: utf-8 */
+/*
+Author: Lin-Xing Zeng
+Email:  jasonphysics@outlook.com | jasonphysics19@gmail.com
+
+This file is part of Math Addition, in ./linalg/linear_equations.cu
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>
@@ -24,9 +30,11 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
         case CUSOLVER_STATUS_ARCH_MISMATCH:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs (CUSOLVER_STATUS_ARCH_MISMATCH) The IRS solver supports compute capability 7.0 and above. The lowest precision options CUSOLVER_[CR]_16BF and CUSOLVER_[CR]_TF32 are only available on compute capability 8.0 and above.", func_name, func_exec_name);
             break;
+#if __CUDACC_VER_MAJOR__ >= 11
         case CUSOLVER_STATUS_INVALID_WORKSPACE:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs (CUSOLVER_STATUS_INVALID_WORKSPACE) lwork_bytes is smaller than the required workspace. Could happen if the users called cusolverDnIRSXgesv_bufferSize() function, then changed some of the configurations setting such as the lowest precision.", func_name, func_exec_name);
             break;
+#endif /* __CUDACC_VER_MAJOR__ >= 11 */
         case CUSOLVER_STATUS_IRS_OUT_OF_RANGE:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: %hs (CUSOLVER_STATUS_IRS_OUT_OF_RANGE) Numerical error related to niters <0, see niters description for more details.", func_name, func_exec_name);
             break;
