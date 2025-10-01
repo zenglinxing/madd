@@ -58,6 +58,14 @@ bool Matrix_Transpose_Inplace_c128(uint64_t m, uint64_t n, Cnum128 *matrix);
 bool Matrix_Transpose_Outplace_c128(uint64_t m, uint64_t n, Cnum128 *matrix, Cnum128 *newmat);
 #endif /* ENABLE_QUADPRECISION */
 
+/* Hermitian Transpose */
+bool Matrix_Hermitian_Transpose_c64(uint64_t m, uint64_t n, Cnum *matrix);
+bool Matrix_Hermitian_Transpose_c32(uint64_t m, uint64_t n, Cnum32 *matrix);
+bool Matrix_Hermitian_Transpose_cl(uint64_t m, uint64_t n, Cnuml *matrix);
+#ifdef ENABLE_QUADPRECISION
+bool Matrix_Hermitian_Transpose_c128(uint64_t m, uint64_t n, Cnum128 *matrix);
+#endif /* ENABLE_QUADPRECISION */
+
 /*
 ===============================================================================
 matrix multiply
@@ -95,5 +103,14 @@ eigenvalue & eigenvector
 bool Eigen(int n, double *matrix, Cnum *eigenvalue,
            bool flag_left, Cnum *eigenvector_left,
            bool flag_right, Cnum *eigenvector_right);
+bool Eigen_f32(int n, float *matrix, Cnum32 *eigenvalue,
+               bool flag_left, Cnum32 *eigenvector_left,
+               bool flag_right, Cnum32 *eigenvector_right);
+bool Eigen_c64(int n, Cnum *matrix, Cnum *eigenvalue,
+               bool flag_left, Cnum *eigenvector_left,
+               bool flag_right, Cnum *eigenvector_right);
+bool Eigen_c32(int n, Cnum32 *matrix, Cnum32 *eigenvalue,
+               bool flag_left, Cnum32 *eigenvector_left,
+               bool flag_right, Cnum32 *eigenvector_right);
 
 #endif /* MADD_LINALG_H */
