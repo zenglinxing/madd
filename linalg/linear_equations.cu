@@ -121,6 +121,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
                                                                      (cusolver_num_type*)d_vector, n, \
                                                                      (cusolver_num_type*)d_result, n, \
                                                                      NULL, &lwork_bytes); \
+    cudaStreamSynchronize(stream); \
     if (status_buffersize != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_temp_space); \
         cusolverDnDestroy(handle); \
