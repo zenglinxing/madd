@@ -189,6 +189,8 @@ extern "C"{
     return true; \
 } \
 
+extern "C"{
+
 bool Matrix_Multiply_cuda(int m, int n, int l,
                           double *a, double *b, double *res)
 MATRIX_MULTIPLY_CUDA__ALGORITHM(double, cublasDgemm, Matrix_Transpose)
@@ -204,3 +206,5 @@ MATRIX_MULTIPLY_CUDA_CNUM__ALGORITHM(cuDoubleComplex, cublasZgemm, Matrix_Transp
 bool Matrix_Multiply_cuda_c32(int m, int n, int l,
                               Cnum32 *a, Cnum32 *b, Cnum32 *res)
 MATRIX_MULTIPLY_CUDA_CNUM__ALGORITHM(cuComplex, cublasCgemm, Matrix_Transpose_c32)
+
+}

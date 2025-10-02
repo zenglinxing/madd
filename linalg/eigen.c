@@ -79,27 +79,38 @@ This file is part of Math Addition, in ./linalg/eigen.c
     } \
     Matrix_Transpose(2, n, (real_num_type*)eigenvalue); \
  \
-    uint64_t i, j; \
-    for (i=0; i<n; i++){ \
-        Cnum *le = eigenvector_left + i, *re = eigenvector_right + i; \
-        real_num_type *lv = vl + i, *rv = vr + i; \
-        if (eigenvalue[i].imag == 0){ \
-            for (j=0; j<n; j++,lv+=n,rv+=n,le+=n,re+=n){ \
-                le->real = *lv; \
-                re->real = *rv; \
-                le->imag = re->imag = 0; \
+    if (flag_left || flag_right){ \
+        uint64_t i, j; \
+        for (i=0; i<n; i++){ \
+            Cnum *le = eigenvector_left + i, *re = eigenvector_right + i; \
+            real_num_type *lv = vl + i, *rv = vr + i; \
+            if (eigenvalue[i].imag == 0){ \
+                for (j=0; j<n; j++,lv+=n,rv+=n,le+=n,re+=n){ \
+                    if (flag_left){ \
+                        le->real = *lv; \
+                        le->imag = 0; \
+                    } \
+                    if (flag_right){ \
+                        re->real = *rv; \
+                        re->imag = 0; \
+                    } \
+                } \
+            }else{ \
+                for (j=0; j<n; j++,lv+=n,rv+=n,le+=n,re+=n){ \
+                    if (flag_left){ \
+                        le->real = le[1].real = *lv; \
+                        le->imag = lv[1]; \
+                        le[1].imag = -lv[1]; \
+                    } \
+                    if (flag_right){ \
+                        re->real = re[1].real = *rv; \
+                        re->imag = rv[1]; \
+                        re[1].imag = -rv[1]; \
+                    } \
+                } \
+                i ++; \
+                continue; \
             } \
-        }else{ \
-            for (j=0; j<n; j++,lv+=n,rv+=n,le+=n,re+=n){ \
-                le->real = le[1].real = *lv; \
-                re->real = re[1].real = *rv; \
-                le->imag = lv[1]; \
-                le[1].imag = -lv[1]; \
-                re->imag = rv[1]; \
-                re[1].imag = -rv[1]; \
-            } \
-            i ++; \
-            continue; \
         } \
     } \
  \

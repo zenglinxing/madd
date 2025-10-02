@@ -25,7 +25,7 @@ static char *Wide2Char(wchar_t *wstr)
     }
 
     size_t len_char = wcstombs(NULL, wstr, 0);
-    wprintf(wstr);
+    //wprintf(wstr);
     if (len_char == (size_t)-1 || len_char == 0){
         if (madd_print_wide) wprintf(L"%hs\t%hs line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);
         else printf("%s\t%s line %d:\n\tMadd Exit!\tOccur failure to calculate the wide string.", __func__, __FILE__, __LINE__);

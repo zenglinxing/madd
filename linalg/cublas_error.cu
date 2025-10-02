@@ -21,13 +21,13 @@ void Madd_cublasCreate_error(int ret, const char *func_name)
     wchar_t error_info[MADD_ERROR_INFO_LEN];
     switch (ret){
         case CUBLAS_STATUS_NOT_INITIALIZED:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: The CUDA™ Runtime initialization failed.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasCreate (CUBLAS_STATUS_NOT_INITIALIZED) The CUDA™ Runtime initialization failed.", func_name);
             break;
         case CUBLAS_STATUS_ALLOC_FAILED:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: The resources could not be allocated.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasCreate (CUBLAS_STATUS_ALLOC_FAILED) The resources could not be allocated.", func_name);
             break;
         case CUBLAS_STATUS_INVALID_VALUE:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: handle is NULL.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasCreate (CUBLAS_STATUS_INVALID_VALUE) handle is NULL.", func_name);
             break;
         default:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasCreate returns an error 0x%x that Madd doesn't know.", func_name, ret);
@@ -41,7 +41,7 @@ void Madd_cublasSetStream_error(int ret, const char *func_name)
     wchar_t error_info[MADD_ERROR_INFO_LEN];
     switch (ret){
         case CUBLAS_STATUS_NOT_INITIALIZED:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the library was not initialized.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasSetStream (CUBLAS_STATUS_NOT_INITIALIZED) the library was not initialized.", func_name);
             break;
         default:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cublasSetStream returns an error 0x%x that Madd doesn't know.", func_name, ret);

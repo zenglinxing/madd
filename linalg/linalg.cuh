@@ -49,6 +49,16 @@ bool Linear_Equations_cuda_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
 
 /*
 ===============================================================================
+eigenvalue & eigenvector
+===============================================================================
+*/
+bool Eigen_cuda64(int64_t n, double *matrix,
+                  Cnum *eigenvalue,
+                  bool flag_left, Cnum *eigenvector_left,
+                  bool flag_right, Cnum *eigenvector_right);
+
+/*
+===============================================================================
 cublas error
 ===============================================================================
 */
@@ -62,5 +72,6 @@ cusolver error
 */
 void Madd_cusolverDnCreate_error(int ret, const char *func_name);
 void Madd_cusolverDnSetStream_error(int ret, const char *func_name);
+void Madd_cusolverDnCreateParams_error(int ret, const char *func_name);
 
 #endif /* MADD_LINALG_CUH */

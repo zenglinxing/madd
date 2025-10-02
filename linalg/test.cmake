@@ -7,6 +7,17 @@ endif()
 add_test(NAME Linalg-Eigen
          COMMAND test_linalg-eigen)
 
+if (ENABLE_CUDA)
+    add_executable(test_linalg-eigen-cuda linalg/test/eigen-cuda.c)
+    target_include_directories(test_linalg-eigen-cuda PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    target_link_libraries(test_linalg-eigen-cuda PUBLIC madd ${OpenBLAS_LIBRARY})
+    if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+        target_link_libraries(test_linalg-eigen-cuda PUBLIC gfortran)
+    endif()
+    add_test(NAME Linalg-Eigen-CUDA
+             COMMAND test_linalg-eigen-cuda)
+endif ()
+
 add_executable(test_linalg-linear-equations linalg/test/linear-equations.c)
 target_include_directories(test_linalg-linear-equations PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_linalg-linear-equations PUBLIC madd ${OpenBLAS_LIBRARY})
