@@ -45,6 +45,7 @@ endif()
 option(ENABLE_CUDA "Enable support for CUDA. NVIDIA compiler is required" OFF)
 set(CMAKE_CUDA_ARCHITECTURES 86 CACHE STRING "CUDA architecture. You should check it on https://developer.nvidia.com/cuda-gpus")
 if (ENABLE_CUDA)
+    find_package(CUDA)
     enable_language(CUDA)
 endif()
 
