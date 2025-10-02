@@ -231,7 +231,7 @@ void NxN_Complex_Matrix_Eigen_Test()
     print_cnum_matrix(n, 1, eigenvalue);
     printf("Eigenvector Left:\n");
     print_cnum_matrix(n, n, vl);
-    printf("Eigenvector Rightt:\n");
+    printf("Eigenvector Right:\n");
     print_cnum_matrix(n, n, vr);
     
     Cnum cnum_zero = {.real = 0, .imag = 0};

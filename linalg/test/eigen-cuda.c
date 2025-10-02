@@ -211,6 +211,102 @@ void _2x2_Real_Matrix_Complex_Eigen_Test()
     printf("\n\n");
 }
 
+void NxN_Complex_Matrix_Eigen_Test()
+{
+    printf("\n===\n%d x %d Complex Matrix Test\n===\n", n, n);
+    uint64_t i, j;
+    size_t size_nn = (uint64_t)n*n*sizeof(Cnum), size_n = (uint64_t)n*sizeof(Cnum);
+    Cnum *matrix = (Cnum*)malloc(size_nn);
+    Cnum *mm = (Cnum*)malloc(size_nn);
+    Cnum *eigenvalue = (Cnum*)malloc(size_n);
+    Cnum *vl = (Cnum*)malloc(size_nn);
+    Cnum *vr = (Cnum*)malloc(size_nn);
+    for (i=0; i<n; i++){
+        for (j=0; j<n; j++){
+            matrix[i*n+j].real = Rand(&rng);
+            matrix[i*n+j].imag = Rand(&rng);
+        }
+    }
+    print_cnum_matrix(n, n, matrix);
+    memcpy(mm, matrix, size_nn);
+    
+    Eigen_cuda64_c64(n, matrix, eigenvalue, false, vl, true, vr);
+
+    printf("Eigenvalues:\n");
+    print_cnum_matrix(n, 1, eigenvalue);
+    //printf("Eigenvector Left:\n");
+    //print_cnum_matrix(n, n, vl);
+    printf("Eigenvector Right:\n");
+    print_cnum_matrix(n, n, vr);
+    
+    Cnum cnum_zero = {.real = 0, .imag = 0};
+    Cnum *eigenvalue_matrix = (Cnum*)malloc(size_nn);
+    for (i=0; i<n; i++){
+        for (j=0; j<n; j++){
+            eigenvalue_matrix[i*n+j] = (i == j) ? eigenvalue[i] : cnum_zero;
+        }
+    }
+    Cnum *mm_res = (Cnum*)malloc(size_nn), *mv_res = (Cnum*)malloc(size_nn);
+
+    // left eigen check
+    /*printf("---\nLeft Eigen Check\n---\n");
+    Cnum *vlT = (Cnum*)malloc(size_nn);
+    memcpy(vlT, vl, size_nn);
+    Matrix_Hermitian_Transpose_c64(n, n, vlT);
+    Matrix_Multiply_c64(n, n, n, vlT, mm, mm_res);
+    Matrix_Multiply_c64(n, n, n, eigenvalue_matrix, vlT, mv_res);
+    printf("Eigenvectors Left (T) x Original Matrix:\n");
+    print_cnum_matrix(n, n, mm_res);
+    printf("Eigenvalues Matrix x Eigenvectors Left (T):\n");
+    print_cnum_matrix(n, n, mv_res);
+    for (i=0; i<n; i++){
+        for (j=0; j<n; j++){
+            double dev_real = mm_res[i*n+j].real - mv_res[i*n+j].real;
+            double dev_imag = mm_res[i*n+j].imag - mv_res[i*n+j].imag;
+            double rate_real = fabs(dev_real / mv_res[i*n+j].real), rate_imag = fabs(dev_imag / mv_res[i*n+j].imag);
+            if (rate_real > tolerance || rate_imag > tolerance){
+                flag_complex_left_verified = false;
+            }
+        }
+    }*/
+
+    // right eigen check
+    printf("---\nRight Eigen Check\n---\n");
+    Matrix_Multiply_c64(n, n, n, mm, vr, mm_res);
+    Matrix_Multiply_c64(n, n, n, vr, eigenvalue_matrix, mv_res);
+    printf("Original Matrix x Eigenvectors Right:\n");
+    print_cnum_matrix(n, n, mm_res);
+    printf("Eigenvectors Right x Eigenvalues Matrix:\n");
+    print_cnum_matrix(n, n, mv_res);
+    for (i=0; i<n; i++){
+        for (j=0; j<n; j++){
+            double dev_real = mm_res[i*n+j].real - mv_res[i*n+j].real;
+            double dev_imag = mm_res[i*n+j].imag - mv_res[i*n+j].imag;
+            double rate_real = fabs(dev_real / mv_res[i*n+j].real), rate_imag = fabs(dev_imag / mv_res[i*n+j].imag);
+            if (rate_real > tolerance || rate_imag > tolerance){
+                flag_complex_right_verified = false;
+            }
+        }
+    }
+
+    free(matrix);
+    free(mm);
+    free(eigenvalue);
+    free(vl);
+    free(vr);
+    free(eigenvalue_matrix);
+
+    /*if (!flag_complex_left_verified){
+        printf("*** Test Complex Matrix (Left) Failed ***\n");
+    }*/
+    if (!flag_complex_right_verified){
+        printf("*** Test Complex Matrix (Right) Failed ***\n");
+    }
+    if (flag_complex_left_verified && flag_complex_right_verified){
+        printf("Complex Matrix Test Passed\n");
+    }
+}
+
 int main(int argc, char *argv[])
 {
     madd_error_keep_print = true;
@@ -227,7 +323,7 @@ int main(int argc, char *argv[])
 
     NxN_Real_Matrix_Test();
     _2x2_Real_Matrix_Complex_Eigen_Test();
-    //NxN_Complex_Matrix_Eigen_Test();
+    NxN_Complex_Matrix_Eigen_Test();
 
     // All tests reports
     printf("\n\n===\nAll Tests Reports:\n");

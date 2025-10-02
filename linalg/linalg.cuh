@@ -56,6 +56,10 @@ bool Eigen_cuda64(int64_t n, double *matrix,
                   Cnum *eigenvalue,
                   bool flag_left, Cnum *eigenvector_left,
                   bool flag_right, Cnum *eigenvector_right);
+bool Eigen_cuda64_c64(int64_t n, Cnum *matrix,
+                      Cnum *eigenvalue,
+                      bool flag_left, Cnum *eigenvector_left,
+                      bool flag_right, Cnum *eigenvector_right);
 
 /*
 ===============================================================================
