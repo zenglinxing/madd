@@ -200,19 +200,19 @@ extern "C"{
 extern "C"{
 
 bool Matrix_Multiply_cuda64(int64_t m, int64_t n, int64_t l,
-                          double *a, double *b, double *res)
+                            double *a, double *b, double *res)
 MATRIX_MULTIPLY_CUDA64__ALGORITHM(double, cublasDgemm_64, Matrix_Transpose)
 
 bool Matrix_Multiply_cuda64_f32(int64_t m, int64_t n, int64_t l,
-                              float *a, float *b, float *res)
+                                float *a, float *b, float *res)
 MATRIX_MULTIPLY_CUDA64__ALGORITHM(float, cublasSgemm_64, Matrix_Transpose_f32)
 
 bool Matrix_Multiply_cuda64_c64(int64_t m, int64_t n, int64_t l,
-                              Cnum *a, Cnum *b, Cnum *res)
+                                Cnum *a, Cnum *b, Cnum *res)
 MATRIX_MULTIPLY_CUDA64_CNUM__ALGORITHM(cuDoubleComplex, cublasZgemm_64, Matrix_Transpose_c64)
 
 bool Matrix_Multiply_cuda64_c32(int64_t m, int64_t n, int64_t l,
-                              Cnum32 *a, Cnum32 *b, Cnum32 *res)
+                                Cnum32 *a, Cnum32 *b, Cnum32 *res)
 MATRIX_MULTIPLY_CUDA64_CNUM__ALGORITHM(cuComplex, cublasCgemm_64, Matrix_Transpose_c32)
 
 }
