@@ -238,16 +238,20 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     } \
  \
     /* temporarily save the results (vl & vr) from CUDA */ \
-    size_t size_nn_matrix = (uint64_t)n*n*sizeof(real_type), size_vl_vr = 0; \
-    if (flag_left) size_vl_vr += size_nn_matrix; \
-    if (flag_right) size_vl_vr += size_nn_matrix; \
-    real_type *vl = (real_type*)malloc(size_vl_vr), *vr = (flag_left) ? vl + nn : vl; \
-    if (vl == NULL){ \
-        cudaFree(d_matrix); \
-        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for vl & vr.", __func__, size_nn); \
-        Madd_Error_Add(MADD_ERROR, error_info); \
-        return false; \
+    size_t size_vl_vr = 0; \
+    if (flag_left) size_vl_vr += size_nn; \
+    if (flag_right) size_vl_vr += size_nn; \
+    real_type *vl = NULL, *vr = NULL; \
+    if (size_vl_vr){ \
+        vl = (real_type*)malloc(size_vl_vr); \
+        vr = (flag_left) ? vl + nn : vl; \
+        if (vl == NULL){ \
+            cudaFree(d_matrix); \
+            wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for vl & vr.", __func__, size_nn); \
+            Madd_Error_Add(MADD_ERROR, error_info); \
+            return false; \
+        } \
     } \
     cudaMemcpy(eigenvalue, d_eigenvalue, size_n, cudaMemcpyDeviceToHost); \
     if (flag_left){ \
