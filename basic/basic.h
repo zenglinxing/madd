@@ -291,4 +291,47 @@ inline void Madd_Swap(void *a, void *b, size_t usize, void *temp)
     memcpy(b, temp, usize);
 }
 
+/* set 0 */
+inline void Madd_Set0(uint64_t n, double *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i] = 0;
+}
+
+inline void Madd_Set0_f32(uint64_t n, float *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i] = 0;
+}
+
+inline void Madd_Set0_fl(uint64_t n, long double *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i] = 0;
+}
+
+inline void Madd_Set0_c64(uint64_t n, Cnum *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
+}
+
+inline void Madd_Set0_c32(uint64_t n, Cnum32 *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
+}
+
+inline void Madd_Set0_cl(uint64_t n, Cnuml *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
+}
+
+#ifdef ENABLE_QUADPRECISION
+inline void Madd_Set0_f128(uint64_t n, __float128 *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i] = 0;
+}
+
+inline void Madd_Set0_c128(uint64_t n, Cnum128 *arr)
+{
+    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
+}
+#endif /* ENABLE_QUADPRECISION */
+
 #endif /* MADD_BASIC_H */
