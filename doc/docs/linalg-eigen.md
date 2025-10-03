@@ -46,3 +46,29 @@ bool Eigen_c64(int n, Cnum *matrix, Cnum *eigenvalue,
 If you only want the eigenvalues, you can set both `flag_left` and `flag_right` to be `false`.
 
 The *i*-th column (not row) of `eigenvector_left` and `eigenvector_right` corresponds to the eigenvector of *i*-th eigenvalue.
+
+CUDA 64-bit Function
+---
+
+Since CUDA 12.6, a new function `cusolverDnXgeev` is introduced, and it was the first time to solve a general matrix eigen problem via CUDA.
+
+*NOTE: at present,* `cusolverDnXgeev` *does not support the left eigenvector problem. So if you set* `flag_left=true`*, you will probably get an error, and the function will stop.*
+
+```C
+bool Eigen_cuda64(int64_t n, double *matrix,
+                  Cnum *eigenvalue,
+                  bool flag_left, Cnum *eigenvector_left,
+                  bool flag_right, Cnum *eigenvector_right);
+bool Eigen_cuda64_f32(int64_t n, float *matrix,
+                      Cnum32 *eigenvalue,
+                      bool flag_left, Cnum32 *eigenvector_left,
+                      bool flag_right, Cnum32 *eigenvector_right);
+bool Eigen_cuda64_c64(int64_t n, Cnum *matrix,
+                      Cnum *eigenvalue,
+                      bool flag_left, Cnum *eigenvector_left,
+                      bool flag_right, Cnum *eigenvector_right);
+bool Eigen_cuda64_c32(int64_t n, Cnum32 *matrix,
+                      Cnum32 *eigenvalue,
+                      bool flag_left, Cnum32 *eigenvector_left,
+                      bool flag_right, Cnum32 *eigenvector_right);
+```
