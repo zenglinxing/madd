@@ -32,6 +32,15 @@ if (ENABLE_CUDA)
     target_link_libraries(test_linalg-linear-equations-cuda PUBLIC madd ${OpenBLAS_LIBRARY})
     add_test(NAME Linalg-LinearEquations-CUDA
              COMMAND test_linalg-linear-equations-cuda)
+
+    # if CUDA >= 11.1, Linear_Equations_cuda64 is available
+    if (${CUDA_VERSION} VERSION_GREATER_EQUAL 11.1)
+        add_executable(test_linalg-linear-equations-cuda64 linalg/test/linear-equations-cuda64.c)
+        target_include_directories(test_linalg-linear-equations-cuda64 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+        target_link_libraries(test_linalg-linear-equations-cuda64 PUBLIC madd ${OpenBLAS_LIBRARY})
+        add_test(NAME Linalg-LinearEquations-CUDA64
+                COMMAND test_linalg-linear-equations-cuda64)
+    endif ()
 endif ()
 
 add_executable(test_linalg-matrix-multiply linalg/test/matrix-multiply.c)

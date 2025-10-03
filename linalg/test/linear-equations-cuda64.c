@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     printf("matrix B:\n");
     print_matrix(n, n_vec, BB);
 
-    Linear_Equations_cuda(n, AA, n_vec, BB);
+    Linear_Equations_cuda64(n, AA, n_vec, BB);
 
     printf("matrix A:\n");
     print_matrix(n, n, AA);

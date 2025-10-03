@@ -47,6 +47,11 @@ bool Linear_Equations_cuda_f32(int n, float *eq, int n_vector, float *vector);
 bool Linear_Equations_cuda_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
 bool Linear_Equations_cuda_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
 
+bool Linear_Equations_cuda64(int64_t n, double *matrix, int64_t n_vector, double *vector);
+bool Linear_Equations_cuda64_f32(int64_t n, float *matrix, int64_t n_vector, float *vector);
+bool Linear_Equations_cuda64_c64(int64_t n, Cnum *matrix, int64_t n_vector, Cnum *vector);
+bool Linear_Equations_cuda64_c32(int64_t n, Cnum32 *matrix, int64_t n_vector, Cnum32 *vector);
+
 /*
 ===============================================================================
 eigenvalue & eigenvector
@@ -85,5 +90,6 @@ cusolver error
 void Madd_cusolverDnCreate_error(int ret, const char *func_name);
 void Madd_cusolverDnSetStream_error(int ret, const char *func_name);
 void Madd_cusolverDnCreateParams_error(int ret, const char *func_name);
+void Madd_cusolverDnSetAdvOptions_error(int ret, const char *func_name);
 
 #endif /* MADD_LINALG_CUH */

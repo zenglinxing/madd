@@ -63,4 +63,18 @@ void Madd_cusolverDnCreateParams_error(int ret, const char *func_name)
     Madd_Error_Add(MADD_ERROR, error_info);
 }
 
+void Madd_cusolverDnSetAdvOptions_error(int ret, const char *func_name)
+{
+    if (ret == CUSOLVER_STATUS_SUCCESS) return;
+    wchar_t error_info[MADD_ERROR_INFO_LEN];
+    switch (ret){
+        case CUSOLVER_STATUS_INVALID_VALUE:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnSetAdvOptions (CUSOLVER_STATUS_INVALID_VALUE) Wrong combination of function and algo.", func_name);
+            break;
+        default:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnSetAdvOptions returns an error 0x%x that Madd doesn't know.", func_name, ret);
+    }
+    Madd_Error_Add(MADD_ERROR, error_info);
+}
+
 }
