@@ -72,18 +72,18 @@ void Madd_cuda_Device_Property_Destroy(Madd_cuda_Device_Properties dp)
     free(dp.devices);
 }
 
-void Madd_cudaMalloc_error(int ret, const char *func_name)
+void Madd_cudaMalloc_error(int ret, const char *func_name, size_t size_alloc, const char *var_name)
 {
     wchar_t error_info[MADD_ERROR_INFO_LEN];
     switch (ret){
         case cudaErrorInvalidValue:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorInvalidValue): one or more of the parameters passed to the API call is not within an acceptable range of values.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorInvalidValue) unable to allocate %llu bytes on CUDA GPU for variable '%hs': one or more of the parameters passed to the API call is not within an acceptable range of values.", func_name, size_alloc, var_name);
             break;
         case cudaErrorMemoryAllocation:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorMemoryAllocation): The API call failed because it was unable to allocate enough memory or other resources to perform the requested operation.", func_name);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorMemoryAllocation) unable to allocate %llu bytes on CUDA GPU for variable '%hs': The API call failed because it was unable to allocate enough memory or other resources to perform the requested operation.", func_name, size_alloc, var_name);
             break;
         default:
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc returns an error 0x%x that Madd doesn't know.", func_name, ret);
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc - unable to allocate %llu bytes on CUDA GPU for variable '%hs': returns an error 0x%x that Madd doesn't know.", func_name, size_alloc, var_name, ret);
     }
     Madd_Error_Add(MADD_ERROR, error_info);
 }

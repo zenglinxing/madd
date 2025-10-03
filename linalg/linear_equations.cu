@@ -82,7 +82,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     int *d_ipiv, *d_info; \
     cudaError_t ret_tmp = cudaMalloc(&d_temp_space, size_arr + size_vector + size_ipiv + size_info + size_vector); \
     if (ret_tmp != cudaSuccess){ \
-        Madd_cudaMalloc_error(ret_tmp, __func__); \
+        Madd_cudaMalloc_error(ret_tmp, __func__, size_arr + size_vector + size_ipiv + size_info + size_vector, "d_arr & d_vector & d_ipiv & d_info & d_result"); \
         return false; \
     } \
     d_arr = (double*)d_temp_space; \
@@ -134,7 +134,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     if (ret_work != cudaSuccess){ \
         cudaFree(d_temp_space); \
         cusolverDnDestroy(handle); \
-        Madd_cudaMalloc_error(ret_work, __func__); \
+        Madd_cudaMalloc_error(ret_work, __func__, lwork_bytes, "d_work"); \
         return false; \
     } \
  \

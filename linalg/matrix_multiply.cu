@@ -60,18 +60,21 @@ extern "C"{
     num_type *d_a, *d_b, *d_res; \
     cudaError_t cuda_malloc_a, cuda_malloc_b, cuda_malloc_res; \
     cuda_malloc_a = cudaMalloc(&d_a, size_a); \
-    if (cuda_malloc_a == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_a != cudaSuccess){ \
+        Madd_cudaMalloc_error(cuda_malloc_a, __func__, size_a, "d_a"); \
         return false; \
     } \
     cuda_malloc_b = cudaMalloc(&d_b, size_b); \
-    if (cuda_malloc_b == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_b != cudaSuccess){ \
         cudaFree(d_a); \
+        Madd_cudaMalloc_error(cuda_malloc_b, __func__, size_b, "d_b"); \
         return false; \
     } \
     cuda_malloc_res = cudaMalloc(&d_res, size_res); \
-    if (cuda_malloc_res == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_res != cudaSuccess){ \
         cudaFree(d_a); \
         cudaFree(d_b); \
+        Madd_cudaMalloc_error(cuda_malloc_res, __func__, size_res, "d_res"); \
         return false; \
     } \
     cudaMemcpy(d_a, a, size_a, cudaMemcpyHostToDevice); \
@@ -149,18 +152,21 @@ extern "C"{
     num_type *d_a, *d_b, *d_res; \
     cudaError_t cuda_malloc_a, cuda_malloc_b, cuda_malloc_res; \
     cuda_malloc_a = cudaMalloc(&d_a, size_a); \
-    if (cuda_malloc_a == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_a != cudaSuccess){ \
+        Madd_cudaMalloc_error(cuda_malloc_a, __func__, size_a, "d_a"); \
         return false; \
     } \
     cuda_malloc_b = cudaMalloc(&d_b, size_b); \
-    if (cuda_malloc_b == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_b != cudaSuccess){ \
         cudaFree(d_a); \
+        Madd_cudaMalloc_error(cuda_malloc_b, __func__, size_b, "d_b"); \
         return false; \
     } \
     cuda_malloc_res = cudaMalloc(&d_res, size_res); \
-    if (cuda_malloc_res == cudaErrorMemoryAllocation){ \
+    if (cuda_malloc_res != cudaSuccess){ \
         cudaFree(d_a); \
         cudaFree(d_b); \
+        Madd_cudaMalloc_error(cuda_malloc_res, __func__, size_res, "d_res"); \
         return false; \
     } \
     cudaMemcpy(d_a, a, size_a, cudaMemcpyHostToDevice); \

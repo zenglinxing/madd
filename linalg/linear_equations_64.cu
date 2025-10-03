@@ -92,7 +92,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     num_type *d_matrix, *d_vector; \
     cudaError_t error_matrix = cudaMalloc(&d_matrix, size_nn + size_nvec); \
     if (error_matrix != cudaSuccess){ \
-        Madd_cudaMalloc_error(error_matrix, __func__); \
+        Madd_cudaMalloc_error(error_matrix, __func__, size_nn + size_nvec, "d_matrix & d_vector"); \
         return false; \
     } \
     d_vector = d_matrix + (uint64_t)n * n; \
@@ -158,7 +158,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
         cudaFree(d_matrix); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
-        Madd_cudaMalloc_error(error_dev_buffer, __func__); \
+        Madd_cudaMalloc_error(error_dev_buffer, __func__, workspaceInBytesOnDevice, "bufferOnDevice"); \
         return false; \
     } \
     bufferOnHost = malloc(workspaceInBytesOnHost); \
@@ -183,7 +183,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
         cusolverDnDestroyParams(params); \
         cudaFree(bufferOnDevice); \
         free(bufferOnHost); \
-        Madd_cudaMalloc_error(error_ipiv, __func__); \
+        Madd_cudaMalloc_error(error_ipiv, __func__, (uint64_t)n*sizeof(int64_t) + sizeof(int), "d_ipiv"); \
         return false; \
     } \
     d_info = (int*)(d_ipiv + n); \

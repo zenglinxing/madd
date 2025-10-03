@@ -62,7 +62,7 @@ extern "C"{
     cufftDoubleComplex *d_arr; \
     cudaError_t ret_malloc = cudaMalloc(&d_arr, size_arr); \
     if (ret_malloc != cudaSuccess){ \
-        Madd_cudaMalloc_error(ret_malloc, __func__); \
+        Madd_cudaMalloc_error(ret_malloc, __func__, size_arr, "d_arr"); \
         return false; \
     } \
     cudaMemcpy(d_arr, arr, size_arr, cudaMemcpyHostToDevice); \

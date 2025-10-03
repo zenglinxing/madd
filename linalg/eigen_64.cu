@@ -111,7 +111,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     Cnum *d_eigenvalue, *d_eigenvector_left=NULL, *d_eigenvector_right=NULL; \
     cudaError_t error_matrix = cudaMalloc(&d_matrix, size_alloc); \
     if (error_matrix != cudaSuccess){ \
-        Madd_cusolverDnCreate_error(error_matrix, __func__); \
+        Madd_cudaMalloc_error(error_matrix, __func__, size_alloc, "d_matrix & d_eigenvalue, maybe d_eigenvector_left & d_eigenvector_right"); \
         return false; \
     } \
     d_eigenvalue = (Cnum*)(((real_type*)d_matrix + nn)); \
@@ -184,7 +184,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
         cudaFree(d_matrix); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
-        Madd_cudaMalloc_error(error_buffer_device, __func__); \
+        Madd_cudaMalloc_error(error_buffer_device, __func__, workspaceInBytesOnDevice + sizeof(int), "bufferOnDevice & d_info"); \
         return false; \
     } \
     bufferOnHost = malloc(workspaceInBytesOnHost); \
@@ -364,7 +364,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     Cnum *d_eigenvalue, *d_eigenvector_left=NULL, *d_eigenvector_right=NULL; \
     cudaError_t error_matrix = cudaMalloc(&d_matrix, size_alloc); \
     if (error_matrix != cudaSuccess){ \
-        Madd_cusolverDnCreate_error(error_matrix, __func__); \
+        Madd_cudaMalloc_error(error_matrix, __func__, size_alloc, "d_matrix & d_eigenvalue, maybe d_eigenvector_left & d_eigenvector_right"); \
         return false; \
     } \
     d_eigenvalue = (Cnum*)(d_matrix + nn); \
@@ -435,7 +435,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
         cudaFree(d_matrix); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
-        Madd_cudaMalloc_error(error_buffer_device, __func__); \
+        Madd_cudaMalloc_error(error_buffer_device, __func__, workspaceInBytesOnDevice + sizeof(int), "bufferOnDevice & d_info"); \
         return false; \
     } \
     bufferOnHost = malloc(workspaceInBytesOnHost); \
