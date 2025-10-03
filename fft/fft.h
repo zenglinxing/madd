@@ -71,6 +71,8 @@ bool Fast_Fourier_Transform_Radix2_Core_c128(uint64_t n_ceil, Cnum128 *arr, cons
 bool Fast_Fourier_Transform_Radix2_c128(uint64_t n, Cnum128 *arr, int fft_direction);
 #endif /* ENABLE_QUADPRECISION */
 
+bool Fast_Fourier_Transform_Bluestein(uint64_t n, Cnum *arr, int fft_direction);
+
 bool Discrete_Fourier_Transform_Naive(uint64_t n, Cnum *arr, int fft_direction);
 bool Discrete_Fourier_Transform_Naive_c32(uint32_t n, Cnum32 *arr, int fft_direction);
 bool Discrete_Fourier_Transform_Naive_cl(uint64_t n, Cnuml *arr, int fft_direction);

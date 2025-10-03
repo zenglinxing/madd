@@ -59,7 +59,7 @@ This file is part of Math Addition, in ./fft/fft.c
 
 bool Fast_Fourier_Transform(uint64_t n, Cnum *arr, int fft_direction)
 FFT__ALGORITHM(Fast_Fourier_Transform_Radix2, "Fast_Fourier_Transform_Radix2",
-               Discrete_Fourier_Transform_Naive, "Discrete_Fourier_Transform_Naive")
+               Fast_Fourier_Transform_Bluestein, "Fast_Fourier_Transform_Bluestein")
 
 bool Fast_Fourier_Transform_c32(uint32_t n, Cnum32 *arr, int fft_direction)
 FFT__ALGORITHM(Fast_Fourier_Transform_Radix2_c32, "Fast_Fourier_Transform_Radix2_c32",
