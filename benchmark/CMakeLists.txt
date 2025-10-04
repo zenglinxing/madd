@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(benchmark-madd
+    LANGUAGES CXX
+)
+message(STATUS "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+
+#option(ENABLE_CUDA "enable cuda func benchmark" OFF)
+if (ENABLE_CUDA)
+    enable_language(CUDA)
+endif ()
+
+find_package(benchmark REQUIRED)
+#find_package(madd REQUIRED)
+#find_package(OpenBLAS REQUIRED)
+
+add_executable(bench-rng rng.cpp)
+target_link_libraries(bench-rng PUBLIC benchmark::benchmark benchmark::benchmark_main madd)
+
+add_executable(bench-fft fft.cpp)
+target_link_libraries(bench-fft PUBLIC benchmark::benchmark benchmark::benchmark_main madd)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_link_libraries(bench-fft PUBLIC quadmath)
+endif()
+
+if (ENABLE_CUDA)
+    add_executable(bench-fft-cuda fft-cuda.cpp)
+    target_link_libraries(bench-fft-cuda PUBLIC benchmark::benchmark benchmark::benchmark_main madd cudart_static cublas cusolver cufft)
+endif ()
+
+add_executable(bench-linalg-eigen linalg-eigen.cpp)
+target_link_libraries(bench-linalg-eigen PUBLIC benchmark::benchmark benchmark::benchmark_main madd openblas)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_link_libraries(bench-linalg-eigen PUBLIC gfortran)
+endif()
+
+add_executable(bench-sort sort.cpp)
+target_link_libraries(bench-sort PUBLIC benchmark::benchmark benchmark::benchmark_main madd)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_link_libraries(bench-sort PUBLIC quadmath)
+endif()

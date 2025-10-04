@@ -68,6 +68,12 @@ option(BUILD_DOCUMENT "Build documentation." OFF)
 # test
 option(ENABLE_TEST "Enable test to check the functions work well." ON)
 
+# benchmark
+option(ENABLE_BENCHMARK "Benchmark the Madd functions. Requires Google Benchmark library." OFF)
+if (ENABLE_BENCHMARK)
+    find_package(benchmark REQUIRED)
+endif ()
+
 # =================================================================================================
 # configure the config.h
 # =================================================================================================
@@ -174,6 +180,11 @@ if (ENABLE_TEST)
         include(thread_base/test.cmake)
     endif ()
 endif()
+
+# =================================================================================================
+# benchmark
+# =================================================================================================
+add_subdirectory(benchmark)
 
 # =================================================================================================
 # install
