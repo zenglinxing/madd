@@ -82,6 +82,9 @@ void Madd_cudaMalloc_error(int ret, const char *func_name, size_t size_alloc, co
         case cudaErrorMemoryAllocation:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorMemoryAllocation) unable to allocate %llu bytes on CUDA GPU for variable '%hs': The API call failed because it was unable to allocate enough memory or other resources to perform the requested operation.", func_name, size_alloc, var_name);
             break;
+        case cudaErrorInsufficientDriver:
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc (cudaErrorInsufficientDriver) unable to allocate %llu bytes on CUDA GPU for variable '%hs': This indicates that the installed NVIDIA CUDA driver is older than the CUDA runtime library. This is not a supported configuration. Users should install an updated NVIDIA display driver to allow the application to run.", func_name, size_alloc, var_name);
+            break;
         default:
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cudaMalloc - unable to allocate %llu bytes on CUDA GPU for variable '%hs': returns an error 0x%x that Madd doesn't know.", func_name, size_alloc, var_name, ret);
     }

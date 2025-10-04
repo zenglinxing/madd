@@ -1,7 +1,7 @@
 add_executable(test_linalg-eigen linalg/test/eigen.c)
 target_include_directories(test_linalg-eigen PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_linalg-eigen PUBLIC madd ${OpenBLAS_LIBRARY})
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(test_linalg-eigen PUBLIC gfortran)
 endif()
 add_test(NAME Linalg-Eigen
@@ -11,8 +11,8 @@ if (ENABLE_CUDA)
     if (${CUDA_VERSION} VERSION_GREATER_EQUAL 12.6)
         add_executable(test_linalg-eigen-cuda linalg/test/eigen-cuda.c)
         target_include_directories(test_linalg-eigen-cuda PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-        target_link_libraries(test_linalg-eigen-cuda PUBLIC madd ${OpenBLAS_LIBRARY})
-        if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+        target_link_libraries(test_linalg-eigen-cuda PUBLIC madd ${OpenBLAS_LIBRARY} cudart_static)
+        if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
             target_link_libraries(test_linalg-eigen-cuda PUBLIC gfortran)
         endif()
         add_test(NAME Linalg-Eigen-CUDA
@@ -29,7 +29,7 @@ add_test(NAME Linalg-LinearEquations
 if (ENABLE_CUDA)
     add_executable(test_linalg-linear-equations-cuda linalg/test/linear-equations-cuda.c)
     target_include_directories(test_linalg-linear-equations-cuda PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-    target_link_libraries(test_linalg-linear-equations-cuda PUBLIC madd ${OpenBLAS_LIBRARY})
+    target_link_libraries(test_linalg-linear-equations-cuda PUBLIC madd ${OpenBLAS_LIBRARY} cudart_static)
     add_test(NAME Linalg-LinearEquations-CUDA
              COMMAND test_linalg-linear-equations-cuda)
 
@@ -37,7 +37,7 @@ if (ENABLE_CUDA)
     if (${CUDA_VERSION} VERSION_GREATER_EQUAL 11.1)
         add_executable(test_linalg-linear-equations-cuda64 linalg/test/linear-equations-cuda64.c)
         target_include_directories(test_linalg-linear-equations-cuda64 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-        target_link_libraries(test_linalg-linear-equations-cuda64 PUBLIC madd ${OpenBLAS_LIBRARY})
+        target_link_libraries(test_linalg-linear-equations-cuda64 PUBLIC madd ${OpenBLAS_LIBRARY} cudart_static)
         add_test(NAME Linalg-LinearEquations-CUDA64
                 COMMAND test_linalg-linear-equations-cuda64)
     endif ()
