@@ -109,6 +109,26 @@ int test_inverse_property() {
     return compare_arrays("Inverse Property", original, reconstructed, n, TOLERANCE);
 }
 
+int test_dct2_non_power_of_2_inverse()
+{
+    printf("Test Non-Power-of-2 Length DCT2 Reverse\n");
+    uint64_t n = 13, i;
+    size_t size_n = n * sizeof(double);
+    double *arr = (double*)malloc(size_n);
+    double *iarr = (double*)malloc(size_n);
+    double *rarr = (double*)malloc(size_n);
+    RNG_Param rng = RNG_Init(10, 0);
+    for (i=0; i<n; i++){
+        arr[i] = iarr[i] = Rand(&rng);
+    }
+    Discrete_Cosine_Transform_2(n, iarr);
+    memcpy(rarr, iarr, size_n);
+    Inverse_Discrete_Cosine_Transform_2(n, rarr);
+
+    int compare_res = compare_arrays("Test Non-Power-of-2", arr, rarr, n, 1e-6);
+    return compare_res;
+}
+
 int main() {
     int test_results = PASSED;
     
