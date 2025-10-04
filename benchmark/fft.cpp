@@ -58,4 +58,9 @@ FFT_TEST(Cnum32, Rand_f32, Fast_Fourier_Transform_cuda_c32)
 BENCHMARK(fft_cuda_c32)->Apply(Custom_FFT_Input);
 #endif /* ENABLE_CUDA */
 
+static void fft_bluestein_c64(benchmark::State& state)
+FFT_TEST(Cnum, Rand, Fast_Fourier_Transform_Bluestein)
+
+BENCHMARK(fft_bluestein_c64)->Apply(Custom_FFT_Input);
+
 BENCHMARK_MAIN();
