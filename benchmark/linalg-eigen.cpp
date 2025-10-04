@@ -5,11 +5,13 @@
 #include<benchmark/benchmark.h>
 #include"../madd.h"
 
+#define N_LEN 4
+int64_t lengths[N_LEN] = {1e1, 5e1, 1e2, 1e3};
+
 static void Custom_Eigen_Input(benchmark::internal::Benchmark* b)
 {
-    for (int64_t i=0; i<3; i++){
-        int64_t len = (int64_t)pow(10, i+1);
-        b->Args({len});
+    for (int64_t i=0; i<4; i++){
+        b->Args({lengths[i]});
     }
 }
 
@@ -81,5 +83,27 @@ static void eigen_c32(benchmark::State& state)
 EIGEN_CNUM_BENCH(Cnum32, Eigen_c32)
 
 BENCHMARK(eigen_c32)->Apply(Custom_Eigen_Input);
+
+#ifdef CUDA_12_6
+static void eigen_cuda_f64(benchmark::State& state)
+EIGEN_BENCH(double, Cnum, Eigen_cuda64)
+
+BENCHMARK(eigen_cuda_f64)->Apply(Custom_Eigen_Input);
+
+static void eigen_cuda_f32(benchmark::State& state)
+EIGEN_BENCH(float, Cnum32, Eigen_cuda64_f32)
+
+BENCHMARK(eigen_cuda_f32)->Apply(Custom_Eigen_Input);
+
+static void eigen_cuda_c64(benchmark::State& state)
+EIGEN_CNUM_BENCH(Cnum, Eigen_cuda64_c64)
+
+BENCHMARK(eigen_cuda_c64)->Apply(Custom_Eigen_Input);
+
+static void eigen_cuda_c32(benchmark::State& state)
+EIGEN_CNUM_BENCH(Cnum32, Eigen_cuda64_c32)
+
+BENCHMARK(eigen_cuda_c32)->Apply(Custom_Eigen_Input);
+#endif /* CUDA_12_6 */
 
 BENCHMARK_MAIN();
