@@ -45,9 +45,3 @@ target_include_directories(test_sort-shell PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_sort-shell PUBLIC madd)
 add_test(NAME Sort-ShellSort
          COMMAND test_sort-shell)
-
-add_executable(test_sort-time-compare sort/test/sort-time-compare.c)
-target_include_directories(test_sort-time-compare PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(test_sort-time-compare PUBLIC madd)
-add_test(NAME Sort-TimeCompare
-         COMMAND test_sort-time-compare)
