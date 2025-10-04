@@ -6,7 +6,7 @@
 #include"../madd.h"
 
 #define N_LEN 4
-int64_t lengths[N_LEN] = {1e1, 5e1, 1e2, 1e3};
+int64_t lengths[N_LEN] = {(uint64_t)1e1, (uint64_t)5e1, (uint64_t)1e2, (uint64_t)1e3};
 
 static void Custom_Eigen_Input(benchmark::internal::Benchmark* b)
 {
