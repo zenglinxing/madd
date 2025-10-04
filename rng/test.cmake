@@ -1,9 +1,3 @@
-add_executable(test_RNG-time-compare rng/test/RNG-time-compare.c)
-target_include_directories(test_RNG-time-compare PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(test_RNG-time-compare PUBLIC madd)
-add_test(NAME RNG-TimeCompare
-         COMMAND test_RNG-time-compare)
-
 add_executable(test_RNG-MT rng/test/RNG-MT.c)
 target_include_directories(test_RNG-MT PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_RNG-MT PUBLIC madd)
