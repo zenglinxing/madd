@@ -14,15 +14,24 @@ This project is built upon `CMake` and supports modern compilers, like GNU GCC, 
 Dependencies & Requirements
 ---
 
+Required:
+
 * C & C++ compiler (at least C99 support)
-* [CMake](https://cmake.org)
-* [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS)
+* [CMake](https://cmake.org) - Building system of Madd.
+* [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) - For linear algebra computations.
+
+Optional:
+
+* [CUDAToolkit](https://developer.nvidia.com/cuda-toolkit) - For some cuda functions.
+* [Benchmark](https://github.com/google/benchmark) - Google benchmark
 
 Your machine should be binary 64-bit, supporting 64-bit float number (double precision).
 
 Third-Parties Licences
 ---
 
-1. [OpenBLAS](https://www.openblas.net) - BSD-3
+1. OpenBLAS - [BSD-3](https://opensource.org/licenses/BSD-3-Clause)
 
-https://opensource.org/licenses/BSD-3-Clause
+2. CUDAToolkit - [NVIDIA End User License Agreement](https://docs.nvidia.com/cuda/eula/index.html)
+
+3. Benchmark - [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)

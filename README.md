@@ -5,7 +5,7 @@ Author: Lin-Xing Zeng
 
 Email:  jasonphysics@outlook.com | zenglinxing@petalmail.com
 
-Open Source License: MIT
+Open Source License: [MIT](https://mit-license.org/)
 
 Introduction
 ---
