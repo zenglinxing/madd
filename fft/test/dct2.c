@@ -111,7 +111,7 @@ int test_inverse_property() {
 
 int test_dct2_non_power_of_2_inverse()
 {
-    printf("Test Non-Power-of-2 Length DCT2 Reverse\n");
+    //printf("Test Non-Power-of-2 Length DCT2 Reverse\n");
     uint64_t n = 13, i;
     size_t size_n = n * sizeof(double);
     double *arr = (double*)malloc(size_n);
@@ -125,7 +125,7 @@ int test_dct2_non_power_of_2_inverse()
     memcpy(rarr, iarr, size_n);
     Inverse_Discrete_Cosine_Transform_2(n, rarr);
 
-    int compare_res = compare_arrays("Test Non-Power-of-2", arr, rarr, n, 1e-6);
+    int compare_res = compare_arrays("Test Non-Power-of-2 (n=13)", arr, rarr, n, 1e-6);
     return compare_res;
 }
 
@@ -140,6 +140,7 @@ int main() {
     test_results |= test_simple_vector();
     test_results |= test_single_element();
     test_results |= test_inverse_property();
+    test_results |= test_dct2_non_power_of_2_inverse();
     
     printf("\nTest Summary:\n");
     if (test_results == PASSED) {

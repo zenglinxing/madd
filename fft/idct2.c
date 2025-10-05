@@ -51,10 +51,10 @@ Inverse Discrete Cosine Transform (DCT-II)
     for (uint64_t i=1; i<n; i++){ \
         real_type angle = i *angle_base; \
         x[i].real = x[m - i].real = arr[i] * cos(angle); \
-        x[i].imag = arr[i] * sin(angle); \
+        x[i].imag = - arr[i] * sin(angle); \
         x[m - i].imag = - x[i].imag; \
     } \
-    bool flag_fft = Fast_Fourier_Transform(m, x, MADD_FFT_INVERSE); \
+    bool flag_fft = Fast_Fourier_Transform(m, x, MADD_FFT_FORWARD); \
     if (!flag_fft){ \
         free(x); \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -63,7 +63,7 @@ Inverse Discrete Cosine Transform (DCT-II)
         return false; \
     } \
  \
-    real_type scale = sqrt((real_type)2 * n); \
+    real_type scale = 1 / sqrt((real_type)2 * n); \
     for (uint64_t i=0; i<n; i++){ \
         arr[i] = scale * x[i].real; \
     } \
