@@ -8,6 +8,7 @@ This file is part of Math Addition, in ./linalg/determinant.c
 #include<stdlib.h>
 #include<stdint.h>
 #include<stdbool.h>
+#define HAVE_LAPACK_CONFIG_H
 #include<lapacke.h>
 #include"linalg.h"
 #include"../basic/basic.h"
