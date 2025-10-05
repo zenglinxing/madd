@@ -172,7 +172,7 @@ EIGEN_REAL__ALGORITHM(Cnum32, float, LAPACKE_sgeev, Matrix_Transpose_f32)
         if (info < 0){ \
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the %d-th argument had an illegal value.", __func__, -info); \
         }else{ \
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the QR algorithm failed to compute all the eigenvalues, and no eigenvectors have been computed; elements %d+1:N of W contain eigenvalues which have converged.", __func__, info); \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the QR algorithm failed to compute all the eigenvalues, and no eigenvectors have been computed; elements %d:N of W contain eigenvalues which have converged.", __func__, info+1); \
         } \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \

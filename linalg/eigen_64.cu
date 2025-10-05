@@ -231,7 +231,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
         if (info < 0){ \
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnXgeev (info < 0) the %d-th parameter is wrong (not counting handle).", __func__, -info); \
         }else{ \
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnXgeev (info > 0) the QR algorithm failed to compute all the eigenvalues and no eigenvectors have been computed; elements %d+1:n of W contain eigenvalues which have converged.", __func__, info); \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: cusolverDnXgeev (info > 0) the QR algorithm failed to compute all the eigenvalues and no eigenvectors have been computed; elements %d:n of W contain eigenvalues which have converged.", __func__, info+1); \
         } \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \

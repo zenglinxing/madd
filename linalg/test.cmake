@@ -7,6 +7,15 @@ endif()
 add_test(NAME Linalg-Eigen
          COMMAND test_linalg-eigen)
 
+add_executable(test_linalg-generalized-eigen linalg/test/eigen-generalized.c)
+target_include_directories(test_linalg-generalized-eigen PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_linalg-generalized-eigen PUBLIC madd ${OpenBLAS_LIBRARY})
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(test_linalg-generalized-eigen PUBLIC gfortran)
+endif()
+add_test(NAME Linalg-GeneralizedEigen
+         COMMAND test_linalg-generalized-eigen)
+
 if (ENABLE_CUDA)
     if (${CUDA_VERSION} VERSION_GREATER_EQUAL 12.6)
         add_executable(test_linalg-eigen-cuda linalg/test/eigen-cuda.c)

@@ -113,6 +113,23 @@ bool Eigen_c32(int n, Cnum32 *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right);
 
+bool Generalized_Eigen(int n, double *matrix_A, double *matrix_B,
+                       Cnum *eigenvalue,
+                       bool flag_left, Cnum *eigenvector_left,
+                       bool flag_right, Cnum *eigenvector_right);
+bool Generalized_Eigen_f32(int n, float *matrix_A, float *matrix_B,
+                           Cnum32 *eigenvalue,
+                           bool flag_left, Cnum32 *eigenvector_left,
+                           bool flag_right, Cnum32 *eigenvector_right);
+bool Generalized_Eigen_c64(int n, Cnum *matrix_A, Cnum *matrix_B,
+                           Cnum *eigenvalue,
+                           bool flag_left, Cnum *eigenvector_left,
+                           bool flag_right, Cnum *eigenvector_right);
+bool Generalized_Eigen_c32(int n, Cnum32 *matrix_A, Cnum32 *matrix_B,
+                           Cnum32 *eigenvalue,
+                           bool flag_left, Cnum32 *eigenvector_left,
+                           bool flag_right, Cnum32 *eigenvector_right);
+
 /*
 ===============================================================================
 determinant
