@@ -48,3 +48,12 @@ target_include_directories(test_linalg-matrix-multiply PUBLIC ${CMAKE_CURRENT_SO
 target_link_libraries(test_linalg-matrix-multiply PUBLIC madd ${OpenBLAS_LIBRARY})
 add_test(NAME Linalg-MatrixMultiply
          COMMAND test_linalg-matrix-multiply)
+
+add_executable(test_linalg-determinant linalg/test/determinant.c)
+target_include_directories(test_linalg-determinant PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_linalg-determinant PUBLIC madd ${OpenBLAS_LIBRARY})
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(test_linalg-determinant PUBLIC gfortran)
+endif()
+add_test(NAME Linalg-Determinant
+         COMMAND test_linalg-determinant)

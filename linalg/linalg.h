@@ -113,4 +113,27 @@ bool Eigen_c32(int n, Cnum32 *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right);
 
+/*
+===============================================================================
+determinant
+===============================================================================
+*/
+bool Determinant(int n, double *matrix, double *res);
+bool Determinant_f32(int n, float *matrix, float *res);
+bool Determinant_c64(int n, Cnum *matrix, Cnum *res);
+bool Determinant_c32(int n, Cnum32 *matrix, Cnum32 *res);
+
+bool Determinant_Bareiss(uint64_t n, double *mat, double *res);
+bool Determinant_Bareiss_f32(uint64_t n, float *mat, float *res);
+bool Determinant_Bareiss_fl(uint64_t n, long double *mat, long double *res);
+#ifdef ENABLE_QUADPRECISION
+bool Determinant_Bareiss_f128(uint64_t n, __float128 *mat, __float128 *res);
+#endif /* ENABLE_QUADPRECISION */
+bool Determinant_Bareiss_c64(uint64_t n, Cnum *mat, Cnum *res);
+bool Determinant_Bareiss_c32(uint64_t n, Cnum32 *mat, Cnum32 *res);
+bool Determinant_Bareiss_cl(uint64_t n, Cnuml *mat, Cnuml *res);
+#ifdef ENABLE_QUADPRECISION
+bool Determinant_Bareiss_c128(uint64_t n, Cnum128 *mat, Cnum128 *res);
+#endif /* ENABLE_QUADPRECISION */
+
 #endif /* MADD_LINALG_H */
