@@ -115,6 +115,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cusolverStatus_t status_create = cusolverDnCreate(&handle); \
     if (status_create != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         Madd_cusolverDnCreate_error(status_create, __func__); \
         return false; \
     } \
@@ -124,6 +125,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cusolverStatus_t ret_create_params = cusolverDnCreateParams(&params); \
     if (ret_create_params != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         Madd_cusolverDnCreateParams_error(ret_create_params, __func__); \
         return false; \
@@ -131,6 +133,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cusolverStatus_t ret_set_params = cusolverDnSetAdvOptions(params, CUSOLVERDN_GETRF, CUSOLVER_ALG_0); \
     if (ret_set_params != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         Madd_cusolverDnSetAdvOptions_error(ret_set_params, __func__); \
@@ -147,6 +150,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cudaStreamSynchronize(stream); \
     if (ret_trf_buffer != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         Madd_cusolverDnXgetrf_error(ret_trf_buffer, __func__); \
@@ -156,6 +160,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cudaError_t error_dev_buffer = cudaMalloc(&bufferOnDevice, workspaceInBytesOnDevice); \
     if (error_dev_buffer != cudaSuccess){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         Madd_cudaMalloc_error(error_dev_buffer, __func__, workspaceInBytesOnDevice, "bufferOnDevice"); \
@@ -164,6 +169,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     bufferOnHost = malloc(workspaceInBytesOnHost); \
     if (workspaceInBytesOnHost && bufferOnHost){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         cudaFree(bufferOnDevice); \
@@ -179,6 +185,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cudaError_t error_ipiv = cudaMalloc(&d_ipiv, (uint64_t)n*sizeof(int64_t) + sizeof(int)); \
     if (error_ipiv != cudaSuccess){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         cudaFree(bufferOnDevice); \
@@ -197,6 +204,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cudaStreamSynchronize(stream); \
     if (ret_getrf != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         cudaFree(bufferOnDevice); \
@@ -216,6 +224,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
     cudaStreamSynchronize(stream); \
     if (ret_getrs != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         cudaFree(bufferOnDevice); \
@@ -240,6 +249,7 @@ static inline void Madd_cusolverDnXgetrs_error(cusolverStatus_t ret, const char 
  \
     cusolverDnDestroyParams(params); \
     cudaFree(d_matrix); \
+    cudaStreamDestroy(stream); \
     cudaFree(bufferOnDevice); \
     cudaFree(d_ipiv); \
     free(bufferOnHost); \

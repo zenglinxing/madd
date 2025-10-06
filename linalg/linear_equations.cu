@@ -125,6 +125,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     if (status_buffersize != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_temp_space); \
         cusolverDnDestroy(handle); \
+        cudaStreamDestroy(stream); \
         printf("unable to get buffer size\n"); \
         return false; \
     } \
@@ -134,6 +135,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     if (ret_work != cudaSuccess){ \
         cudaFree(d_temp_space); \
         cusolverDnDestroy(handle); \
+        cudaStreamDestroy(stream); \
         Madd_cudaMalloc_error(ret_work, __func__, lwork_bytes, "d_work"); \
         return false; \
     } \
@@ -149,6 +151,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
         cudaFree(d_temp_space); \
         cudaFree(d_work); \
         cusolverDnDestroy(handle); \
+        cudaStreamDestroy(stream); \
         solver_error(status_solve, __func__, cusolverDnDDgesv_func_name); \
         return false; \
     } \
@@ -162,6 +165,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
         cudaFree(d_temp_space); \
         cudaFree(d_work); \
         cusolverDnDestroy(handle); \
+        cudaStreamDestroy(stream); \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         if (info < 0){ \
             swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: the %d-th argument had an illegal value.", __func__, -info); \
@@ -175,6 +179,7 @@ static void solver_error(cusolverStatus_t ret, const char *func_name, const char
     cudaFree(d_temp_space); \
     cudaFree(d_work); \
     cusolverDnDestroy(handle); \
+    cudaStreamDestroy(stream); \
     return true; \
 } \
 

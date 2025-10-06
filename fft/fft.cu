@@ -53,6 +53,7 @@ extern "C"{
     cudaError_t ret_stream_create = cudaStreamCreate(&stream); \
     if (ret_stream_create != cudaSuccess){ \
         Madd_cudaSetStream_error(ret_stream_create, __func__); \
+        cufftDestroy(handle); \
         return false; \
     } \
     cufftSetStream(handle, stream); \
@@ -63,6 +64,8 @@ extern "C"{
     cudaError_t ret_malloc = cudaMalloc(&d_arr, size_arr); \
     if (ret_malloc != cudaSuccess){ \
         Madd_cudaMalloc_error(ret_malloc, __func__, size_arr, "d_arr"); \
+        cudaStreamDestroy(stream); \
+        cufftDestroy(handle); \
         return false; \
     } \
     cudaMemcpy(d_arr, arr, size_arr, cudaMemcpyHostToDevice); \
@@ -71,11 +74,14 @@ extern "C"{
     cufftResult ret_exec = cufftExecZ2Z(handle, d_arr, d_arr, cufft_direction); \
     if (ret_exec != CUFFT_SUCCESS){ \
         Madd_cufftExec_error(ret_exec, __func__, "cufftExecZ2Z"); \
+        cudaStreamDestroy(stream); \
+        cufftDestroy(handle); \
         cudaFree(d_arr); \
         return false; \
     } \
     cudaStreamSynchronize(stream); \
     cufftDestroy(handle); \
+    cudaStreamDestroy(stream); \
  \
     cudaMemcpy(arr, d_arr, size_arr, cudaMemcpyDeviceToHost); \
     cudaFree(d_arr); \

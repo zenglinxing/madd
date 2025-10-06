@@ -99,6 +99,7 @@ extern "C"{
  \
     cudaMemcpy(res, d_res, size_res, cudaMemcpyDeviceToHost); \
     cublasDestroy(handle); \
+    cudaStreamDestroy(stream); \
     cudaFree(d_a); \
     cudaFree(d_b); \
     cudaFree(d_res); \
@@ -193,6 +194,7 @@ extern "C"{
  \
     cudaMemcpy(res, d_res, size_res, cudaMemcpyDeviceToHost); \
     cublasDestroy(handle); \
+    cudaStreamDestroy(stream); \
     cudaFree(d_a); \
     cudaFree(d_b); \
     cudaFree(d_res); \

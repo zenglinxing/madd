@@ -140,6 +140,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     cusolverStatus_t status_create = cusolverDnCreate(&handle); \
     if (status_create != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         Madd_cusolverDnCreate_error(status_create, __func__); \
         return false; \
     } \
@@ -150,6 +151,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     int64_t lda = n, ldvl = n, ldvr = n; \
     if (ret_create_params != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         Madd_cusolverDnCreateParams_error(ret_create_params, __func__); \
         return false; \
@@ -172,6 +174,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     cudaStreamSynchronize(stream); \
     if (ret_buffer != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         buffer_func_error(ret_buffer, __func__); \
@@ -182,6 +185,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     cudaError_t error_buffer_device = cudaMalloc(&bufferOnDevice, workspaceInBytesOnDevice + sizeof(int)); \
     if (error_buffer_device != cudaSuccess){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         Madd_cudaMalloc_error(error_buffer_device, __func__, workspaceInBytesOnDevice + sizeof(int), "bufferOnDevice & d_info"); \
@@ -190,8 +194,8 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     bufferOnHost = malloc(workspaceInBytesOnHost); \
     if (bufferOnHost == NULL){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cudaFree(bufferOnDevice); \
-        free(bufferOnHost); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -215,6 +219,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
     cudaStreamSynchronize(stream); \
     cudaMemcpy(&info, d_info, sizeof(int), cudaMemcpyDeviceToHost); \
     /* here free some mem first */ \
+    cudaStreamDestroy(stream); \
     cudaFree(bufferOnDevice); \
     free(bufferOnHost); \
     cusolverDnDestroy(handle); \
@@ -298,7 +303,7 @@ static inline void Xgeev_error(cusolverStatus_t ret, const char *func_name)
  \
     /* here the second time to free */ \
     cudaFree(d_matrix); \
-    free(vl); \
+    if (size_vl_vr) free(vl); \
     return true; \
 } \
 
@@ -391,6 +396,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     cusolverStatus_t status_create = cusolverDnCreate(&handle); \
     if (status_create != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         Madd_cusolverDnCreate_error(status_create, __func__); \
         return false; \
     } \
@@ -401,6 +407,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     int64_t lda = n, ldvl = n, ldvr = n; \
     if (ret_create_params != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         Madd_cusolverDnCreateParams_error(ret_create_params, __func__); \
         return false; \
@@ -423,6 +430,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     cudaStreamSynchronize(stream); \
     if (ret_buffer != CUSOLVER_STATUS_SUCCESS){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         buffer_func_error(ret_buffer, __func__); \
@@ -433,6 +441,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     cudaError_t error_buffer_device = cudaMalloc(&bufferOnDevice, workspaceInBytesOnDevice + sizeof(int)); \
     if (error_buffer_device != cudaSuccess){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
         Madd_cudaMalloc_error(error_buffer_device, __func__, workspaceInBytesOnDevice + sizeof(int), "bufferOnDevice & d_info"); \
@@ -441,6 +450,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     bufferOnHost = malloc(workspaceInBytesOnHost); \
     if (bufferOnHost == NULL){ \
         cudaFree(d_matrix); \
+        cudaStreamDestroy(stream); \
         cudaFree(bufferOnDevice); \
         cusolverDnDestroy(handle); \
         cusolverDnDestroyParams(params); \
@@ -465,6 +475,7 @@ EIGEN_CUDA64__ALGORITHM(Cnum32, float, Matrix_Transpose_f32, CUDA_R_32F, CUDA_C_
     cudaStreamSynchronize(stream); \
     cudaMemcpy(&info, d_info, sizeof(int), cudaMemcpyDeviceToHost); \
     /* here free some mem first */ \
+    cudaStreamDestroy(stream); \
     cudaFree(bufferOnDevice); \
     free(bufferOnHost); \
     cusolverDnDestroy(handle); \
