@@ -66,3 +66,14 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES
 endif()
 add_test(NAME Linalg-Determinant
          COMMAND test_linalg-determinant)
+
+if (ENABLE_CUDA)
+    add_executable(test_linalg-determinant-cuda linalg/test/determinant-cuda.c)
+    target_include_directories(test_linalg-determinant-cuda PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    target_link_libraries(test_linalg-determinant-cuda PUBLIC madd ${OpenBLAS_LIBRARY})
+    if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
+        target_link_libraries(test_linalg-determinant-cuda PUBLIC gfortran)
+    endif()
+    add_test(NAME Linalg-Determinant-CUDA
+            COMMAND test_linalg-determinant-cuda)
+endif ()

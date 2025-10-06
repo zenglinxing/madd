@@ -76,6 +76,16 @@ bool Eigen_cuda64_c32(int64_t n, Cnum32 *matrix,
 
 /*
 ===============================================================================
+determinant
+===============================================================================
+*/
+bool Determinant_cuda(int n, double *matrix, double *res);
+bool Determinant_cuda_f32(int n, float *matrix, float *res);
+bool Determinant_cuda_c64(int n, Cnum *matrix, Cnum *res);
+bool Determinant_cuda_c32(int n, Cnum32 *matrix, Cnum32 *res);
+
+/*
+===============================================================================
 cublas error
 ===============================================================================
 */

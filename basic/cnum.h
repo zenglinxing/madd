@@ -42,9 +42,15 @@ typedef struct{
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Add(Cnum a, Cnum b)
 CNUM_ADD__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Add_c32(Cnum32 a, Cnum32 b)
 CNUM_ADD__ALGORITHM(Cnum32)
 
@@ -64,9 +70,15 @@ CNUM_ADD__ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Sub(Cnum a, Cnum b)
 CNUM_SUB__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Sub_c32(Cnum32 a, Cnum32 b)
 CNUM_SUB__ALGORITHM(Cnum32)
 
@@ -86,9 +98,15 @@ CNUM_SUB__ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Mul(Cnum a, Cnum b)
 CNUM_MUL__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Mul_c32(Cnum32 a, Cnum32 b)
 CNUM_MUL__ALGORITHM(Cnum32)
 
@@ -108,9 +126,15 @@ CNUM_MUL__ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Mul_Real(Cnum a, double b)
 CNUM_MUL_REAL_ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Mul_Real_c32(Cnum32 a, float b)
 CNUM_MUL_REAL_ALGORITHM(Cnum32)
 
@@ -131,9 +155,15 @@ CNUM_MUL_REAL_ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Div(Cnum a, Cnum b)
 CNUM_DIV__ALGORITHM(Cnum, double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Div_c32(Cnum32 a, Cnum32 b)
 CNUM_DIV__ALGORITHM(Cnum32, float)
 
@@ -153,9 +183,15 @@ CNUM_DIV__ALGORITHM(Cnum128, __float128)
     return num; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Value(double real, double imag)
 CNUM_VALUE__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Value_c32(float real, float imag)
 CNUM_VALUE__ALGORITHM(Cnum32)
 
@@ -173,9 +209,15 @@ CNUM_VALUE__ALGORITHM(Cnum128)
     return flag_real && flag_imag; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline bool Cnum_Eq(Cnum a, Cnum b)
 CNUM_IS_EQUAL__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline bool Cnum_Eq_c32(Cnum32 a, Cnum32 b)
 CNUM_IS_EQUAL__ALGORITHM(Cnum32)
 
@@ -195,9 +237,15 @@ CNUM_IS_EQUAL__ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Div_Real(Cnum a, double b)
 CNUM_DIV_REAL__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Div_Real_c32(Cnum32 a, float b)
 CNUM_DIV_REAL__ALGORITHM(Cnum32)
 
@@ -218,9 +266,15 @@ CNUM_DIV_REAL__ALGORITHM(Cnum128)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Real_Div_Cnum(double a, Cnum b)
 CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum, double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Real_Div_Cnum_c32(float a, Cnum32 b)
 CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum32, float)
 
@@ -238,9 +292,15 @@ CNUM_REAL_DIV_CNUM__ALGORITHM(Cnum128, __float128)
     return real2+imag2; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline double Cnum_Mod2(Cnum a)
 CNUM_MOD2__ALGORITHM(double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline float Cnum_Mod2_c32(Cnum32 a)
 CNUM_MOD2__ALGORITHM(float)
 
@@ -263,9 +323,15 @@ Cnum_Dot(x1 + x2 i, x3 + x4 i) => (x1 - x2 i) * (x3 + x4 i)
     return c; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Dot(Cnum a, Cnum b)
 CNUM_DOT__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Dot_c32(Cnum32 a, Cnum32 b)
 CNUM_DOT__ALGORITHM(Cnum32)
 
@@ -285,9 +351,15 @@ CNUM_DOT__ALGORITHM(Cnum128)
     return b; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Conj(Cnum a)
 CNUM_CONJ__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Conj_c32(Cnum32 a)
 CNUM_CONJ__ALGORITHM(Cnum32)
 
@@ -305,9 +377,15 @@ CNUM_CONJ__ALGORITHM(Cnum128)
     return sqrt(radius2); \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline double Cnum_Radius(Cnum a)
 CNUM_RADIUS__ALGORITHM(double, sqrt)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline float Cnum_Radius_c32(Cnum32 a)
 CNUM_RADIUS__ALGORITHM(float, sqrtf)
 
@@ -324,9 +402,15 @@ CNUM_RADIUS__ALGORITHM(__float128, sqrtq)
     return atan2(a.imag, a.real); \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline double Cnum_Angle(Cnum a)
 CNUM_ANGLE__ALGORITHM(atan2)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline float Cnum_Angle_c32(Cnum32 a)
 CNUM_ANGLE__ALGORITHM(atan2f)
 
@@ -346,9 +430,15 @@ CNUM_ANGLE__ALGORITHM(atan2q)
     return cnum; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Cnum_Pole(double radius, double angle)
 CNUM_POLE__ALGORITHM(Cnum, cos, sin)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Cnum_Pole_c32(float radius, float angle)
 CNUM_POLE__ALGORITHM(Cnum32, cosf, sinf)
 
