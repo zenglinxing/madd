@@ -22,6 +22,7 @@ Apart from common options `-DCMAKE_BUILD_TYPE=Release` and `-DCMAKE_INSTALL_PREF
 
 | options | Default | Description | 
 | :------ | :-----: | :---------- |
+| `-DENABLE_BENCHMARK` | OFF | Build benchmark code. Requires benchmark library by Google |
 | `-DENABLE_CUDA` | OFF | Build CUDA functions |
 | `-DCMAKE_CUDA_ARCHITECTURES` | 86 | CUDA architecures code. This variable should refer to<br>https://developer.nvidia.com/cuda-gpus and your NVIDIA GPU model |
 |`-DENABLE_TEST` | ON | Build tests. There are too many tests. |
