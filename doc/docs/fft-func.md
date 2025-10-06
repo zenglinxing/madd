@@ -1,16 +1,6 @@
 FFT Functions
 ===
 
-FFT Directions
----
-
-The following macros is defined to determine the FFT directions.
-
-```C
-#define MADD_FFT_FORWARD 1
-#define MADD_FFT_INVERSE -1
-```
-
 FFT Function
 ---
 
