@@ -54,6 +54,13 @@ if (ENABLE_CUDA)
     endif ()
 endif ()
 
+add_executable(bench-linalg-matrix-inverse linalg-matrix-inverse.cpp)
+target_link_libraries(bench-linalg-matrix-inverse PUBLIC benchmark::benchmark benchmark::benchmark_main madd ${OpenBLAS_LIBRARY})
+target_link_directories(bench-linalg-matrix-inverse PUBLIC ${OpenBLAS_INCLUDE_DIRS})
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR ${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(bench-linalg-matrix-inverse PUBLIC gfortran)
+endif()
+
 add_executable(bench-sort sort.cpp)
 target_link_libraries(bench-sort PUBLIC benchmark::benchmark benchmark::benchmark_main madd)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
