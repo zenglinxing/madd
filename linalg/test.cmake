@@ -58,6 +58,12 @@ target_link_libraries(test_linalg-matrix-multiply PUBLIC madd ${OpenBLAS_LIBRARY
 add_test(NAME Linalg-MatrixMultiply
          COMMAND test_linalg-matrix-multiply)
 
+add_executable(test_linalg-matrix-inverse linalg/test/matrix-inverse.c)
+target_include_directories(test_linalg-matrix-inverse PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_linalg-matrix-inverse PUBLIC madd ${OpenBLAS_LIBRARY})
+add_test(NAME Linalg-MatrixInverse
+         COMMAND test_linalg-matrix-inverse)
+
 add_executable(test_linalg-determinant linalg/test/determinant.c)
 target_include_directories(test_linalg-determinant PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_linalg-determinant PUBLIC madd ${OpenBLAS_LIBRARY})

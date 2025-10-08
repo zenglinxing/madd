@@ -85,6 +85,16 @@ bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
 
 /*
 ===============================================================================
+matrix inverse
+===============================================================================
+*/
+bool Matrix_Inverse(int n, double *matrix);
+bool Matrix_Inverse_f32(int n, float *matrix);
+bool Matrix_Inverse_c64(int n, Cnum *matrix);
+bool Matrix_Inverse_c32(int n, Cnum32 *matrix);
+
+/*
+===============================================================================
 linear equations
 ===============================================================================
 eq: n x n
