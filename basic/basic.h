@@ -292,46 +292,60 @@ inline void Madd_Swap(void *a, void *b, size_t usize, void *temp)
 }
 
 /* set 0 */
+#define MADD_SET0__ALGORITHM(num_type) \
+{ \
+    if (n == 0) return; \
+    num_type zero = 0; \
+    uint64_t block_size = 1; \
+    memcpy(arr, &zero, sizeof(num_type)); \
+    while (block_size < n) { \
+        uint64_t copy_size = (block_size <= n - block_size)  \
+                           ? block_size  \
+                           : n - block_size; \
+        memcpy(arr + block_size, arr, copy_size * sizeof(num_type)); \
+        block_size += copy_size; \
+    } \
+} \
+
 inline void Madd_Set0(uint64_t n, double *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i] = 0;
-}
+MADD_SET0__ALGORITHM(double)
 
 inline void Madd_Set0_f32(uint64_t n, float *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i] = 0;
-}
+MADD_SET0__ALGORITHM(float)
 
 inline void Madd_Set0_fl(uint64_t n, long double *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i] = 0;
-}
+MADD_SET0__ALGORITHM(long double)
+
+#define MADD_SET0_CNUM__ALGORITHM(num_type) \
+{ \
+    if (n == 0) return; \
+    num_type zero; zero.real=zero.imag=0; \
+    uint64_t block_size = 1; \
+    memcpy(arr, &zero, sizeof(num_type)); \
+    while (block_size < n) { \
+        uint64_t copy_size = (block_size <= n - block_size)  \
+                           ? block_size  \
+                           : n - block_size; \
+        memcpy(arr + block_size, arr, copy_size * sizeof(num_type)); \
+        block_size += copy_size; \
+    } \
+} \
 
 inline void Madd_Set0_c64(uint64_t n, Cnum *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
-}
+MADD_SET0_CNUM__ALGORITHM(Cnum)
 
 inline void Madd_Set0_c32(uint64_t n, Cnum32 *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
-}
+MADD_SET0_CNUM__ALGORITHM(Cnum32)
 
 inline void Madd_Set0_cl(uint64_t n, Cnuml *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
-}
+MADD_SET0_CNUM__ALGORITHM(Cnuml)
 
 #ifdef ENABLE_QUADPRECISION
 inline void Madd_Set0_f128(uint64_t n, __float128 *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i] = 0;
-}
+MADD_SET0__ALGORITHM(__float128)
 
 inline void Madd_Set0_c128(uint64_t n, Cnum128 *arr)
-{
-    for (uint64_t i=0; i<n; i++) arr[i].real = arr[i].imag = 0;
-}
+MADD_SET0_CNUM__ALGORITHM(Cnum128)
 #endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_BASIC_H */
