@@ -91,6 +91,7 @@ static inline void gemm_error(cublasStatus_t ret, const char *func_name, const c
     d_res = d_b + ll*nn; \
     cudaMemcpy(d_a, a, size_a, cudaMemcpyHostToDevice); \
     cudaMemcpy(d_b, b, size_b, cudaMemcpyHostToDevice); \
+    cudaMemset(d_res, 0, size_res); \
  \
     /* matrix multiply */ \
     cudaStream_t stream; \
@@ -121,6 +122,9 @@ static inline void gemm_error(cublasStatus_t ret, const char *func_name, const c
     cudaStreamSynchronize(stream); \
     if (ret_gemm != CUBLAS_STATUS_SUCCESS){ \
         gemm_error(ret_gemm, __func__, func_gemm_name); \
+        cublasDestroy(handle); \
+        cudaStreamDestroy(stream); \
+        cudaFree(d_a); \
         return false; \
     } \
  \
@@ -186,6 +190,7 @@ static inline void gemm_error(cublasStatus_t ret, const char *func_name, const c
     d_res = d_b + ll*nn; \
     cudaMemcpy(d_a, a, size_a, cudaMemcpyHostToDevice); \
     cudaMemcpy(d_b, b, size_b, cudaMemcpyHostToDevice); \
+    cudaMemset(d_res, 0, size_res); \
  \
     /* matrix multiply */ \
     cudaStream_t stream; \
@@ -218,6 +223,9 @@ static inline void gemm_error(cublasStatus_t ret, const char *func_name, const c
     cudaStreamSynchronize(stream); \
     if (ret_gemm != CUBLAS_STATUS_SUCCESS){ \
         gemm_error(ret_gemm, __func__, func_gemm_name); \
+        cublasDestroy(handle); \
+        cudaStreamDestroy(stream); \
+        cudaFree(d_a); \
         return false; \
     } \
  \

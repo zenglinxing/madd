@@ -12,7 +12,7 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
 #include"linalg.h"
 #include"../basic/basic.h"
 
-#define MATRIX_MULTIPLY__ALGORITHM(num_type, cblas_dgemm) \
+#define MATRIX_MULTIPLY__ALGORITHM(num_type, cblas_dgemm, Madd_Set0) \
 { \
     if (m == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -52,6 +52,7 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
     } \
  \
     num_type alpha = 1, beta = 0; \
+    Madd_Set0((uint64_t)m*n, res); \
     cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, \
                 m, n, l, \
                 alpha, \
@@ -62,7 +63,7 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
     return true; \
 } \
 
-#define MATRIX_MULTIPLY_CNUM__ALGORITHM(num_type, cblas_cgemm) \
+#define MATRIX_MULTIPLY_CNUM__ALGORITHM(num_type, cblas_cgemm, Madd_Set0_c64) \
 { \
     if (m == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -102,6 +103,7 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
     } \
  \
     num_type alpha = {.real=1, .imag=0}, beta = {.real=0, .imag=0}; \
+    Madd_Set0_c64((uint64_t)m*n, res); \
     cblas_cgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, \
                 m, n, l, \
                 &alpha, \
@@ -114,16 +116,16 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
 
 bool Matrix_Multiply(int m, int n, int l,
                      double *a, double *b, double *res)
-MATRIX_MULTIPLY__ALGORITHM(double, cblas_dgemm)
+MATRIX_MULTIPLY__ALGORITHM(double, cblas_dgemm, Madd_Set0)
 
 bool Matrix_Multiply_f32(int m, int n, int l,
                          float *a, float *b, float *res)
-MATRIX_MULTIPLY__ALGORITHM(float, cblas_sgemm)
+MATRIX_MULTIPLY__ALGORITHM(float, cblas_sgemm, Madd_Set0_f32)
 
 bool Matrix_Multiply_c64(int m, int n, int l,
                          Cnum *a, Cnum *b, Cnum *res)
-MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum, cblas_zgemm)
+MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum, cblas_zgemm, Madd_Set0_c64)
 
 bool Matrix_Multiply_c32(int m, int n, int l,
                          Cnum32 *a, Cnum32 *b, Cnum32 *res)
-MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum32, cblas_cgemm)
+MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum32, cblas_cgemm, Madd_Set0_c32)
