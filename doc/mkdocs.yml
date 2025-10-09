@@ -38,6 +38,7 @@ nav:
       - Multiply: linalg-matrix-multiply.md
       - Linear Equation: linalg-linear-equation.md
       - Eigen: linalg-eigen.md
+      - Determinant: linalg-determinant.md
   - Random Number Generator:
     - Instruction: rng-intro.md
   - Sort:
