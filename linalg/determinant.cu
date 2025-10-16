@@ -48,7 +48,7 @@ static inline void cuda_func_error(cusolverStatus_t ret, const char *func_name, 
     for (i=0; i<n; i++, p+=n1){ \
         if (ipiv[i] != i+1) sign *= -1; \
         *res *= *p; \
-        printf("cuda %d-th: %f\n", i, *p); \
+        /*printf("cuda %d-th: %f\n", i, *p);*/ \
     } \
     *res *= sign; \
 } \
