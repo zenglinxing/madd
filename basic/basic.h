@@ -219,6 +219,7 @@ typedef struct{
 } Madd_Error;
 
 extern bool madd_error_keep_print;
+extern bool madd_error_color_print;
 extern bool madd_error_exit, madd_warning_exit;
 extern Madd_Error madd_error;
 extern uint64_t madd_error_n;

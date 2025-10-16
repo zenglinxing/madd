@@ -14,7 +14,27 @@ This file is part of Math Addition, in ./basic/error_info.c
 #include<stdbool.h>
 #include"basic.h"
 
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"    /* Black */
+#define RED     "\033[31m"    /* Red */
+#define GREEN   "\033[32m"    /* Green */
+#define YELLOW  "\033[33m"    /* Yellow */
+#define BLUE    "\033[34m"    /* Blue */
+#define MAGENTA "\033[35m"    /* Magenta */
+#define CYAN    "\033[36m"    /* Cyan */
+#define WHITE   "\033[37m"    /* White */
+ 
+#define BOLDBLACK   "\033[1m\033[30m"   /* Bold Black */
+#define BOLDRED     "\033[1m\033[31m"   /* Bold Red */
+#define BOLDGREEN   "\033[1m\033[32m"   /* Bold Green */
+#define BOLDYELLOW  "\033[1m\033[33m"   /* Bold Yellow */
+#define BOLDBLUE    "\033[1m\033[34m"   /* Bold Blue */
+#define BOLDMAGENTA "\033[1m\033[35m"   /* Bold Magenta */
+#define BOLDCYAN    "\033[1m\033[36m"   /* Bold Cyan */
+#define BOLDWHITE   "\033[1m\033[37m"   /* Bold White */
+
 bool madd_error_keep_print = false;
+bool madd_error_color_print = false;
 bool madd_error_exit = false, madd_warning_exit = false;
 static FILE *madd_error_fp = NULL;
 /*
@@ -63,27 +83,44 @@ static void Madd_Error_Print_Last_Internal(bool flag_print_exceed_note)
 {
     if (madd_error.flag_n_exceed && flag_print_exceed_note){
         wchar_t print_info[MADD_ERROR_INFO_LEN];
-        swprintf(print_info, MADD_ERROR_INFO_LEN, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        if (madd_error_color_print){
+            swprintf(print_info, MADD_ERROR_INFO_LEN, L"\033[1m\033[35mMadd\033[0m Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        }else{
+            swprintf(print_info, MADD_ERROR_INFO_LEN, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        }
         Madd_Print(print_info);
     }
     wchar_t *wsign, *wtime_stamp;
     uint64_t id_error;
     if (madd_error.n == 0){
-        Madd_Print(L"Madd Success.\n");
+        if (madd_error_color_print){
+            Madd_Print(L"\033[1m\033[35mMadd\033[0m \033[32mSuccess\033[0m.\n");
+        }else{
+            Madd_Print(L"Madd Success.\n");
+        }
     }else{
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         if (madd_error.item[madd_error.n-1].sign == MADD_ERROR){
-            wsign = L"Error  ";
+            wsign = (madd_error_color_print) ? L"\033[31mError\033[0m  " : L"Error  ";
         }else if (madd_error.item[madd_error.n-1].sign == MADD_WARNING){
-            wsign = L"Warning";
+            wsign = (madd_error_color_print) ? L"\033[33mWarning\033[0m" : L"Warning";
         }else{
-            wsign = L"Unknown";
+            wsign = (madd_error_color_print) ? L"\033[34mUnknown\033[0m" : L"Unknown";
         }
         id_error = madd_error.item[madd_error.n-1].i_sign;
         Time_Stamp_String(madd_error.item[madd_error.n-1].time_stamp, wtime_stamp);
-        wchar_t print_info[MADD_ERROR_INFO_LEN+100];
+        wchar_t print_info[MADD_ERROR_INFO_LEN+200];
         //wprintf(L"%ls\n",madd_error.item[madd_error.n-1].info);
-        swprintf(print_info, MADD_ERROR_INFO_LEN+100, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
+        if (madd_error_color_print){
+            swprintf(print_info, MADD_ERROR_INFO_LEN+200,
+                L"\033[1m\033[35mMadd\033[0m \033[1m\033[37m%llu\033[0m - %ls \033[1m\033[37m%llu\033[0m:\t%ls\n\t\033[36m%ls\033[0m\n",
+                madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
+        }else{
+            swprintf(print_info, MADD_ERROR_INFO_LEN+200,
+                L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n",
+                madd_error_n, wsign, id_error, wtime_stamp, madd_error.item[madd_error.n-1].info);
+        }
+        
         Madd_Print(print_info);
         free(wtime_stamp);
     }
@@ -150,11 +187,19 @@ void Madd_Error_Add(char sign, const wchar_t *info)
 
     /* check if the program should be stopped */
     if (sign == MADD_ERROR && madd_error_exit){
-        Madd_Print(L"Madd Error triggered, program stopped.\n");
+        if (madd_error_color_print){
+            Madd_Print(L"\033[31mMadd Error triggered, program stopped.\033[0m\n");
+        }else{
+            Madd_Print(L"Madd Error triggered, program stopped.\n");
+        }
         exit(EXIT_FAILURE);
     }
     if (sign == MADD_WARNING && madd_warning_exit){
-        Madd_Print(L"Madd Warning triggered, program stopped.\n");
+        if (madd_error_color_print){
+            Madd_Print(L"\033[33mMadd Warning triggered, program stopped.\033[0m\n");
+        }else{
+            Madd_Print(L"Madd Warning triggered, program stopped.\n");
+        }
         exit(EXIT_FAILURE);
     }
 
@@ -223,27 +268,39 @@ void Madd_Error_Print_All(void)
 
     if (madd_error.flag_n_exceed){
         wchar_t print_info[MADD_ERROR_INFO_LEN];
-        swprintf(print_info, MADD_ERROR_INFO_LEN-1, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        if (madd_error_color_print){
+            swprintf(print_info, MADD_ERROR_INFO_LEN, L"\033[1m\033[35mMadd\033[0m Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        }else{
+            swprintf(print_info, MADD_ERROR_INFO_LEN, L"Madd Note: madd error info are more than %d now\n", MADD_ERROR_MAX);
+        }
         Madd_Print(print_info);
     }
     wchar_t *wsign, *wtime_stamp;
     uint64_t i_item, id_error;
     if (madd_error.n==0){
-        Madd_Print(L"Madd Success.\n");
+        if (madd_error_color_print){
+            Madd_Print(L"\033[1m\033[35mMadd\033[0m \033[32mSuccess\033[0m.\n");
+        }else{
+            Madd_Print(L"Madd Success.\n");
+        }
     }else{
         wtime_stamp = (wchar_t*)malloc(MADD_TIME_STAMP_STRING_LEN*sizeof(wchar_t));
         for (i_item=0; i_item<madd_error.n; i_item++){
             if (madd_error.item[i_item].sign == MADD_ERROR){
-                wsign = L"Error  ";
+                wsign = (madd_error_color_print) ? L"\033[31mError\033[0m  " : L"Error  ";
             }else if (madd_error.item[i_item].sign == MADD_WARNING){
-                wsign = L"Warning";
+                wsign = (madd_error_color_print) ? L"\033[33mWarning\033[0m" : L"Warning";
             }else{
-                wsign = L"Unknown";
+                wsign = (madd_error_color_print) ? L"\033[34mUnknown\033[0m" : L"Unknown";
             }
             id_error = madd_error.item[i_item].i_sign;
             Time_Stamp_String(madd_error.item[i_item].time_stamp, wtime_stamp);
-            wchar_t print_info[MADD_ERROR_INFO_LEN+100];
-            swprintf(print_info, MADD_ERROR_INFO_LEN+100-1, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error.item[i_item].i_all, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
+            wchar_t print_info[MADD_ERROR_INFO_LEN+200];
+            if (madd_error_color_print){
+                swprintf(print_info, MADD_ERROR_INFO_LEN+200, L"\033[1m\033[35mMadd\033[0m \033[1m\033[37m%llu\033[0m - %ls \033[1m\033[37m%llu\033[0m:\t%ls\n\t\033[36m%ls\033[0m\n", madd_error.item[i_item].i_all, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
+            }else{
+                swprintf(print_info, MADD_ERROR_INFO_LEN+200, L"Madd %llu - %ls %llu:\t%ls\n\t%ls\n", madd_error.item[i_item].i_all, wsign, id_error, wtime_stamp, madd_error.item[i_item].info);
+            }
             Madd_Print(print_info);
         }
         free(wtime_stamp);
