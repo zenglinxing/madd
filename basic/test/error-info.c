@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     FILE *fp=fopen("test_basic-error-info.txt", "wb");
 
-    madd_error_color_print = false;
+    madd_error_color_print = true;
     Madd_Print(L"\n\nprint last:\n");
     Madd_Error_Print_Last();
     Madd_Error_Save_Last(fp);
