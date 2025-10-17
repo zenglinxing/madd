@@ -21,6 +21,7 @@ extern "C" {
 #include"fft/fft.h"
 #include"fmin/fmin.h"
 #include"integrate/integrate.h"
+#include"interpolation/interpolation.h"
 #include"large_number/large_uint.h"
 #include"linalg/linalg.h"
 #include"polynomial/polynomial.h"

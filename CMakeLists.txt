@@ -87,6 +87,7 @@ add_subdirectory(data_struct)
 add_subdirectory(fft)
 add_subdirectory(fmin)
 add_subdirectory(integrate)
+add_subdirectory(interpolation)
 add_subdirectory(large_number)
 add_subdirectory(linalg)
 add_subdirectory(polynomial)
@@ -117,6 +118,7 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_FFT} # fft/
             ${MADD_SRC_LIST_FMIN} # fmin/
             ${MADD_SRC_LIST_INTEGRATE} # integrate/
+            ${MADD_SRC_LIST_INTERPOLATION} # interpolation/
             ${MADD_SRC_LIST_LARGE_NUMBER} # large_number/
             ${MADD_SRC_LIST_LINALG} # linalg/
             ${MADD_SRC_LIST_POLYNOMIAL} # polynomial/
@@ -169,6 +171,7 @@ if (ENABLE_TEST)
     include(fft/test.cmake)
     include(fmin/test.cmake)
     include(integrate/test.cmake)
+    include(interpolation/test.cmake)
     include(large_number/test.cmake)
     include(linalg/test.cmake)
     include(polynomial/test.cmake)
