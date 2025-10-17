@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
         printf("All tests passed.\n");
         return EXIT_SUCCESS;
     }else{
-        printf("Some tests failed.\n");
+        printf("*** Some tests failed. ***\n");
         return EXIT_FAILURE;
     }
 }
