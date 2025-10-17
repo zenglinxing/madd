@@ -63,4 +63,9 @@ Cnum        Kahan_Summation_c64(uint64_t n, Cnum *arr);
 Cnum32      Kahan_Summation_c32(uint64_t n, Cnum32 *arr);
 Cnuml       Kahan_Summation_cl(uint64_t n, Cnuml *arr);
 
+#ifdef ENABLE_QUADPRECISION
+__float128 Kahan_Summation_f128(uint64_t n, __float128 *arr);
+Cnum128 Kahan_Summation_c128(uint64_t n, Cnum128 *arr);
+#endif
+
 #endif /* MADD_STATISTICS_H */
