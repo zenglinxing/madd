@@ -39,7 +39,7 @@ KAHAN_SUMMATION_STEP__ALGORITHm(float)
 inline long double Kahan_Summation_Step_fl(long double sum, long double add, long double *compensate)
 KAHAN_SUMMATION_STEP__ALGORITHm(long double)
 
-inline Cnum Kahan_Summation_Step_c(Cnum sum, Cnum add, Cnum *compensate)
+inline Cnum Kahan_Summation_Step_c64(Cnum sum, Cnum add, Cnum *compensate)
 KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnum, Cnum_Sub, Cnum_Add)
 
 inline Cnum32 Kahan_Summation_Step_c32(Cnum32 sum, Cnum32 add, Cnum32 *compensate)
@@ -59,7 +59,7 @@ KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnum128, Cnum_Sub_c128, Cnum_Add_c128)
 double      Kahan_Summation(uint64_t n, double *arr);
 float       Kahan_Summation_f32(uint32_t n, float *arr);
 long double Kahan_Summation_fl(uint64_t n, long double *arr);
-Cnum        Kahan_Summation_c(uint64_t n, Cnum *arr);
+Cnum        Kahan_Summation_c64(uint64_t n, Cnum *arr);
 Cnum32      Kahan_Summation_c32(uint64_t n, Cnum32 *arr);
 Cnuml       Kahan_Summation_cl(uint64_t n, Cnuml *arr);
 
