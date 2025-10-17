@@ -10,7 +10,7 @@ file(GLOB_RECURSE MARKDOWN_SOURCE
      "*.md")
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/search.html
-    COMMAND ${MKDOCS_EXECUTABLE} build -d ${CMAKE_CURRENT_BINARY_DIR}/doc --dirty
+    COMMAND ${MKDOCS_EXECUTABLE} build -d ${CMAKE_CURRENT_BINARY_DIR}/doc --clean
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     DEPENDS ${MARKDOWN_SOURCE} mkdocs.yml
     COMMENT "Building documentation with MkDocs..."
