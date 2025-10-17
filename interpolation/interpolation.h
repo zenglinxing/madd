@@ -62,4 +62,16 @@ __float128 Interpolation_Lagrange_Value_Internal_f128(__float128 x, const Interp
 __float128 Interpolation_Lagrange_Value_f128(__float128 x, const Interpolation_Lagrange_Param_f128 *ilp);
 #endif /* ENABLE_QUADPRECISION */
 
+/*
+===============================================================================
+Cubic Spline Interpolation
+===============================================================================
+*/
+typedef struct{
+    uint64_t n;
+    double *x, *a, *b, *c, *d;
+} Interpolation_Cubic_Spline_Param;
+
+bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *y, Interpolation_Cubic_Spline_Param *icsp);
+
 #endif /* MADD_INTERPOLATION_H */
