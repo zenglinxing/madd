@@ -99,6 +99,20 @@ bool Discrete_Cosine_Transform_Weight_f128(uint64_t n, __float128 *w);
 
 /*
 ===============================================================================
+DCT-1
+===============================================================================
+*/
+bool Discrete_Cosine_Transform_1(uint64_t n, double *arr);
+bool Discrete_Cosine_Transform_1_f32(uint64_t n, float *arr);
+bool Discrete_Cosine_Transform_1_fl(uint64_t n, long double *arr);
+#ifdef ENABLE_QUADPRECISION
+bool Discrete_Cosine_Transform_1_f128(uint64_t n, __float128 *arr);
+#endif /* ENABLE_QUADPRECISION */
+
+bool Discrete_Cosine_Transform_1_Naive(uint64_t n, double *arr);
+
+/*
+===============================================================================
 DCT-2
 ===============================================================================
 */
