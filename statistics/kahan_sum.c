@@ -41,7 +41,7 @@ long double Kahan_Summation_fl(uint64_t n, long double *arr)
 KAHAN_SUMMATION__ALGORITHM(long double, uint64_t, Kahan_Summation_Step_fl)
 
 Cnum Kahan_Summation_c(uint64_t n, Cnum *arr)
-KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum, uint64_t, Kahan_Summation_Step_c)
+KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum, uint64_t, Kahan_Summation_Step_c64)
 
 Cnum32 Kahan_Summation_c32(uint64_t n, Cnum32 *arr)
 KAHAN_SUMMATION_CNUM__ALGORITHM(Cnum32, uint64_t, Kahan_Summation_Step_c32)
