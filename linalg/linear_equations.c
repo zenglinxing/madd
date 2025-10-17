@@ -42,7 +42,7 @@ This file is part of Math Addition, in ./linalg/linear_equations.c
         return false; \
     } \
  \
-    size_t size_ipiv = (uint64_t)n * sizeof(int), size_coefficient = (uint64_t)n*n*sizeof(num_type); \
+    size_t size_ipiv = (uint64_t)n * sizeof(int); \
     int *ipiv = (int*)malloc(size_ipiv); \
     if (ipiv == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \

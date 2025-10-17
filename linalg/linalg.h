@@ -105,6 +105,15 @@ bool Linear_Equations_f32(int n, float *eq, int n_vector, float *vector);
 bool Linear_Equations_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
 bool Linear_Equations_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
 
+bool Linear_Equations_Tridiagonal(int n, double *lower, double *diag, double *upper,
+                                  int n_vector, double *vector);
+bool Linear_Equations_Tridiagonal_f32(int n, float *lower, float *diag, float *upper,
+                                      int n_vector, float *vector);
+bool Linear_Equations_Tridiagonal_c64(int n, Cnum *lower, Cnum *diag, Cnum *upper,
+                                      int n_vector, Cnum *vector);
+bool Linear_Equations_Tridiagonal_c32(int n, Cnum32 *lower, Cnum32 *diag, Cnum32 *upper,
+                                      int n_vector, Cnum32 *vector);
+
 /*
 ===============================================================================
 eigenvalue & eigenvector
