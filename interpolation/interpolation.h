@@ -68,12 +68,21 @@ Cubic Spline Interpolation
 ===============================================================================
 */
 typedef struct{
-    uint64_t n;
+    int32_t n;
     double *x, *a, *b, *c, *d;
 } Interpolation_Cubic_Spline_Param;
 
-bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *y, Interpolation_Cubic_Spline_Param *icsp);
+bool Interpolation_Cubic_Spline_Init(int32_t n, const double *x, const double *y, Interpolation_Cubic_Spline_Param *icsp);
 void Interpolation_Cubic_Spline_Free(Interpolation_Cubic_Spline_Param *icsp);
 double Interpolation_Cubic_Spline_Value(double x, const Interpolation_Cubic_Spline_Param *icsp);
+
+typedef struct{
+    int32_t n;
+    float *x, *a, *b, *c, *d;
+} Interpolation_Cubic_Spline_Param_f32;
+
+bool Interpolation_Cubic_Spline_Init_f32(int32_t n, const float *x, const float *y, Interpolation_Cubic_Spline_Param_f32 *icsp);
+void Interpolation_Cubic_Spline_Free_f32(Interpolation_Cubic_Spline_Param_f32 *icsp);
+float Interpolation_Cubic_Spline_Value_f32(float x, const Interpolation_Cubic_Spline_Param_f32 *icsp);
 
 #endif /* MADD_INTERPOLATION_H */
