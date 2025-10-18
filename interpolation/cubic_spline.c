@@ -103,7 +103,7 @@ bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *
     diag[0] = diag[n1] = 1;
     for (i=1; i<n1; i++){
         lower[i-1] = delta[i-1];
-        diag[i] = 2*delta[i-1] + delta[i];
+        diag[i] = 2*(delta[i-1] + delta[i]);
         upper[i] = delta[i];
         vec[i] = 3*(Delta[i]/delta[i] - Delta[i-1]/delta[i-1]);
     }
@@ -128,6 +128,23 @@ bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *
     free(pairs);
     free(delta);
     return true;
+}
+
+void Interpolation_Cubic_Spline_Free(Interpolation_Cubic_Spline_Param *icsp)
+{
+    if (icsp == NULL){
+        wchar_t error_info[MADD_ERROR_INFO_LEN];
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: icsp is NULL.", __func__);
+        Madd_Error_Add(MADD_ERROR, error_info);
+        return;
+    }
+    if (icsp->x != NULL) free(icsp->x);
+    icsp->n = 0;
+    icsp->x = NULL;
+    icsp->a = NULL;
+    icsp->b = NULL;
+    icsp->c = NULL;
+    icsp->d = NULL;
 }
 
 double Interpolation_Cubic_Spline_Value(double x, const Interpolation_Cubic_Spline_Param *icsp)
