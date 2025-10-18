@@ -76,18 +76,18 @@ This file is part of Math Addition, in ./linalg/linear_equations_tridiagonal.c
     return true; \
 } \
 
-bool Linear_Equations_Tridiagonal(int n, double *lower, double *diag, double *upper,
-                                  int n_vector, double *vector)
+bool Linear_Equations_Tridiagonal(int32_t n, double *lower, double *diag, double *upper,
+                                  int32_t n_vector, double *vector)
 LINEAR_EQUATIONS_TRIDIAGONAL__ALGORITHM(double, double, LAPACKE_dgtsv)
 
-bool Linear_Equations_Tridiagonal_f32(int n, float *lower, float *diag, float *upper,
-                                      int n_vector, float *vector)
+bool Linear_Equations_Tridiagonal_f32(int32_t n, float *lower, float *diag, float *upper,
+                                      int32_t n_vector, float *vector)
 LINEAR_EQUATIONS_TRIDIAGONAL__ALGORITHM(float, float, LAPACKE_sgtsv)
 
-bool Linear_Equations_Tridiagonal_c64(int n, Cnum *lower, Cnum *diag, Cnum *upper,
-                                      int n_vector, Cnum *vector)
+bool Linear_Equations_Tridiagonal_c64(int32_t n, Cnum *lower, Cnum *diag, Cnum *upper,
+                                      int32_t n_vector, Cnum *vector)
 LINEAR_EQUATIONS_TRIDIAGONAL__ALGORITHM(Cnum, lapack_complex_double, LAPACKE_zgtsv)
 
-bool Linear_Equations_Tridiagonal_c32(int n, Cnum32 *lower, Cnum32 *diag, Cnum32 *upper,
-                                      int n_vector, Cnum32 *vector)
+bool Linear_Equations_Tridiagonal_c32(int32_t n, Cnum32 *lower, Cnum32 *diag, Cnum32 *upper,
+                                      int32_t n_vector, Cnum32 *vector)
 LINEAR_EQUATIONS_TRIDIAGONAL__ALGORITHM(Cnum32, lapack_complex_float, LAPACKE_cgtsv)

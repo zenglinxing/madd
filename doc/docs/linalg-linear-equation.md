@@ -11,7 +11,7 @@ Functions
 ---
 
 ```C
-bool Linear_Equations(int n, double *eq, int n_vector, double *vector);
+bool Linear_Equations(int32_t n, double *eq, int32_t n_vector, double *vector);
 // if CUDA is available
 bool Linear_Equations_cuda(int n, double *eq, int n_vector, double *vector);
 ```

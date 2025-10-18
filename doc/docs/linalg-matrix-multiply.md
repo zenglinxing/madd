@@ -15,7 +15,7 @@ Functions
 ---
 
 ```C
-bool Matrix_Multiply(int m, int n, int l,
+bool Matrix_Multiply(int32_t m, int32_t n, int32_t l,
                      double *a, double *b, double *res);
 // if CUDA is available
 bool Matrix_Multiply_cuda(int64_t m, int64_t n, int64_t l,

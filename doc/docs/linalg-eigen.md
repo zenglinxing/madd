@@ -39,10 +39,10 @@ Functions
 ---
 
 ```C
-bool Eigen(int n, double *matrix, Cnum *eigenvalue,
+bool Eigen(int32_t n, double *matrix, Cnum *eigenvalue,
            bool flag_left, Cnum *eigenvector_left,
            bool flag_right, Cnum *eigenvector_right);
-bool Eigen_c64(int n, Cnum *matrix, Cnum *eigenvalue,
+bool Eigen_c64(int32_t n, Cnum *matrix, Cnum *eigenvalue,
                bool flag_left, Cnum *eigenvector_left,
                bool flag_right, Cnum *eigenvector_right);
 ```
@@ -63,11 +63,11 @@ The *i*-th column (not row) of `eigenvector_left` and `eigenvector_right` corres
 
 ```C
 /* generalized eigen */
-bool Generalized_Eigen(int n, double *matrix_A, double *matrix_B,
+bool Generalized_Eigen(int32_t n, double *matrix_A, double *matrix_B,
                        Cnum *eigenvalue,
                        bool flag_left, Cnum *eigenvector_left,
                        bool flag_right, Cnum *eigenvector_right);
-bool Generalized_Eigen_c64(int n, Cnum *matrix_A, Cnum *matrix_B,
+bool Generalized_Eigen_c64(int32_t n, Cnum *matrix_A, Cnum *matrix_B,
                            Cnum *eigenvalue,
                            bool flag_left, Cnum *eigenvector_left,
                            bool flag_right, Cnum *eigenvector_right);

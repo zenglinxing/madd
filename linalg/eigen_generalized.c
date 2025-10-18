@@ -151,13 +151,13 @@ This file is part of Math Addition, in ./linalg/eigen.c
     return true; \
 } \
 
-bool Generalized_Eigen(int n, double *matrix_A, double *matrix_B,
+bool Generalized_Eigen(int32_t n, double *matrix_A, double *matrix_B,
                        Cnum *eigenvalue,
                        bool flag_left, Cnum *eigenvector_left,
                        bool flag_right, Cnum *eigenvector_right)
 GENERALIZED_EIGEN_REAL__ALGORITHM(Cnum, double, LAPACKE_dggev, Matrix_Transpose, Cnum_Div_Real)
 
-bool Generalized_Eigen_f32(int n, float *matrix_A, float *matrix_B,
+bool Generalized_Eigen_f32(int32_t n, float *matrix_A, float *matrix_B,
                            Cnum32 *eigenvalue,
                            bool flag_left, Cnum32 *eigenvector_left,
                            bool flag_right, Cnum32 *eigenvector_right)
@@ -244,13 +244,13 @@ GENERALIZED_EIGEN_REAL__ALGORITHM(Cnum32, float, LAPACKE_sggev, Matrix_Transpose
     return true; \
 } \
 
-bool Generalized_Eigen_c64(int n, Cnum *matrix_A, Cnum *matrix_B,
+bool Generalized_Eigen_c64(int32_t n, Cnum *matrix_A, Cnum *matrix_B,
                            Cnum *eigenvalue,
                            bool flag_left, Cnum *eigenvector_left,
                            bool flag_right, Cnum *eigenvector_right)
 GENERALIZED_EIGEN_CNUM__ALGORITHM(Cnum, LAPACKE_zggev, lapack_complex_double, Cnum_Div)
 
-bool Generalized_Eigen_c32(int n, Cnum32 *matrix_A, Cnum32 *matrix_B,
+bool Generalized_Eigen_c32(int32_t n, Cnum32 *matrix_A, Cnum32 *matrix_B,
                            Cnum32 *eigenvalue,
                            bool flag_left, Cnum32 *eigenvector_left,
                            bool flag_right, Cnum32 *eigenvector_right)

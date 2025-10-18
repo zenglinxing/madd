@@ -177,28 +177,28 @@ This file is part of Math Addition, in ./integrate/int_gauss.c
     return res; \
 } \
 
-/* uint64_t & double */
-bool Integrate_Gauss_Legendre_x(uint64_t n_int_, double *x_int)
+/* double */
+bool Integrate_Gauss_Legendre_x(int32_t n_int_, double *x_int)
 INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(double, uint64_t, sqrt, LAPACKE_dsteqr)
 
-bool Integrate_Gauss_Legendre_w(uint64_t n_int, double *x_int, double *w_int)
+bool Integrate_Gauss_Legendre_w(int32_t n_int, double *x_int, double *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint64_t, Poly1d, Poly1d_Create, Special_Func_Legendre, Poly1d_Derivative, Poly1d_Value, Poly1d_Free)
 
-double Integrate_Gauss_Legendre_via_xw(double func(double, void *), double x1, double x2, uint64_t n_int, void *other_param, double *x_int, double *w_int)
+double Integrate_Gauss_Legendre_via_xw(double func(double, void *), double x1, double x2, int32_t n_int, void *other_param, double *x_int, double *w_int)
 INTEGRATE_GAUSS_LEGENDRE_VIA_XW__ALGORITHM(double, uint64_t)
 
-double Integrate_Gauss_Legendre(double func(double, void *), double x1, double x2, uint64_t n_int, void *other_param)
+double Integrate_Gauss_Legendre(double func(double, void *), double x1, double x2, int32_t n_int, void *other_param)
 INTEGRATE_GAUSS_LEGENDRE__ALGORITHM(double, Integrate_Gauss_Legendre_x, "Integrate_Gauss_Legendre_x", Integrate_Gauss_Legendre_w, "Integrate_Gauss_Legendre_w", Integrate_Gauss_Legendre_via_xw)
 
-/* uint32_t & float */
-bool Integrate_Gauss_Legendre_x_f32(uint32_t n_int_, float *x_int)
+/* float */
+bool Integrate_Gauss_Legendre_x_f32(int32_t n_int_, float *x_int)
 INTEGRATE_GAUSS_LEGENDRE_X__ALGORITHM(float, uint32_t, sqrtf, LAPACKE_ssteqr)
 
-bool Integrate_Gauss_Legendre_w_f32(uint32_t n_int, float *x_int, float *w_int)
+bool Integrate_Gauss_Legendre_w_f32(int32_t n_int, float *x_int, float *w_int)
 INTEGRATE_GAUSS_LEGENDRE_W__ALGORITHM(uint32_t, Poly1d_f32, Poly1d_Create_f32, Special_Func_Legendre_f32, Poly1d_Derivative_f32, Poly1d_Value_f32, Poly1d_Free_f32)
 
-float Integrate_Gauss_Legendre_via_xw_f32(float func(float, void *), float x1, float x2, uint32_t n_int, void *other_param, float *x_int, float *w_int)
+float Integrate_Gauss_Legendre_via_xw_f32(float func(float, void *), float x1, float x2, int32_t n_int, void *other_param, float *x_int, float *w_int)
 INTEGRATE_GAUSS_LEGENDRE_VIA_XW__ALGORITHM(float, uint32_t)
 
-float Integrate_Gauss_Legendre_f32(float func(float, void *), float x1, float x2, uint32_t n_int, void *other_param)
+float Integrate_Gauss_Legendre_f32(float func(float, void *), float x1, float x2, int32_t n_int, void *other_param)
 INTEGRATE_GAUSS_LEGENDRE__ALGORITHM(float, Integrate_Gauss_Legendre_x_f32, "Integrate_Gauss_Legendre_x_f32", Integrate_Gauss_Legendre_w_f32, "Integrate_Gauss_Legendre_w_f32", Integrate_Gauss_Legendre_via_xw_f32)

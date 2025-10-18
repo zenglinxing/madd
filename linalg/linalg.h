@@ -71,13 +71,13 @@ bool Matrix_Hermitian_Transpose_c128(uint64_t m, uint64_t n, Cnum128 *matrix);
 matrix multiply
 ===============================================================================
 */
-bool Matrix_Multiply(int m, int n, int l,
+bool Matrix_Multiply(int32_t m, int32_t n, int32_t l,
                      double *a, double *b, double *res);
-bool Matrix_Multiply_f32(int m, int n, int l,
+bool Matrix_Multiply_f32(int32_t m, int32_t n, int32_t l,
                          float *a, float *b, float *res);
-bool Matrix_Multiply_c64(int m, int n, int l,
+bool Matrix_Multiply_c64(int32_t m, int32_t n, int32_t l,
                          Cnum *a, Cnum *b, Cnum *res);
-bool Matrix_Multiply_c32(int m, int n, int l,
+bool Matrix_Multiply_c32(int32_t m, int32_t n, int32_t l,
                          Cnum32 *a, Cnum32 *b, Cnum32 *res);
 
 bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
@@ -88,10 +88,10 @@ bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
 matrix inverse
 ===============================================================================
 */
-bool Matrix_Inverse(int n, double *matrix);
-bool Matrix_Inverse_f32(int n, float *matrix);
-bool Matrix_Inverse_c64(int n, Cnum *matrix);
-bool Matrix_Inverse_c32(int n, Cnum32 *matrix);
+bool Matrix_Inverse(int32_t n, double *matrix);
+bool Matrix_Inverse_f32(int32_t n, float *matrix);
+bool Matrix_Inverse_c64(int32_t n, Cnum *matrix);
+bool Matrix_Inverse_c32(int32_t n, Cnum32 *matrix);
 
 /*
 ===============================================================================
@@ -100,51 +100,51 @@ linear equations
 eq: n x n
 vector: n x n_vector
 */
-bool Linear_Equations(int n, double *eq, int n_vector, double *vector);
-bool Linear_Equations_f32(int n, float *eq, int n_vector, float *vector);
-bool Linear_Equations_c64(int n, Cnum *eq, int n_vector, Cnum *vector);
-bool Linear_Equations_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector);
+bool Linear_Equations(int32_t n, double *eq, int32_t n_vector, double *vector);
+bool Linear_Equations_f32(int32_t n, float *eq, int32_t n_vector, float *vector);
+bool Linear_Equations_c64(int32_t n, Cnum *eq, int32_t n_vector, Cnum *vector);
+bool Linear_Equations_c32(int32_t n, Cnum32 *eq, int32_t n_vector, Cnum32 *vector);
 
-bool Linear_Equations_Tridiagonal(int n, double *lower, double *diag, double *upper,
-                                  int n_vector, double *vector);
-bool Linear_Equations_Tridiagonal_f32(int n, float *lower, float *diag, float *upper,
-                                      int n_vector, float *vector);
-bool Linear_Equations_Tridiagonal_c64(int n, Cnum *lower, Cnum *diag, Cnum *upper,
-                                      int n_vector, Cnum *vector);
-bool Linear_Equations_Tridiagonal_c32(int n, Cnum32 *lower, Cnum32 *diag, Cnum32 *upper,
-                                      int n_vector, Cnum32 *vector);
+bool Linear_Equations_Tridiagonal(int32_t n, double *lower, double *diag, double *upper,
+                                  int32_t n_vector, double *vector);
+bool Linear_Equations_Tridiagonal_f32(int32_t n, float *lower, float *diag, float *upper,
+                                      int32_t n_vector, float *vector);
+bool Linear_Equations_Tridiagonal_c64(int32_t n, Cnum *lower, Cnum *diag, Cnum *upper,
+                                      int32_t n_vector, Cnum *vector);
+bool Linear_Equations_Tridiagonal_c32(int32_t n, Cnum32 *lower, Cnum32 *diag, Cnum32 *upper,
+                                      int32_t n_vector, Cnum32 *vector);
 
 /*
 ===============================================================================
 eigenvalue & eigenvector
 ===============================================================================
 */
-bool Eigen(int n, double *matrix, Cnum *eigenvalue,
+bool Eigen(int32_t n, double *matrix, Cnum *eigenvalue,
            bool flag_left, Cnum *eigenvector_left,
            bool flag_right, Cnum *eigenvector_right);
-bool Eigen_f32(int n, float *matrix, Cnum32 *eigenvalue,
+bool Eigen_f32(int32_t n, float *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right);
-bool Eigen_c64(int n, Cnum *matrix, Cnum *eigenvalue,
+bool Eigen_c64(int32_t n, Cnum *matrix, Cnum *eigenvalue,
                bool flag_left, Cnum *eigenvector_left,
                bool flag_right, Cnum *eigenvector_right);
-bool Eigen_c32(int n, Cnum32 *matrix, Cnum32 *eigenvalue,
+bool Eigen_c32(int32_t n, Cnum32 *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right);
 
-bool Generalized_Eigen(int n, double *matrix_A, double *matrix_B,
+bool Generalized_Eigen(int32_t n, double *matrix_A, double *matrix_B,
                        Cnum *eigenvalue,
                        bool flag_left, Cnum *eigenvector_left,
                        bool flag_right, Cnum *eigenvector_right);
-bool Generalized_Eigen_f32(int n, float *matrix_A, float *matrix_B,
+bool Generalized_Eigen_f32(int32_t n, float *matrix_A, float *matrix_B,
                            Cnum32 *eigenvalue,
                            bool flag_left, Cnum32 *eigenvector_left,
                            bool flag_right, Cnum32 *eigenvector_right);
-bool Generalized_Eigen_c64(int n, Cnum *matrix_A, Cnum *matrix_B,
+bool Generalized_Eigen_c64(int32_t n, Cnum *matrix_A, Cnum *matrix_B,
                            Cnum *eigenvalue,
                            bool flag_left, Cnum *eigenvector_left,
                            bool flag_right, Cnum *eigenvector_right);
-bool Generalized_Eigen_c32(int n, Cnum32 *matrix_A, Cnum32 *matrix_B,
+bool Generalized_Eigen_c32(int32_t n, Cnum32 *matrix_A, Cnum32 *matrix_B,
                            Cnum32 *eigenvalue,
                            bool flag_left, Cnum32 *eigenvector_left,
                            bool flag_right, Cnum32 *eigenvector_right);
@@ -154,10 +154,10 @@ bool Generalized_Eigen_c32(int n, Cnum32 *matrix_A, Cnum32 *matrix_B,
 determinant
 ===============================================================================
 */
-bool Determinant(int n, double *matrix, double *res);
-bool Determinant_f32(int n, float *matrix, float *res);
-bool Determinant_c64(int n, Cnum *matrix, Cnum *res);
-bool Determinant_c32(int n, Cnum32 *matrix, Cnum32 *res);
+bool Determinant(int32_t n, double *matrix, double *res);
+bool Determinant_f32(int32_t n, float *matrix, float *res);
+bool Determinant_c64(int32_t n, Cnum *matrix, Cnum *res);
+bool Determinant_c32(int32_t n, Cnum32 *matrix, Cnum32 *res);
 
 bool Determinant_Bareiss(uint64_t n, double *mat, double *res);
 bool Determinant_Bareiss_f32(uint64_t n, float *mat, float *res);

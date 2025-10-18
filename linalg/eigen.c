@@ -118,12 +118,12 @@ This file is part of Math Addition, in ./linalg/eigen.c
     return true; \
 } \
 
-bool Eigen(int n, double *matrix, Cnum *eigenvalue,
+bool Eigen(int32_t n, double *matrix, Cnum *eigenvalue,
            bool flag_left, Cnum *eigenvector_left,
            bool flag_right, Cnum *eigenvector_right)
 EIGEN_REAL__ALGORITHM(Cnum, double, LAPACKE_dgeev, Matrix_Transpose)
 
-bool Eigen_f32(int n, float *matrix, Cnum32 *eigenvalue,
+bool Eigen_f32(int32_t n, float *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right)
 EIGEN_REAL__ALGORITHM(Cnum32, float, LAPACKE_sgeev, Matrix_Transpose_f32)
@@ -180,12 +180,12 @@ EIGEN_REAL__ALGORITHM(Cnum32, float, LAPACKE_sgeev, Matrix_Transpose_f32)
     return true; \
 } \
 
-bool Eigen_c64(int n, Cnum *matrix, Cnum *eigenvalue,
+bool Eigen_c64(int32_t n, Cnum *matrix, Cnum *eigenvalue,
                bool flag_left, Cnum *eigenvector_left,
                bool flag_right, Cnum *eigenvector_right)
 EIGEN_CNUM__ALGORITHM(Cnum, LAPACKE_zgeev, lapack_complex_double)
 
-bool Eigen_c32(int n, Cnum32 *matrix, Cnum32 *eigenvalue,
+bool Eigen_c32(int32_t n, Cnum32 *matrix, Cnum32 *eigenvalue,
                bool flag_left, Cnum32 *eigenvector_left,
                bool flag_right, Cnum32 *eigenvector_right)
 EIGEN_CNUM__ALGORITHM(Cnum32, LAPACKE_cgeev, lapack_complex_float)

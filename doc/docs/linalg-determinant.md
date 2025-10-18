@@ -29,8 +29,8 @@ Functions
 ---
 
 ```C
-bool Determinant(int n, double *matrix, double *res);
-bool Determinant_c64(int n, Cnum *matrix, Cnum *res);
+bool Determinant(int32_t n, double *matrix, double *res);
+bool Determinant_c64(int32_t n, Cnum *matrix, Cnum *res);
 ```
 
 If the functions fail, they will return `false`.

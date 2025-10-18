@@ -114,18 +114,18 @@ This file is part of Math Addition, in ./linalg/matrix_multiply.c
     return true; \
 } \
 
-bool Matrix_Multiply(int m, int n, int l,
+bool Matrix_Multiply(int32_t m, int32_t n, int32_t l,
                      double *a, double *b, double *res)
 MATRIX_MULTIPLY__ALGORITHM(double, cblas_dgemm, Madd_Set0)
 
-bool Matrix_Multiply_f32(int m, int n, int l,
+bool Matrix_Multiply_f32(int32_t m, int32_t n, int32_t l,
                          float *a, float *b, float *res)
 MATRIX_MULTIPLY__ALGORITHM(float, cblas_sgemm, Madd_Set0_f32)
 
-bool Matrix_Multiply_c64(int m, int n, int l,
+bool Matrix_Multiply_c64(int32_t m, int32_t n, int32_t l,
                          Cnum *a, Cnum *b, Cnum *res)
 MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum, cblas_zgemm, Madd_Set0_c64)
 
-bool Matrix_Multiply_c32(int m, int n, int l,
+bool Matrix_Multiply_c32(int32_t m, int32_t n, int32_t l,
                          Cnum32 *a, Cnum32 *b, Cnum32 *res)
 MATRIX_MULTIPLY_CNUM__ALGORITHM(Cnum32, cblas_cgemm, Madd_Set0_c32)

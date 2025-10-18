@@ -10,8 +10,8 @@ Functions
 ---
 
 ```C
-bool Matrix_Inverse(int n, double *matrix);
-bool Matrix_Inverse_c64(int n, Cnum *matrix);
+bool Matrix_Inverse(int32_t n, double *matrix);
+bool Matrix_Inverse_c64(int32_t n, Cnum *matrix);
 ```
 
 If the functions fail, they will return `false`.

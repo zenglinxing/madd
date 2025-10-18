@@ -64,10 +64,10 @@ This file is part of Math Addition, in ./linalg/determinant.c
     return true; \
 } \
 
-bool Determinant(int n, double *matrix, double *res)
+bool Determinant(int32_t n, double *matrix, double *res)
 DET__ALGORITHM(double, LAPACKE_dgetrf)
 
-bool Determinant_f32(int n, float *matrix, float *res)
+bool Determinant_f32(int32_t n, float *matrix, float *res)
 DET__ALGORITHM(float, LAPACKE_sgetrf)
 
 #define DET_CNUM__ALGORITHM(Cnum, LAPACKE_zgetrf, lapack_complex_double, Cnum_Mul, Cnum_Mul_Real) \
@@ -121,8 +121,8 @@ DET__ALGORITHM(float, LAPACKE_sgetrf)
     return true; \
 } \
 
-bool Determinant_c64(int n, Cnum *matrix, Cnum *res)
+bool Determinant_c64(int32_t n, Cnum *matrix, Cnum *res)
 DET_CNUM__ALGORITHM(Cnum, LAPACKE_zgetrf, lapack_complex_double, Cnum_Mul, Cnum_Mul_Real)
 
-bool Determinant_c32(int n, Cnum32 *matrix, Cnum32 *res)
+bool Determinant_c32(int32_t n, Cnum32 *matrix, Cnum32 *res)
 DET_CNUM__ALGORITHM(Cnum32, LAPACKE_cgetrf, lapack_complex_float, Cnum_Mul_c32, Cnum_Mul_Real_c32)

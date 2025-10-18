@@ -72,14 +72,14 @@ This file is part of Math Addition, in ./linalg/matrix_inverse.c
     return true; \
 } \
 
-bool Matrix_Inverse(int n, double *matrix)
+bool Matrix_Inverse(int32_t n, double *matrix)
 MATRIX_INVERSE__ALGORITHM(double, LAPACKE_dgetrf, LAPACKE_dgetri)
 
-bool Matrix_Inverse_f32(int n, float *matrix)
+bool Matrix_Inverse_f32(int32_t n, float *matrix)
 MATRIX_INVERSE__ALGORITHM(float, LAPACKE_sgetrf, LAPACKE_sgetri)
 
-bool Matrix_Inverse_c64(int n, Cnum *matrix)
+bool Matrix_Inverse_c64(int32_t n, Cnum *matrix)
 MATRIX_INVERSE__ALGORITHM(lapack_complex_double, LAPACKE_zgetrf, LAPACKE_zgetri)
 
-bool Matrix_Inverse_c32(int n, Cnum32 *matrix)
+bool Matrix_Inverse_c32(int32_t n, Cnum32 *matrix)
 MATRIX_INVERSE__ALGORITHM(lapack_complex_float, LAPACKE_cgetrf, LAPACKE_cgetri)

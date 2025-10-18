@@ -3,7 +3,7 @@ Gauss-Legendre Quadrature
 
 ```C
 double Integrate_Gauss_Legendre(double func(double, void *), double xmin, double xmax,
-                                uint64_t n_int, void *other_param);
+                                int32_t n_int, void *other_param);
 ```
 
 Gauss-Legendre is a very efficient quadrature method. With only `n_int` points, the precision improved to $2*n\_int-1$ order. If your integrand is **smooth** and **continuous**, Gauss-Legendre quadrature is adequate.

@@ -71,14 +71,14 @@ This file is part of Math Addition, in ./linalg/linear_equations.c
     return true; \
 } \
 
-bool Linear_Equations(int n, double *eq, int n_vector, double *vector)
+bool Linear_Equations(int32_t n, double *eq, int32_t n_vector, double *vector)
 LINEAR_EQUATIONS__ALGORITHM(double, double, LAPACKE_dgesv)
 
-bool Linear_Equations_f32(int n, float *eq, int n_vector, float *vector)
+bool Linear_Equations_f32(int32_t n, float *eq, int32_t n_vector, float *vector)
 LINEAR_EQUATIONS__ALGORITHM(float, float, LAPACKE_sgesv)
 
-bool Linear_Equations_c64(int n, Cnum *eq, int n_vector, Cnum *vector)
+bool Linear_Equations_c64(int32_t n, Cnum *eq, int32_t n_vector, Cnum *vector)
 LINEAR_EQUATIONS__ALGORITHM(Cnum, lapack_complex_double, LAPACKE_zgesv)
 
-bool Linear_Equations_c32(int n, Cnum32 *eq, int n_vector, Cnum32 *vector)
+bool Linear_Equations_c32(int32_t n, Cnum32 *eq, int32_t n_vector, Cnum32 *vector)
 LINEAR_EQUATIONS__ALGORITHM(Cnum32, lapack_complex_float, LAPACKE_cgesv)
