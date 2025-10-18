@@ -43,6 +43,7 @@ Global Variables
 ---
 
 * `madd_error_keep_print` if `true`, Madd keeps print the error/warning item at any time it pops.
+* `madd_error_color_print` if `true`, Madd will print the error/warning with colors. This feature is based on the ESC (escape character), which may not be supported on some platforms like Windows 8 or earlier.
 * `madd_error_exit` if `true`, Madd will exit immediately when an *error* is popped. I **strongly recommend** you to set it `true` in your main function, because Madd won't guarantee the correctness after an error.
 * `madd_warning_exit` if `true`, Madd will exit immediately when a *warning* is popped.
 * `madd_error_n` number of error & warning items.
