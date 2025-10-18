@@ -94,9 +94,9 @@ bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *
     }
     /* get *a, *delta, *Delta */
     for (i=0; i<n1; i++){
-        icsp->a[i] = pairs.y[i];
+        icsp->a[i] = pairs[i].y;
         delta[i] = icsp->x[i+1] - icsp->x[i];
-        Delta[i] = pairs.y[i+1] - pairs.y[i];
+        Delta[i] = pairs[i+1].y - pairs[i].y;
     }
     /* get tridiagnal matrix param and *vec */
     vec[0] = vec[n1] = upper[0] = lower[n-2] = 0;
