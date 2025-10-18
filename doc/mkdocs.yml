@@ -29,7 +29,7 @@ nav:
     - Fundamental Integral:
       - Trapezoidal Integral: integrate-trapeze.md
       - Simpson Integral: integrate-Simpson.md
-    - Gauss Quadrature:
+    - Advanced Quadrature:
       - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
   - Linear Algebra:
     - Introduction: linalg-intro.md
