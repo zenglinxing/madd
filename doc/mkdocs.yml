@@ -45,6 +45,7 @@ nav:
   - Sort:
     - Introduction: sort-intro.md
     - Functions: sort-func.md
+    - Binary Search: sort-binary-search.md
   - Statistics:
     - Introduction: statistics-intro.md
     - Sum, Mean, etc:
