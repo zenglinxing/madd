@@ -31,6 +31,7 @@ nav:
       - Simpson Integral: integrate-Simpson.md
     - Advanced Quadrature:
       - Gauss-Legendre Quadrature: integrate-Gauss-Legendre.md
+      - Clenshaw-Curtis Quadrature: integrate-Clenshaw-Curtis.md
   - Linear Algebra:
     - Introduction: linalg-intro.md
     - Transpose: linalg-transpose.md
