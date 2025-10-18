@@ -73,5 +73,6 @@ typedef struct{
 } Interpolation_Cubic_Spline_Param;
 
 bool Interpolation_Cubic_Spline_Init(uint64_t n, const double *x, const double *y, Interpolation_Cubic_Spline_Param *icsp);
+double Interpolation_Cubic_Spline_Value(double x, const Interpolation_Cubic_Spline_Param *icsp);
 
 #endif /* MADD_INTERPOLATION_H */
