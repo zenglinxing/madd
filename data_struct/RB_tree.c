@@ -447,6 +447,8 @@ cleanup:
 #ifdef MADD_ENABLE_MULTITHREAD
     RB_Write_Unlock(T);
     return;
+#else
+    return;
 #endif
 }
 
