@@ -103,4 +103,9 @@ bool Fmin_SA_f128(uint64_t n_param, __float128 *params,
                   uint64_t print_start, uint64_t print_step);
 #endif /* ENABLE_QUADPRECISION */
 
+/* Newton-Iteration Methods */
+bool Fmin_Newton_Iteration(uint64_t n_param, double *params,
+                           double func(double *params, void *other_param), void *other_param,
+                           double *param_steps, double norm_term, uint64_t n_step);
+
 #endif /* MADD_FMIN_H */
