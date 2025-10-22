@@ -9,6 +9,7 @@ This file is part of Math Addition, in ./fmin/fmin.h
 #define MADD_FMIN_H
 
 #include<stdint.h>
+#include<stdbool.h>
 #include"../rng/rng.h"
 
 #ifdef ENABLE_QUADPRECISION
@@ -72,6 +73,34 @@ void Fmin_PSO_f128(uint64_t n_param, uint64_t n_bird, __float128 **start,
                    uint64_t n_step,
                    __float128 weight_ini, __float128 weight_end, __float128 c1, __float128 c2,
                    __float128 **velocity, __float128 dt, RNG_Param *rng);
+#endif /* ENABLE_QUADPRECISION */
+
+/* Stimulated Annealing */
+bool Fmin_SA(uint64_t n_param, double *params,
+             double func(double *params, void *other_param), void *other_param,
+             double *perturbation_step,
+             uint64_t n_step, double temp_start, double temp_end,
+             RNG_Param *rng,
+             uint64_t print_start, uint64_t print_step);
+bool Fmin_SA_f32(uint64_t n_param, float *params,
+                 float func(float *params, void *other_param), void *other_param,
+                 float *perturbation_step,
+                 uint64_t n_step, float temp_start, float temp_end,
+                 RNG_Param *rng,
+                 uint64_t print_start, uint64_t print_step);
+bool Fmin_SA_fl(uint64_t n_param, long double *params,
+                long double func(long double *params, void *other_param), void *other_param,
+                long double *perturbation_step,
+                uint64_t n_step, long double temp_start, long double temp_end,
+                RNG_Param *rng,
+                uint64_t print_start, uint64_t print_step);
+#ifdef ENABLE_QUADPRECISION
+bool Fmin_SA_f128(uint64_t n_param, __float128 *params,
+                  __float128 func(__float128 *params, void *other_param), void *other_param,
+                  __float128 *perturbation_step,
+                  uint64_t n_step, __float128 temp_start, __float128 temp_end,
+                  RNG_Param *rng,
+                  uint64_t print_start, uint64_t print_step);
 #endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_FMIN_H */
