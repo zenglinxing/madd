@@ -22,6 +22,54 @@ Particle Swarm Optimization
 
 #define FMIN_PSO__ALGORITHM(size_num_type, num_type, Fmin_PSO_Bird, Rand) \
 { \
+    if (n_param == 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: n_param cannot be zero.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (n_bird == 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: n_bird cannot be zero.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (n_step == 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: n_step cannot be zero.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (dt <= 0){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: dt must be positive.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (func == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: func pointer is NULL.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (start == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: start pointer is NULL.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (velocity == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: velocity pointer is NULL.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
+    if (rng == NULL){ \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: rng pointer is NULL.", __func__); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return; \
+    } \
     size_t size_cpy=(uint64_t)n_param*sizeof(num_type); \
     register uint64_t i_bird,i_param; \
     num_type gbest=func(start[0],other_param),*gbest_x=(num_type*)malloc(size_cpy); \
