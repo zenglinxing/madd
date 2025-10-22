@@ -11,3 +11,11 @@ target_include_directories(test_fmin-PSO PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_fmin-PSO PUBLIC madd)
 add_test(NAME Fmin-ParticleSwarmOptimization
          COMMAND test_fmin-PSO)
+
+
+# Newton Iteration Methods
+add_executable(test_fmin-Newton-Iteration fmin/test/fmin-Newton-Iteration.c)
+target_include_directories(test_fmin-Newton-Iteration PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_fmin-Newton-Iteration PUBLIC madd ${OpenBLAS_LIBRARY})
+add_test(NAME Fmin-NewtonIterationMethods
+         COMMAND test_fmin-Newton-Iteration)
