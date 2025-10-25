@@ -11,11 +11,12 @@ This file is part of Math Addition, in ./fmin/Jacobi-Iteration.c
 #include<stdbool.h>
 #include"fmin.h"
 #include"../basic/basic.h"
+#include"../linalg/linalg.h"
 #include"../sort/sort.h"
 
 static char jacobi_compare(void *a_, void *b_, void *other_param)
 {
-    Fmin_Jacobi_Iteration_Param *a = (Fmin_Jacobi_Iteration_Param*)a_, *b = (Fmin_Jacobi_Iteration_Param*)b_;
+    Sparse_Matrix_COO_Unit *a = (Sparse_Matrix_COO_Unit*)a_, *b = (Sparse_Matrix_COO_Unit*)b_;
     if (a->x < b->x) return MADD_LESS;
     else if (a->x > b->x) return MADD_GREATER;
     else if (a->y < b->y) return MADD_LESS;
@@ -23,12 +24,12 @@ static char jacobi_compare(void *a_, void *b_, void *other_param)
     else return MADD_SAME;
 }
 
-bool Fmin_Jacobi_Iteration_Scarse(uint64_t n, uint64_t n_param, Fmin_Jacobi_Iteration_Param *param, double *b, double *solution, uint64_t n_step)
+bool Fmin_Jacobi_Iteration_Sparse(Sparse_Matrix_COO *param, double *b, double *solution, uint64_t n_step)
 {
-    if (n == 0){
+    if (param->dim == 0){
         return false;
     }
-    if (n_param == 0){
+    if (param->n_unit == 0){
         return false;
     }
     if (param == NULL){
@@ -41,34 +42,33 @@ bool Fmin_Jacobi_Iteration_Scarse(uint64_t n, uint64_t n_param, Fmin_Jacobi_Iter
         return false;
     }
 
-    double *diag = (Fmin_Jacobi_Iteration_Param*)malloc((uint64_t)n*2*sizeof(double)), *x_new = diag + n;
+    double *diag = (double*)malloc((uint64_t)param->dim*2*sizeof(double)), *x_new = diag + param->dim;
     if (diag == NULL){
         return false;
     }
-    Sort(n_param, sizeof(Fmin_Jacobi_Iteration_Param), param, jacobi_compare, NULL);
-    for (uint64_t i=0; i<n; i++){
+    Sort(param->n_unit, sizeof(Sparse_Matrix_COO_Unit), param, jacobi_compare, NULL);
+    for (uint64_t i=0; i<param->dim; i++){
         diag[i] = Inf;
     }
-    for (uint64_t i=0; i<n_param; i++){
-        Fmin_Jacobi_Iteration_Param *p = param + i;
+    for (uint64_t i=0; i<param->n_unit; i++){
+        Sparse_Matrix_COO_Unit *p = param->unit + i;
         if (p->x == p->y){
             diag[p->x] = 1 / p->value;
         }
     }
 
-    size_t size_cpy = (uint64_t)n * sizeof(double);
+    size_t size_cpy = (uint64_t)param->dim * sizeof(double);
     for (uint64_t i_step=0; i_step<n_step; i_step++){
-        Fmin_Jacobi_Iteration_Param *p = param;
-        uint64_t i_param = 0;
-        while (p->x == p->y){
+        Sparse_Matrix_COO_Unit *p = param->unit;
+        uint64_t i_unit = 0;
+        while (i_unit < param->n_unit && p->x == p->y){
             p ++;
-            i_param ++;
-            if (i_param == n_param) break;
+            i_unit ++;
         }
-        for (uint64_t ix=0; ix<n; ix++){
+        for (uint64_t ix=0; ix<param->dim; ix++){
             double sum = 0;
             if (p->x > ix) continue;
-            while (i_param < n_param && p->x == ix){
+            while (i_unit < param->n_unit && p->x == ix){
                 if (p->y == ix){
                     p ++;
                     i_param ++;
@@ -76,7 +76,7 @@ bool Fmin_Jacobi_Iteration_Scarse(uint64_t n, uint64_t n_param, Fmin_Jacobi_Iter
                 }
                 sum += p->value * solution[p->y];
                 p ++;
-                i_param ++;
+                i_unit ++;
             }
             x_new[ix] = diag[ix] * (b[ix] - sum);
         }

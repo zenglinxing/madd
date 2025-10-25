@@ -19,6 +19,29 @@ This file is part of Math Addition, in ./linalg/linalg.h
 
 /*
 ===============================================================================
+sparse matrix
+===============================================================================
+*/
+#define SPARSE_MATRIX_COO(num_type, Sparse_Matrix_COO_Unit, Sparse_Matrix_COO) \
+typedef struct{ \
+    uint64_t x, y; \
+    num_type value; \
+} Sparse_Matrix_COO_Unit; \
+ \
+typedef struct{ \
+    uint64_t dim, n_unit; \
+    Sparse_Matrix_COO_Unit *unit; \
+} Sparse_Matrix_COO; \
+
+SPARSE_MATRIX_COO(double, Sparse_Matrix_COO_Unit, Sparse_Matrix_COO)
+SPARSE_MATRIX_COO(float, Sparse_Matrix_COO_Unit_f32, Sparse_Matrix_COO_f32)
+SPARSE_MATRIX_COO(long double, Sparse_Matrix_COO_Unit_fl, Sparse_Matrix_COO_fl)
+#ifdef ENABLE_QUADPRECISION
+SPARSE_MATRIX_COO(__float128, Sparse_Matrix_COO_Unit_f128, Sparse_Matrix_COO_f128)
+#endif /* ENABLE_QUADPRECISION */
+
+/*
+===============================================================================
 matrix transpose
 ===============================================================================
 */

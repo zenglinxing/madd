@@ -113,9 +113,6 @@ bool Fmin_Newton_Iteration_f32(int32_t n_param, float *params,
 
 
 /* Jacobi-Iteration */
-typedef struct{
-    uint64_t x, y;
-    double value;
-} Fmin_Jacobi_Iteration_Param;
+
 
 #endif /* MADD_FMIN_H */
