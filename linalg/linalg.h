@@ -36,8 +36,12 @@ typedef struct{ \
 SPARSE_MATRIX_COO(double, Sparse_Matrix_COO_Unit, Sparse_Matrix_COO)
 SPARSE_MATRIX_COO(float, Sparse_Matrix_COO_Unit_f32, Sparse_Matrix_COO_f32)
 SPARSE_MATRIX_COO(long double, Sparse_Matrix_COO_Unit_fl, Sparse_Matrix_COO_fl)
+SPARSE_MATRIX_COO(Cnum, Sparse_Matrix_COO_Unit_c64, Sparse_Matrix_COO_c64)
+SPARSE_MATRIX_COO(Cnum32, Sparse_Matrix_COO_Unit_c32, Sparse_Matrix_COO_c32)
+SPARSE_MATRIX_COO(Cnuml, Sparse_Matrix_COO_Unit_cl, Sparse_Matrix_COO_cl)
 #ifdef ENABLE_QUADPRECISION
 SPARSE_MATRIX_COO(__float128, Sparse_Matrix_COO_Unit_f128, Sparse_Matrix_COO_f128)
+SPARSE_MATRIX_COO(Cnum128, Sparse_Matrix_COO_Unit_c128, Sparse_Matrix_COO_c128)
 #endif /* ENABLE_QUADPRECISION */
 
 /*

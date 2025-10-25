@@ -11,6 +11,7 @@ This file is part of Math Addition, in ./fmin/fmin.h
 #include<stdint.h>
 #include<stdbool.h>
 #include"../rng/rng.h"
+#include"../linalg/linalg.h"
 
 #ifdef ENABLE_QUADPRECISION
 #include<quadmath.h>
@@ -113,6 +114,30 @@ bool Fmin_Newton_Iteration_f32(int32_t n_param, float *params,
 
 
 /* Jacobi-Iteration */
+bool Fmin_Jacobi_Iteration(uint64_t n, double *matrix, const double *b, double *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_f32(uint64_t n, float *matrix, const float *b, float *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_fl(uint64_t n, long double *matrix, const long double *b, long double *solution, uint64_t n_step);
+#ifdef ENABLE_QUADPRECISION
+bool Fmin_Jacobi_Iteration_f128(uint64_t n, __float128 *matrix, const __float128 *b, __float128 *solution, uint64_t n_step);
+#endif /* ENABLE_QUADPRECISION */
+bool Fmin_Jacobi_Iteration_c64(uint64_t n, Cnum *matrix, const Cnum *b, Cnum *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_c32(uint64_t n, Cnum32 *matrix, const Cnum32 *b, Cnum32 *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_cl(uint64_t n, Cnuml *matrix, const Cnuml *b, Cnuml *solution, uint64_t n_step);
+#ifdef ENABLE_QUADPRECISION
+bool Fmin_Jacobi_Iteration_c128(uint64_t n, Cnum128 *matrix, const Cnum128 *b, Cnum128 *solution, uint64_t n_step);
+#endif /* ENABLE_QUADPRECISION */
 
+bool Fmin_Jacobi_Iteration_Sparse(Sparse_Matrix_COO *matrix, const double *b, double *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_Sparse_f32(Sparse_Matrix_COO_f32 *matrix, const float *b, float *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_Sparse_fl(Sparse_Matrix_COO_fl *matrix, const long double *b, long double *solution, uint64_t n_step);
+#ifdef ENABLE_QUADPRECISION
+bool Fmin_Jacobi_Iteration_Sparse_f128(Sparse_Matrix_COO_f128 *matrix, const __float128 *b, __float128 *solution, uint64_t n_step);
+#endif /* ENABLE_QUADPRECISION */
+bool Fmin_Jacobi_Iteration_Sparse_c64(Sparse_Matrix_COO_c64 *matrix, const Cnum *b, Cnum *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_Sparse_c32(Sparse_Matrix_COO_c32 *matrix, const Cnum32 *b, Cnum32 *solution, uint64_t n_step);
+bool Fmin_Jacobi_Iteration_Sparse_cl(Sparse_Matrix_COO_cl *matrix, const Cnuml *b, Cnuml *solution, uint64_t n_step);
+#ifdef ENABLE_QUADPRECISION
+bool Fmin_Jacobi_Iteration_Sparse_c128(Sparse_Matrix_COO_c128 *matrix, const Cnum128 *b, Cnum128 *solution, uint64_t n_step);
+#endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_FMIN_H */
