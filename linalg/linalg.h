@@ -115,9 +115,13 @@ bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
 matrix inverse
 ===============================================================================
 */
+bool Matrix_Inverse_Internal(int32_t n, double *matrix, int32_t *ipiv);
 bool Matrix_Inverse(int32_t n, double *matrix);
+bool Matrix_Inverse_Internal_f32(int32_t n, float *matrix, int32_t *ipiv);
 bool Matrix_Inverse_f32(int32_t n, float *matrix);
+bool Matrix_Inverse_Internal_c64(int32_t n, Cnum *matrix, int32_t *ipiv);
 bool Matrix_Inverse_c64(int32_t n, Cnum *matrix);
+bool Matrix_Inverse_Internal_c32(int32_t n, Cnum32 *matrix, int32_t *ipiv);
 bool Matrix_Inverse_c32(int32_t n, Cnum32 *matrix);
 
 /*
