@@ -13,7 +13,7 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
 #include"../linalg/linalg.h"
 
 #define FMIN_NEWTON_ITERATION__ALGORITHM(num_type, \
-                                         Matrix_Inverse, Matrix_Inverse_func_name, \
+                                         Matrix_Inverse_Internal, Matrix_Inverse_Internal_func_name, \
                                          Matrix_Multiply) \
 { \
     if (n_param == 0){ \
@@ -52,6 +52,14 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
     if (param_tent == NULL){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
         swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for param_tent & Hessian & grad & delta_param.", __func__, size_malloc); \
+        Madd_Error_Add(MADD_ERROR, error_info); \
+        return false; \
+    } \
+    int32_t *ipiv = (int32_t*)malloc((uint64_t)n_param*sizeof(int32_t)); \
+    if (ipiv == NULL){ \
+        free(param_tent); \
+        wchar_t error_info[MADD_ERROR_INFO_LEN]; \
+        swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: unable to malloc %llu bytes for ipiv.", __func__, (uint64_t)n_param*sizeof(int32_t)); \
         Madd_Error_Add(MADD_ERROR, error_info); \
         return false; \
     } \
@@ -104,11 +112,12 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
             } \
         } \
         /* Hessian^-1 */ \
-        bool flag_inverse = Matrix_Inverse(n_param, Hessian); \
+        bool flag_inverse = Matrix_Inverse_Internal(n_param, Hessian, ipiv); \
         if (!flag_inverse){ \
             free(param_tent); \
+            free(ipiv); \
             wchar_t error_info[MADD_ERROR_INFO_LEN]; \
-            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: see info from %hs.", __func__, Matrix_Inverse_func_name); \
+            swprintf(error_info, MADD_ERROR_INFO_LEN, L"%hs: see info from %hs.", __func__, Matrix_Inverse_Internal_func_name); \
             Madd_Error_Add(MADD_ERROR, error_info); \
             return false; \
         } \
@@ -120,15 +129,16 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
     } \
  \
     free(param_tent); \
+    free(ipiv); \
     return true; \
 } \
 
 bool Fmin_Newton_Iteration(int32_t n_param, double *params,
                            double func(double *params, void *other_param), void *other_param,
                            double *param_steps, double norm_term, uint64_t n_step)
-FMIN_NEWTON_ITERATION__ALGORITHM(double, Matrix_Inverse, "Matrix_Inverse", Matrix_Multiply)
+FMIN_NEWTON_ITERATION__ALGORITHM(double, Matrix_Inverse_Internal, "Matrix_Inverse_Internal", Matrix_Multiply)
 
 bool Fmin_Newton_Iteration_f32(int32_t n_param, float *params,
                                float func(float *params, void *other_param), void *other_param,
                                float *param_steps, float norm_term, uint64_t n_step)
-FMIN_NEWTON_ITERATION__ALGORITHM(float, Matrix_Inverse_f32, "Matrix_Inverse_f32", Matrix_Multiply_f32)
+FMIN_NEWTON_ITERATION__ALGORITHM(float, Matrix_Inverse_Internal_f32, "Matrix_Inverse_Internal_f32", Matrix_Multiply_f32)
