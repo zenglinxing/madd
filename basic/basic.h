@@ -109,6 +109,9 @@ __float128 Norm_Infinity_c128(uint64_t n, Cnum128 *x);
 #endif /* ENABLE_QUADPRECISION */
 
 /* bit reverse*/
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline union _union8 Bit_Reverse_8(union _union8 x)
 {
     uint8_t y = x.u;
@@ -120,6 +123,9 @@ inline union _union8 Bit_Reverse_8(union _union8 x)
     return ret;
 }
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline union _union16 Bit_Reverse_16(union _union16 x)
 {
     uint16_t y = x.u;
@@ -132,6 +138,9 @@ inline union _union16 Bit_Reverse_16(union _union16 x)
     return ret;
 }
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline union _union32 Bit_Reverse_32(union _union32 x)
 {
     uint32_t y = x.u;
@@ -145,6 +154,9 @@ inline union _union32 Bit_Reverse_32(union _union32 x)
     return ret;
 }
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline union _union64 Bit_Reverse_64(union _union64 x)
 {
     uint64_t y = x.u;
@@ -160,6 +172,9 @@ inline union _union64 Bit_Reverse_64(union _union64 x)
 }
 
 /* endian type */
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline bool Endian_Type(void)
 {
     union _union32 u32;
@@ -246,6 +261,9 @@ void Madd_Print(wchar_t *wstr);
 void Madd_Save(FILE *fp, wchar_t *wstr);
 
 /* hash float */
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline uint64_t Hash_IEEE754_double_to_uint64(double x)
 {
     union _union64 u;
@@ -265,6 +283,9 @@ inline uint64_t Hash_IEEE754_double_to_uint64(double x)
     }
 }
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline uint32_t Hash_IEEE754_float_to_uint32(float x)
 {
     union _union32 u;
@@ -285,6 +306,9 @@ inline uint32_t Hash_IEEE754_float_to_uint32(float x)
 
 /* swap */
 /* suppose temp has enough space */
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Swap(void *a, void *b, size_t usize, void *temp)
 {
     memcpy(temp, a, usize);
@@ -308,12 +332,21 @@ inline void Madd_Swap(void *a, void *b, size_t usize, void *temp)
     } \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0(uint64_t n, double *arr)
 MADD_SET0__ALGORITHM(double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0_f32(uint64_t n, float *arr)
 MADD_SET0__ALGORITHM(float)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0_fl(uint64_t n, long double *arr)
 MADD_SET0__ALGORITHM(long double)
 
@@ -332,12 +365,21 @@ MADD_SET0__ALGORITHM(long double)
     } \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0_c64(uint64_t n, Cnum *arr)
 MADD_SET0_CNUM__ALGORITHM(Cnum)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0_c32(uint64_t n, Cnum32 *arr)
 MADD_SET0_CNUM__ALGORITHM(Cnum32)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline void Madd_Set0_cl(uint64_t n, Cnuml *arr)
 MADD_SET0_CNUM__ALGORITHM(Cnuml)
 
