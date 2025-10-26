@@ -112,6 +112,21 @@ bool Matrix_Multiply_Naive(uint64_t m, uint64_t n, uint64_t l,
 
 /*
 ===============================================================================
+matrix multiply vector
+===============================================================================
+*/
+bool Matrix_Multiply_Vector(int32_t m, int32_t n, const double *matrix, const double *vector, double *result);
+bool Matrix_Multiply_Vector_f32(int32_t m, int32_t n, const float *matrix, const float *vector, float *result);
+bool Vector_Multiply_Matrix(int32_t m, int32_t n, const double *vector, const double *matrix, double *result);
+bool Vector_Multiply_Matrix_f32(int32_t m, int32_t n, const float *vector, const float *matrix, float *result);
+
+bool Matrix_Multiply_Vector_c64(int32_t m, int32_t n, const Cnum *matrix, const Cnum *vector, Cnum *result);
+bool Matrix_Multiply_Vector_c32(int32_t m, int32_t n, const Cnum32 *matrix, const Cnum32 *vector, Cnum32 *result);
+bool Vector_Multiply_Matrix_c64(int32_t m, int32_t n, const Cnum *vector, const Cnum *matrix, Cnum *result);
+bool Vector_Multiply_Matrix_c32(int32_t m, int32_t n, const Cnum32 *vector, const Cnum32 *matrix, Cnum32 *result);
+
+/*
+===============================================================================
 matrix inverse
 ===============================================================================
 */
