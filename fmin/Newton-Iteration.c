@@ -14,7 +14,7 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
 
 #define FMIN_NEWTON_ITERATION__ALGORITHM(num_type, \
                                          Matrix_Inverse_Internal, Matrix_Inverse_Internal_func_name, \
-                                         Matrix_Multiply) \
+                                         Matrix_Multiply_Vector) \
 { \
     if (n_param == 0){ \
         wchar_t error_info[MADD_ERROR_INFO_LEN]; \
@@ -121,7 +121,7 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
             Madd_Error_Add(MADD_ERROR, error_info); \
             return false; \
         } \
-        Matrix_Multiply(n_param, 1, n_param, Hessian, grad, delta_param); \
+        Matrix_Multiply_Vector(n_param, n_param, Hessian, grad, delta_param); \
         /* update params */ \
         for (uint64_t i_param=0; i_param<n_param; i_param++){ \
             params[i_param] -= delta_param[i_param]; \
@@ -136,9 +136,9 @@ This file is part of Math Addition, in ./fmin/Newton-Iteration.c
 bool Fmin_Newton_Iteration(int32_t n_param, double *params,
                            double func(double *params, void *other_param), void *other_param,
                            double *param_steps, double norm_term, uint64_t n_step)
-FMIN_NEWTON_ITERATION__ALGORITHM(double, Matrix_Inverse_Internal, "Matrix_Inverse_Internal", Matrix_Multiply)
+FMIN_NEWTON_ITERATION__ALGORITHM(double, Matrix_Inverse_Internal, "Matrix_Inverse_Internal", Matrix_Multiply_Vector)
 
 bool Fmin_Newton_Iteration_f32(int32_t n_param, float *params,
                                float func(float *params, void *other_param), void *other_param,
                                float *param_steps, float norm_term, uint64_t n_step)
-FMIN_NEWTON_ITERATION__ALGORITHM(float, Matrix_Inverse_Internal_f32, "Matrix_Inverse_Internal_f32", Matrix_Multiply_f32)
+FMIN_NEWTON_ITERATION__ALGORITHM(float, Matrix_Inverse_Internal_f32, "Matrix_Inverse_Internal_f32", Matrix_Multiply_Vector_f32)
