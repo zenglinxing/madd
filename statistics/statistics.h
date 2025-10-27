@@ -87,5 +87,10 @@ Cnum128 Kahan_Summation_c128(uint64_t n, Cnum128 *arr);
 #endif
 
 bool Linspace(double start, double end, uint64_t n, double *arr, bool include_end);
+bool Linspace_f32(float start, float end, uint64_t n, float *arr, bool include_end);
+bool Linspace_fl(long double start, long double end, uint64_t n, long double *arr, bool include_end);
+#ifdef ENABLE_QUADPRECISION
+bool Linspace_f128(__float128 start, __float128 end, uint64_t n, __float128 *arr, bool include_end);
+#endif /* ENABLE_QUADPRECISION */
 
 #endif /* MADD_STATISTICS_H */
