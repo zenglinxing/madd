@@ -68,4 +68,6 @@ __float128 Kahan_Summation_f128(uint64_t n, __float128 *arr);
 Cnum128 Kahan_Summation_c128(uint64_t n, Cnum128 *arr);
 #endif
 
+bool Linspace(double start, double end, uint64_t n, double *arr, bool include_end);
+
 #endif /* MADD_STATISTICS_H */
