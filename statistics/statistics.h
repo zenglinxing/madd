@@ -30,21 +30,39 @@ This file is part of Math Addition, in ./statistics/statistics.h
     return t; \
 } \
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline double Kahan_Summation_Step(double sum, double add, double *compensate)
 KAHAN_SUMMATION_STEP__ALGORITHm(double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline float Kahan_Summation_Step_f32(float sum, float add, float *compensate)
 KAHAN_SUMMATION_STEP__ALGORITHm(float)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline long double Kahan_Summation_Step_fl(long double sum, long double add, long double *compensate)
 KAHAN_SUMMATION_STEP__ALGORITHm(long double)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum Kahan_Summation_Step_c64(Cnum sum, Cnum add, Cnum *compensate)
 KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnum, Cnum_Sub, Cnum_Add)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnum32 Kahan_Summation_Step_c32(Cnum32 sum, Cnum32 add, Cnum32 *compensate)
 KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnum32, Cnum_Sub_c32, Cnum_Add_c32)
 
+#ifdef __CUDACC__
+__host__ __device__
+#endif /* __CUDACC__ */
 inline Cnuml Kahan_Summation_Step_cl(Cnuml sum, Cnuml add, Cnuml *compensate)
 KAHAN_SUMMATION_STEP_CNUM__ALGORITHm(Cnuml, Cnum_Sub_cl, Cnum_Add_cl)
 
