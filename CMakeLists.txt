@@ -15,12 +15,7 @@ SET(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES 1)
 set(CMAKE_C_RESPONSE_FILE_LINK_FLAG "@")
 set(CMAKE_CXX_RESPONSE_FILE_LINK_FLAG "@")
 
-if (NOT DEFINED CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "set Cmake C++ standard.")
-else()
-    set(CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD} CACHE INTERNAL "set Cmake C++ standard.")
-endif ()
-message(STATUS "C++ standard: c++${CMAKE_CXX_STANDARD}")
+set(CMAKE_CXX_STANDARD 98)
 
 project(madd
         VERSION 0.0.0
@@ -74,8 +69,13 @@ option(ENABLE_TEST "Enable test to check the functions work well." ON)
 # benchmark
 option(ENABLE_BENCHMARK "Benchmark the Madd functions. Requires Google Benchmark library." OFF)
 if (ENABLE_BENCHMARK)
+    if (${CMAKE_CXX_STANDARD} STREQUAL "98")
+        set(CMAKE_CXX_STANDARD 11)
+    endif ()
     find_package(benchmark REQUIRED)
 endif ()
+
+message(STATUS "C++ standard: c++${CMAKE_CXX_STANDARD}")
 
 # =================================================================================================
 # configure the config.h
