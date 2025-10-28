@@ -35,10 +35,13 @@ message(STATUS "OpenBLAS library: ${OpenBLAS_LIBRARY}")
 #message(STATUS "C compiler ID: ${CMAKE_C_COMPILER_ID}")
 
 # multithread
-option(ENABLE_MULTITHREAD "Enable multithread." ON)
+option(ENABLE_MULTITHREAD "Enable multithread." OFF)
 if (ENABLE_MULTITHREAD)
     add_definitions(-DMADD_ENABLE_MULTITHREAD)
-    set(MADD_DEF_ENABLE_MULTITHREAD "#define MADD_ENABLE_MULTITHREAD")
+    find_package(thread_base REQUIRED)
+    message(STATUS "thread_base library: ${thread_base_LIBRARIES}")
+    message(STATUS "thread_base include: ${thread_base_INCLUDE_DIRS}")
+    message(STATUS "thread_base libpath: ${thread_base_LIBRARY_DIRS}")
 endif()
 
 # CUDA
@@ -95,13 +98,6 @@ add_subdirectory(rng)
 add_subdirectory(sort)
 add_subdirectory(special_func)
 add_subdirectory(statistics)
-set(MADD_SRC_LIST_THREAD_BASE)
-if (ENABLE_MULTITHREAD)
-    add_subdirectory(thread_base)
-else()
-    unset(MADD_SRC_LIST_THREAD_BASE CACHE)
-endif()
-message(STATUS "thread base src: ${MADD_SRC_LIST_THREAD_BASE}")
 
 if (BUILD_DOCUMENT)
     add_subdirectory(doc)
@@ -126,7 +122,6 @@ add_library(madd STATIC
             ${MADD_SRC_LIST_SORT} # sort/
             ${MADD_SRC_LIST_SPECIAL_FUNC} # special_func/
             ${MADD_SRC_LIST_STATISTICS} # statistics/
-            ${MADD_SRC_LIST_THREAD_BASE} # thread_base
 )
 # link OpenBLAS
 target_include_directories(madd PRIVATE ${OpenBLAS_INCLUDE_DIRS})
@@ -155,9 +150,9 @@ if (ENABLE_QUADPRECISION)
     target_link_libraries(madd PRIVATE quadmath)
 endif()
 if (ENABLE_MULTITHREAD)
-    if (${MADD_THREAD_API} STREQUAL "pthread")
-        target_link_libraries(madd PRIVATE pthread)
-    endif()
+    target_link_libraries(madd PRIVATE ${thread_base_LIBRARIES})
+    target_link_directories(madd PRIVATE ${thread_base_LIBRARY_DIRS})
+    target_include_directories(madd PRIVATE ${thread_base_INCLUDE_DIRS})
 endif()
 
 # =================================================================================================
@@ -179,9 +174,6 @@ if (ENABLE_TEST)
     include(sort/test.cmake)
     include(special_func/test.cmake)
     include(statistics/test.cmake)
-    if (ENABLE_MULTITHREAD)
-        include(thread_base/test.cmake)
-    endif ()
 endif()
 
 # =================================================================================================

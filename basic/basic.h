@@ -20,7 +20,9 @@ This file is aimed to collect majority of prevalent constants used in math and p
 #include"cnum.h"
 #include"constant.h"
 #include"cuda_base.cuh"
-#include"../thread_base/thread_base.h"
+#ifdef MADD_ENABLE_MULTITHREAD
+#include<thread_base/thread_base.h>
+#endif
 
 #ifdef ENABLE_QUADPRECISION
 #include<quadmath.h>
@@ -229,7 +231,9 @@ typedef struct{
 typedef struct{
     bool flag_n_exceed;
     uint64_t n, n_error, n_warning;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif /* MADD_ENABLE_MULTITHREAD */
     Madd_Error_Item item[MADD_ERROR_MAX];
 } Madd_Error;
 

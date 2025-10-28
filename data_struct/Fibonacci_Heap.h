@@ -11,7 +11,9 @@ This file is part of Math Addition, in ./data_struct/Fibonacci_Heap.h
 #include<stdint.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include"../thread_base/thread_base.h"
+#ifdef MADD_ENABLE_MULTITHREAD
+#include<thread_base/thread_base.h>
+#endif
 
 #define FIBONACCI_HEAP_DECREASE_KEY_SUCCESS 0
 #define FIBONACCI_HEAP_DECREASE_KEY_FAIL 1

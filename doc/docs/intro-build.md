@@ -26,6 +26,6 @@ Apart from common options `-DCMAKE_BUILD_TYPE=Release` and `-DCMAKE_INSTALL_PREF
 | `-DENABLE_CUDA` | OFF | Build CUDA functions |
 | `-DCMAKE_CUDA_ARCHITECTURES` | 86 | CUDA architecures code. This variable should refer to<br>https://developer.nvidia.com/cuda-gpus and your NVIDIA GPU model |
 |`-DENABLE_TEST` | ON | Build tests. There are too many tests. |
-| `-DENABLE_MULTITHREAD` | OFF | Enable multithread. Requires C11 standard and C++17 standard |
-| `-DMADD_THREAD_API` | C++ | If your OS is Windows, suggest to switch to Windows<br>If your OS is Linux/Unix/MacOS, suggest to switch to pthread |
+| `-DENABLE_MULTITHREAD` | OFF | Enable multithread. Requires thread_base from my git repository |
 | `-DENABLE_QUADPRECISION` | OFF | 128-bit float support from quadmath |
+<!-- | `-DMADD_THREAD_API` | C++ | If your OS is Windows, suggest to switch to Windows<br>If your OS is Linux/Unix/MacOS, suggest to switch to pthread | -->

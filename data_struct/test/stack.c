@@ -157,18 +157,18 @@ void test_thread_safety() {
     
     // 创建生产者线程
     for (int i = 0; i < 5; i++) {
-        producers[i] = Thread_Create(producer, &stack);
+        Thread_Create(producers+i, producer, &stack);
     }
     
     // 创建消费者线程
     for (int i = 0; i < 5; i++) {
-        consumers[i] = Thread_Create(consumer, &stack);
+        Thread_Create(consumers+i, consumer, &stack);
     }
     
     // 等待所有线程完成
     for (int i = 0; i < 5; i++) {
-        Thread_Join(producers[i]);
-        Thread_Join(consumers[i]);
+        Thread_Join(producers+i);
+        Thread_Join(consumers+i);
     }
     
     bool is_empty = Stack_Empty(&stack);

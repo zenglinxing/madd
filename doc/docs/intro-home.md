@@ -22,6 +22,7 @@ Required:
 
 Optional:
 
+* [thread_base](https://gitee.com/zenglinxing/thread_base) - My cross-platform multithread API.
 * [CUDAToolkit](https://developer.nvidia.com/cuda-toolkit) - For some cuda functions.
 * [Benchmark](https://github.com/google/benchmark) - Google benchmark
 

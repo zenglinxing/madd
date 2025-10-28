@@ -8,7 +8,7 @@ To initialize madd_error.
 */
 extern "C"{
 #include"basic.h"
-#include"../thread_base/thread_base.h"
+#include<thread_base/thread_base.h>
 }
 
 Madd_Error madd_error;

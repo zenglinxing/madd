@@ -14,7 +14,9 @@ This file is part of Math Addition, in ./basic/data_struct.h
 #include"binary_search_tree.h"
 #include"Fibonacci_Heap.h"
 #include"RB_tree.h"
-#include"../thread_base/thread_base.h"
+#ifdef MADD_ENABLE_MULTITHREAD
+#include<thread_base/thread_base.h>
+#endif
 
 /* stack */
 typedef struct{

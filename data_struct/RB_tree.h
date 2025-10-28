@@ -13,7 +13,9 @@ Red-Black Tree
 #include<stdint.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include"../thread_base/thread_base.h"
+#ifdef MADD_ENABLE_MULTITHREAD
+#include<thread_base/thread_base.h>
+#endif
 
 #define RB_TREE_SUCCESS 0
 #define RB_TREE_NULL 1

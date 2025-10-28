@@ -182,14 +182,14 @@ void Test_Queue_Multithread(void) {
     
     // Create producer and consumer threads
     for (int i = 0; i < NUM_THREADS; i++) {
-        producers[i] = Thread_Create(Producer, NULL);
-        consumers[i] = Thread_Create(Consumer, NULL);
+        Thread_Create(producers+i, Producer, NULL);
+        Thread_Create(consumers+i, Consumer, NULL);
     }
     
     // Wait for all threads to complete
     for (int i = 0; i < NUM_THREADS; i++) {
-        Thread_Join(producers[i]);
-        Thread_Join(consumers[i]);
+        Thread_Join(producers+i);
+        Thread_Join(consumers+i);
     }
     
     // Verify queue is finally empty

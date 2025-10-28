@@ -29,7 +29,6 @@ extern "C" {
 #include"sort/sort.h"
 #include"special_func/special_func.h"
 #include"statistics/statistics.h"
-#include"thread_base/thread_base.h"
 
 #ifdef __cplusplus
 }
