@@ -31,7 +31,9 @@ typedef struct{
     bool flag_multithread;
     uint64_t n;
     Fibonacci_Heap_Node *min;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } Fibonacci_Heap;
 
 bool Fibonacci_Heap_Init(Fibonacci_Heap *H);

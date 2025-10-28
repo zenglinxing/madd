@@ -16,6 +16,7 @@ I did this via refering to the book Introduction to Algorithm by Thomas H. Corme
 #include"../basic/basic.h"
 /*#include"../thread_base/thread_base.h"*/
 
+#ifdef MADD_ENABLE_MULTITHREAD
 static inline void RB_Read_Lock(RB_Tree *T)
 {
     if (T->flag_multithread){
@@ -43,6 +44,7 @@ static inline void RB_Write_Unlock(RB_Tree *T)
         RWLock_Write_Unlock(&T->rwlock);
     }
 }
+#endif
 
 static inline char RB_Tree_Internal_Compare(RB_Tree_Node *node1, RB_Tree_Node *node2,
                                      char func(void *key1, void *key2, void *other_param), void *other_param,

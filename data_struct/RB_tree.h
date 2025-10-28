@@ -35,7 +35,9 @@ typedef struct _RB_Tree_Node RB_Tree_Node;
 typedef struct{
     bool flag_multithread;
     RB_Tree_Node *root, nil;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } RB_Tree;
 
 bool RB_Tree_Init(RB_Tree *T);

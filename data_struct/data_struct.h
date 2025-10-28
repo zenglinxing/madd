@@ -23,7 +23,9 @@ typedef struct{
     bool flag_multithread, auto_shrink;
     void *buf;
     size_t capacity, n_element, unit_capacity, usize;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } Stack;
 
 bool Stack_Init(Stack *stack, uint64_t unit_capacity, size_t usize /* element size */);
@@ -51,7 +53,9 @@ typedef struct{
     uint64_t unit_capacity, n_element;
     size_t usize;
     Queue_Node *head;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } Queue;
 
 bool Queue_Init(Queue *queue, uint64_t unit_capacity, size_t usize);
@@ -72,7 +76,9 @@ typedef struct _Singly_Linked_List_Node Singly_Linked_List_Node;
 typedef struct{
     bool flag_multithread;
     Singly_Linked_List_Node *head, *tail;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } Singly_Linked_List;
 
 void Singly_Linked_List_Init(Singly_Linked_List *list);

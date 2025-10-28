@@ -25,7 +25,9 @@ typedef struct _Binary_Search_Tree_Node Binary_Search_Tree_Node;
 typedef struct{
     bool flag_multithread;
     Binary_Search_Tree_Node *root;
+#ifdef MADD_ENABLE_MULTITHREAD
     RWLock rwlock;
+#endif
 } Binary_Search_Tree;
 
 bool Binary_Search_Tree_Init(Binary_Search_Tree *T);
