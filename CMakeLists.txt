@@ -196,7 +196,7 @@ endif ()
 # =================================================================================================
 # Generate Config.cmake
 set(INCLUDE_DIRS include)
-set(LIBRARIES time_unified)
+set(LIBRARIES madd)
 set(LIB_DIR lib)
 
 include(CMakePackageConfigHelpers)
